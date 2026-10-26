@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where Am I?</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0001 · Math for Data Analysis</p>
+<h1>Where am I?</h1>
+<p class="subtitle">A ten-minute check that tells us where your math really starts.</p>
+
+<div class="meta">
+  <span>⏱ 10–15 minutes</span>
+  <span>✎ Pen and paper, no calculator</span>
+  <span>🎯 Win: an honest starting point</span>
+</div>
+
+<h2>Why start with a check?</h2>
+
+<p>You said you've probably forgotten even the basics. That may be true, or you may remember more than you think. Guessing would waste your time either way.</p>
+
+<p>These 12 questions cover the four building blocks underneath almost every report you'll build: <strong>arithmetic</strong>, <strong>percentages</strong>, <strong>averages</strong>, and <strong>reading a formula</strong>. The <a href="../reference/roadmap.html">roadmap</a> shows how they lead into the statistics you'll meet later.</p>
+
+<div class="callout">
+  <span class="label">One rule</span>
+  <p>If you'd be guessing, press <strong>Not sure</strong>. An honest "Not sure" tells me more than a lucky guess, and nobody is grading you.</p>
+</div>
+
+<p>Each answer shows a short explanation straight away. Read it even when you're right, since some questions hide a classic analyst trap.</p>
+
+<h2>The check</h2>
+
+<div id="quiz"></div>
+
+<h2>What happens next</h2>
+
+<ol class="steps">
+  <li>Press <strong>Copy results</strong> and paste them into the chat with me (Claude).</li>
+  <li>I'll pick Lesson 0002 to start exactly at your first gap, not at page one of a textbook.</li>
+  <li>If you have a long day, look around the roadmap's first stage. On short days, the check alone is enough.</li>
+</ol>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p>Skim the <a href="https://learn.microsoft.com/certifications/resources/study-guides/pl-300">official PL-300 study guide</a> on Microsoft Learn, just the "skills at a glance" list. Notice that it asks for Power Query, data modelling, and DAX, not equations. The math we're building is what sits <em>inside</em> those skills: the percentages and averages your measures calculate.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>I'm your teacher for this whole course. If an explanation didn't click, or you want to know why a trap catches people, just ask in the chat. No question is too basic.</p>
+</div>
+
+<div class="footer">
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <span>Next lesson: chosen from your results</span>
+</div>
+
+</main>
+
+<script src="../assets/quiz.js"></script>
+<script>
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0001-diagnostic",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Arithmetic",
+      q: "<p>What is <code>2 + 3 × 4</code>?</p>",
+      options: ["20", "24", "14", "11"],
+      answer: 2,
+      explain: "Multiplication comes before addition: 3 × 4 = 12, then 2 + 12 = 14. Excel follows the same order, so <code>=2+3*4</code> also gives 14. Use brackets when you mean something else: <code>=(2+3)*4</code> = 20."
+    },
+    {
+      topic: "Arithmetic",
+      q: "<p>What is <code>−5 + 8 − 6</code>?</p>",
+      options: ["−3", "+3", "−9", "+9"],
+      answer: 0,
+      explain: "Work left to right: −5 + 8 = 3, then 3 − 6 = −3. Negative numbers show up all the time as losses, returns, and declines."
+    },
+    {
+      topic: "Arithmetic",
+      q: "<p>What is <code>3/4</code> as a decimal?</p>",
+      options: ["0.34", "0.43", "0.70", "0.75"],
+      answer: 3,
+      explain: "3 ÷ 4 = 0.75. A fraction is just a division. In Excel, formatting 0.75 as a percentage shows 75%."
+    },
+    {
+      topic: "Percentages",
+      q: "<p>What is <strong>15% of 80</strong>?</p>",
+      options: ["10", "12", "15", "18"],
+      answer: 1,
+      explain: "15% means 15/100 = 0.15, and 0.15 × 80 = 12. A quick mental route: 10% of 80 is 8, 5% is half of that (4), so 8 + 4 = 12."
+    },
+    {
+      topic: "Percentages",
+      q: "<p>Monthly sales went from <strong>200</strong> to <strong>250</strong>. By what percent did they grow?</p>",
+      options: ["20%", "25%", "50%", "45%"],
+      answer: 1,
+      explain: "Percent change = (new − old) ÷ <em>old</em> = 50 ÷ 200 = 25%. The trap is dividing by the new value (50 ÷ 250 = 20%). Always divide by where you <em>started</em>."
+    },
+    {
+      topic: "Percentages",
+      q: "<p>Next month sales fell from <strong>250</strong> back to <strong>200</strong>. By what percent did they fall?</p>",
+      options: ["−25%", "−50%", "−45%", "−20%"],
+      answer: 3,
+      explain: "(200 − 250) ÷ 250 = −50 ÷ 250 = −20%. Up 25% and then down 20% brings you back to the same number, because the starting point changed. Percent changes aren't symmetric, and this catches people in reports."
+    },
+    {
+      topic: "Percentages",
+      q: "<p>A website's conversion rate rose from <strong>4%</strong> to <strong>5%</strong>. How many <em>percentage points</em> did it rise?</p>",
+      options: ["1", "25", "20", "9"],
+      answer: 0,
+      explain: "5% − 4% = 1 <strong>percentage point</strong>. That same change is also a 25% <em>relative</em> increase (1 ÷ 4). Both are true, and mixing them up is one of the most common reporting mistakes."
+    },
+    {
+      topic: "Averages",
+      q: "<p>What is the mean (average) of <code>4, 8, 6, 2</code>?</p>",
+      options: ["4", "6", "5", "7"],
+      answer: 2,
+      explain: "Add them and divide by how many there are: (4 + 8 + 6 + 2) ÷ 4 = 20 ÷ 4 = 5. In Excel that's <code>=AVERAGE(...)</code>."
+    },
+    {
+      topic: "Averages",
+      q: "<p>What is the median of <code>3, 9, 1, 7, 100</code>?</p>",
+      options: ["24", "3", "9", "7"],
+      answer: 3,
+      explain: "Sort first: 1, 3, 7, 9, 100. The median is the middle value, 7. The mean would be 24, pulled up by the 100. Excel: <code>=MEDIAN(...)</code>."
+    },
+    {
+      topic: "Averages",
+      q: "<p>A team has 5 people earning 4,000 a month and a director earning 50,000. Which number best describes a <em>typical</em> salary?</p>",
+      options: ["The median", "The mean", "The maximum", "The total"],
+      answer: 0,
+      explain: "The median is 4,000, which matches what almost everyone earns. The mean is about 11,700, which nobody on the team actually earns, because one large value drags it up. With skewed data (salaries, house prices, order sizes), analysts reach for the median."
+    },
+    {
+      topic: "Averages",
+      q: "<p>Store A had <strong>100</strong> orders averaging <strong>€10</strong>. Store B had <strong>300</strong> orders averaging <strong>€20</strong>. What is the average order value across both stores?</p>",
+      options: ["15.0", "20.0", "17.5", "12.5"],
+      answer: 2,
+      explain: "You can't average the averages ((10 + 20) ÷ 2 = 15) because the stores have different numbers of orders. Instead: total revenue ÷ total orders = (100×10 + 300×20) ÷ 400 = 7,000 ÷ 400 = €17.50. This is a <strong>weighted average</strong>, and it's exactly what a Power BI measure does when it divides two sums."
+    },
+    {
+      topic: "Formulas",
+      q: "<p>Margin % is defined as <code>(Revenue − Cost) ÷ Revenue</code>. With revenue 500 and cost 400, what is the margin?</p>",
+      options: ["25%", "20%", "80%", "10%"],
+      answer: 1,
+      explain: "(500 − 400) ÷ 500 = 100 ÷ 500 = 20%. Reading a formula means plugging in values in the order the brackets say. Dividing by cost instead (100 ÷ 400 = 25%) gives a different metric, called markup."
+    }
+  ]
+});
+</script>
+</body>
+</html>
