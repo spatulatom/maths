@@ -9,5 +9,7 @@
 
 ## Working notes
 - Practice tool: Excel first (matches Coursera course 1), with optional JS/Python equivalents since the user knows JS.
-- Lesson 0001 is a diagnostic. Wait for the user's pasted results before planning lesson 0002 and writing learning records about math level.
-- Glossary: don't create until the user has demonstrated understanding of some terms (per GLOSSARY-FORMAT rules).
+- Diagnostic done (LR 0002). Plan: 0002 median → 0003 weighted averages (link to DAX DIVIDE(SUM,SUM)) → stage 4 growth over time.
+- Each lesson ends with 1–2 spaced review questions from earlier lessons.
+- Glossary lives at reference/glossary.html. Add terms only after quiz evidence. Pending: median (after 0002 results).
+- Components: assets/style.css, quiz.js/.css (Not-sure button, copyable results), datastrip.js/.css (dot plot with mean/median, editable).

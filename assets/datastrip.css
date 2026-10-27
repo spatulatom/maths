@@ -1,0 +1,32 @@
+/* Styles for assets/datastrip.js. Relies on tokens from style.css. */
+
+.datastrip {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0;
+}
+.datastrip-label { display: block; font-family: var(--sans); font-size: 0.78rem; color: var(--muted); }
+.datastrip-input {
+  display: block; width: 100%; margin-top: 0.3rem;
+  font-family: var(--mono); font-size: 0.95rem; color: var(--text);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.6rem;
+}
+.datastrip-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.datastrip-svg { width: 100%; height: auto; display: block; margin: 0.6rem 0 0.2rem; }
+.ds-axis { stroke: var(--rule); stroke-width: 2; }
+.ds-tick { fill: var(--muted); font-family: var(--sans); font-size: 12px; }
+.ds-dot { fill: var(--text); opacity: 0.75; }
+.ds-median { stroke: var(--accent); stroke-width: 2.5; }
+.ds-mean { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 5 4; }
+.ds-median-label { fill: var(--accent); color: var(--accent); font-family: var(--sans); font-size: 13px; font-weight: 600; }
+.ds-mean-label { fill: var(--muted); color: var(--muted); font-family: var(--sans); font-size: 13px; font-weight: 600; }
+
+.datastrip-sorted { font-family: var(--mono); font-size: 0.88rem; margin: 0.4rem 0; line-height: 2; }
+.ds-caption { font-family: var(--sans); font-size: 0.78rem; color: var(--muted); }
+.ds-num { display: inline-block; padding: 0 0.4rem; margin-right: 0.25rem; border-radius: 3px; background: var(--bg); border: 1px solid var(--rule); }
+.ds-num.is-middle { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+.datastrip-stats { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-size: 0.92rem; align-items: baseline; }
+.datastrip-stats .small { flex-basis: 100%; }
+
+@media print { .datastrip-input { border: 0; padding: 0; } }

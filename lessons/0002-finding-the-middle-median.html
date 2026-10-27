@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finding the Middle</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/datastrip.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0002 · Stage 3: Averages</p>
+<h1>Finding the middle</h1>
+<p class="subtitle">How to find a median, and how to tell when it beats the mean.</p>
+
+<div class="meta">
+  <span>⏱ 15–20 minutes (+20 in Excel on a long day)</span>
+  <span>✎ Pen and paper</span>
+  <span>🎯 Win: find any median by hand and know when to report it</span>
+</div>
+
+<h2>You already have the instinct</h2>
+
+<p>In the check, you said the <em>median</em> best describes a typical salary when one director earns far more than everyone else. That's the right call, and it's the reason analysts use medians at all.</p>
+
+<p>What was missing is the mechanics: how to actually <em>find</em> one. It's a three-step recipe, and it never changes.</p>
+
+<h2>The recipe</h2>
+
+<ol class="steps">
+  <li><strong>Sort</strong> the values from smallest to largest. Skipping this step is the number one mistake.</li>
+  <li><strong>Count</strong> them. Call the count <em>n</em>.</li>
+  <li><strong>Take the middle.</strong>
+    <ul>
+      <li>If <em>n</em> is <strong>odd</strong>, the median is the single middle value.</li>
+      <li>If <em>n</em> is <strong>even</strong>, there are two middle values. The median is their mean: add them and divide by 2.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3>Example 1: odd count (the question you skipped)</h3>
+<p><code>3, 9, 1, 7, 100</code> → sorted <code>1, 3, <b>7</b>, 9, 100</code>. Five values, so the middle is the 3rd: <strong>7</strong>.</p>
+
+<h3>Example 2: even count</h3>
+<p><code>8, 2, 6, 4</code> → sorted <code>2, <b>4</b>, <b>6</b>, 8</code>. Four values, so the two middle ones are 4 and 6: (4 + 6) ÷ 2 = <strong>5</strong>.</p>
+
+<p>Excel's <code>MEDIAN</code> does exactly this. Microsoft's own example gives 3.5 for six values, "the midway point between the third and fourth numbers" (<a href="https://support.microsoft.com/en-us/office/median-function-d0916313-4753-414c-8537-ce85bdd967d2">Excel MEDIAN docs</a>).</p>
+
+<div class="callout">
+  <span class="label">Shortcut for long lists</span>
+  <p>The middle position is <code>(n + 1) ÷ 2</code>. With 9 values that's the 5th. With 10 values it's 5.5, meaning halfway between the 5th and 6th.</p>
+</div>
+
+<h2>Play with it</h2>
+
+<p>This strip plots your numbers. The <span style="color:var(--accent)">solid line</span> is the median and the <span style="color:var(--muted)">dashed line</span> is the mean. Try these three things:</p>
+
+<ol class="steps">
+  <li>Change <code>100</code> to <code>1000</code>. Which line moves, and which stays put?</li>
+  <li>Add a sixth number, like <code>5</code>. Two values light up in the sorted row now. Why?</li>
+  <li>Delete the 100 entirely. What happens to the gap between the two lines?</li>
+</ol>
+
+<div id="strip"></div>
+
+<p>What you should notice: the median only cares about <em>order</em>, so an extreme value barely moves it. The mean uses every value's <em>size</em>, so one extreme value pulls it a long way.</p>
+
+<h2>Why an analyst cares</h2>
+
+<p>When the mean is much bigger than the median, a few very large values are stretching the data. Salaries, house prices, order values, and delivery times often look like this. For data shaped like that, the median is the honest "typical" number, and a big gap between the two is itself worth mentioning in a report.</p>
+
+<p>Power BI has the same function: <code>MEDIAN(Sales[Amount])</code> in DAX returns the median of a column, and it ignores blanks (<a href="https://learn.microsoft.com/en-us/dax/median-function-dax">DAX MEDIAN docs</a>).</p>
+
+<h2>Practice</h2>
+
+<p>Work these out on paper <em>before</em> clicking. The last two revisit Lesson 0001, because pulling something back from memory after a gap is what makes it stick.</p>
+
+<div id="quiz"></div>
+
+<h2>Long day? Do it in Excel</h2>
+
+<ol class="steps">
+  <li>Type these delivery times (minutes) into <code>A1:A7</code>: 22, 25, 19, 31, 24, 27, 140.</li>
+  <li>In <code>C1</code> type <code>=MEDIAN(A1:A7)</code>. In <code>C2</code> type <code>=AVERAGE(A1:A7)</code>. Predict both values on paper first, then compare.</li>
+  <li>Change 140 to 26. Which of the two cells changed a lot?</li>
+  <li>Add an 8th value in <code>A8</code> and extend both formulas to <code>A1:A8</code>. Check that the median is now the mean of the two middle values.</li>
+  <li>Write one sentence you could put in a report: "Typical delivery time is __ minutes; the average is higher because __."</li>
+</ol>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p>Khan Academy's <a href="https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/mean-median-basics">Mean and median basics</a> unit has short videos and unlimited practice. Do the "Mean, median, and mode" exercise until you get several right in a row.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>If anything here felt shaky, like why even counts work the way they do or when the mean is still the better choice, ask me in the chat. When you finish, paste your quiz results there too.</p>
+</div>
+
+<div class="footer">
+  <a href="0001-where-am-i-diagnostic.html">← 0001 Where am I?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <span>Next: weighted averages</span>
+</div>
+
+</main>
+
+<script src="../assets/datastrip.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+DataStrip.mount(document.getElementById("strip"), { values: [3, 9, 1, 7, 100] });
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0002-median",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Median",
+      q: "<p>What is the median of <code>12, 5, 20, 9, 7</code>?</p>",
+      options: ["12", "9", "7", "20"],
+      answer: 1,
+      explain: "Sort: 5, 7, <b>9</b>, 12, 20. Five values, so the 3rd is the middle: 9. If you picked 20, you took the middle of the <em>unsorted</em> list. Always sort first."
+    },
+    {
+      topic: "Median",
+      q: "<p>What is the median of <code>15, 3, 1, 5</code>?</p>",
+      options: ["5", "6", "3", "4"],
+      answer: 3,
+      explain: "Sort: 1, <b>3</b>, <b>5</b>, 15. Four values (even), so take the two middle ones: (3 + 5) ÷ 2 = 4. The mean is 6, pulled up by the 15."
+    },
+    {
+      topic: "Median",
+      q: "<p>A sorted list has <strong>9</strong> values. Which position holds the median?</p>",
+      options: ["5th", "4th", "9th", "3rd"],
+      answer: 0,
+      explain: "(n + 1) ÷ 2 = (9 + 1) ÷ 2 = 5, so the 5th value. There are 4 values on each side of it."
+    },
+    {
+      topic: "Median",
+      q: "<p>What is the median of <code>50, 4, 6, 4, 4</code>?</p>",
+      options: ["14", "6", "4", "5"],
+      answer: 2,
+      explain: "Sort: 4, 4, <b>4</b>, 6, 50. The middle (3rd) value is 4. Repeated values each count separately, so you keep all of them in the list."
+    },
+    {
+      topic: "Mean vs median",
+      q: "<p>You're reporting the <em>typical</em> house price in a city with a handful of mansions. Which should you use?</p>",
+      options: ["The mean", "The total", "The median", "The mode"],
+      answer: 2,
+      explain: "A few mansions drag the mean up, so it would describe a house few people actually buy. The median isn't affected by how extreme those few values are."
+    },
+    {
+      topic: "Mean vs median",
+      q: "<p>Mean delivery time is <strong>40 min</strong>, but the median is <strong>25 min</strong>. What does that most likely tell you?</p>",
+      options: ["A few very slow deliveries", "Most deliveries are very slow", "The data has no outliers", "The mean was calculated wrong"],
+      answer: 0,
+      explain: "Half of deliveries take 25 minutes or less, so most are fine. A mean well above the median means some very large values are pulling it up. That's your cue to look for the slow outliers."
+    },
+    {
+      topic: "Review: percentages",
+      q: "<p>A price drops from <strong>80</strong> to <strong>60</strong>. What is the percent change?</p>",
+      options: ["−20%", "−33%", "−15%", "−25%"],
+      answer: 3,
+      explain: "(new − old) ÷ old = (60 − 80) ÷ 80 = −20 ÷ 80 = −25%. Dividing by the new value (20 ÷ 60 ≈ 33%) is the trap from Lesson 0001."
+    },
+    {
+      topic: "Review: mean vs median",
+      q: "<p>The values are <code>2, 4, 6</code>. You add <code>100</code>. What happens?</p>",
+      options: ["Median moves more", "Mean moves more", "Both move equally", "Neither one moves"],
+      answer: 1,
+      explain: "Before: median 4, mean 4. After: median (4 + 6) ÷ 2 = 5, mean 112 ÷ 4 = 28. The mean jumps by 24 and the median by 1."
+    }
+  ]
+});
+</script>
+</body>
+</html>
