@@ -37,6 +37,18 @@
   <dt>Mean</dt>
   <dd>The sum of the values divided by how many there are. Excel <code>AVERAGE</code>.</dd>
   <dd class="avoid">Avoid: plain "average" in this course. Say mean, median, or weighted average, since "average" alone is ambiguous.</dd>
+  <dd class="avoid">Why the odd name: from Latin <em>medianus</em>, "middle". It has nothing to do with "mean" as in unkind.</dd>
+
+  <dt>Median</dt>
+  <dd>The middle value once the values are sorted. With an even count, it's the mean of the two middle values. Excel and DAX <code>MEDIAN</code>.</dd>
+
+  <dt>Outlier</dt>
+  <dd>A value an abnormal distance from the rest of the data. A common flag is more than 1.5 × IQR beyond the middle half (taught in stage 5), but judgement decides.</dd>
+  <dd class="avoid">Avoid: "error" or "bad data" until you know why it's there.</dd>
+
+  <dt>Skewed data</dt>
+  <dd>Data where most values bunch together and a few stretch far out to one side, pulling the mean away from the median.</dd>
+  <dd class="avoid">Avoid: "lopsided" in reports (fine for intuition).</dd>
 </dl>
 
 <p class="small"><a href="roadmap.html">← Roadmap</a></p>

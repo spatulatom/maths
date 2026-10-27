@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Don't Average Averages</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/weightmix.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0003 · Stage 3: Averages</p>
+<h1>Don't average averages</h1>
+<p class="subtitle">When groups are different sizes, the big groups should count for more.</p>
+
+<div class="meta">
+  <span>⏱ 20 minutes (+20 in Excel on a long day)</span>
+  <span>✎ Pen and paper</span>
+  <span>🎯 Win: combine group averages correctly, in your head and in Excel</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Group</dt><dd>A slice of your data: one store, one month, one class.</dd>
+    <dt>Weight</dt><dd>How much a value should count. Usually it's the group's size.</dd>
+    <dt>Weighted mean</dt><dd>A mean where bigger groups count for more. You'll often hear it called a "weighted average".</dd>
+    <dt>Total</dt><dd>Everything added up. For a group it's count × mean: 100 orders × €10 = €1,000.</dd>
+    <dt>Measure</dt><dd>A Power BI calculation (written in DAX) that recalculates for whatever slice the report is showing.</dd>
+  </dl>
+</div>
+
+<h2>The trap you skipped</h2>
+
+<p>In the check, Store A had <strong>100</strong> orders averaging <strong>€10</strong>, and Store B had <strong>300</strong> orders averaging <strong>€20</strong>. The tempting answer is (10 + 20) ÷ 2 = <strong>€15</strong>.</p>
+
+<p>That treats both stores as equal, but Store B has three times as many orders. Three-quarters of all orders were €20 orders, so the true answer must sit much closer to 20 than to 10.</p>
+
+<h2>The fix: go back to totals</h2>
+
+<p>A mean is <em>total ÷ count</em>. So to combine groups, rebuild the totals first, then divide once:</p>
+
+<table>
+  <thead><tr><th>Store</th><th>Orders (count)</th><th>Mean order</th><th>Total = count × mean</th></tr></thead>
+  <tbody>
+    <tr><td>A</td><td>100</td><td>€10</td><td>€1,000</td></tr>
+    <tr><td>B</td><td>300</td><td>€20</td><td>€6,000</td></tr>
+    <tr><td><strong>Both</strong></td><td><strong>400</strong></td><td></td><td><strong>€7,000</strong></td></tr>
+  </tbody>
+</table>
+
+<p>Weighted mean = €7,000 ÷ 400 = <strong>€17.50</strong>.</p>
+
+<div class="callout">
+  <span class="label">The rule</span>
+  <p><strong>Weighted mean = sum of (weight × value) ÷ sum of weights.</strong> Here the weights are order counts. "Total revenue ÷ total orders" is exactly the same calculation in plain business language.</p>
+</div>
+
+<p>Averaging the averages only works when every group is the same size. Then all the weights are equal, and both methods give the same answer.</p>
+
+<h2>Play with it</h2>
+
+<p>The dot sizes show how many orders each store has. The <span style="color:var(--accent)">solid line</span> is the weighted mean and the <span style="color:var(--muted)">dashed line</span> is the naive average of the averages. Try these:</p>
+
+<ol class="steps">
+  <li>Set both stores to <strong>200</strong> orders. The two lines meet. Why?</li>
+  <li>Set Store A to <strong>5</strong> orders. Where does the weighted mean go now?</li>
+  <li>Set Store B to <strong>10,000</strong> orders. What would the naive answer tell your manager, and how wrong would it be?</li>
+</ol>
+
+<div id="mix"></div>
+
+<p>The pattern: the weighted mean is pulled toward the group with the most weight. The naive average always sits exactly halfway, whatever the sizes.</p>
+
+<h2>Where you'll meet this</h2>
+
+<h3>In Excel</h3>
+<p>With counts in <code>B2:B3</code> and means in <code>C2:C3</code>:</p>
+<p><code>=SUMPRODUCT(B2:B3, C2:C3) / SUM(B2:B3)</code></p>
+<p><code>SUMPRODUCT</code> multiplies each pair (100×10, 300×20) and adds the results, so it builds the total for you. Dividing by <code>SUM</code> of the counts finishes the job. This is Microsoft's own recommended pattern (<a href="https://support.microsoft.com/en-us/office/video-weighted-average-c1ad3cd4-cf64-4461-b3b7-0767498b2135">Excel weighted average</a>).</p>
+
+<h3>In Power BI (preview, nothing to memorise)</h3>
+<p class="small">DAX is Power BI's formula language. You'll learn it properly in the Coursera course. For now, read it like an Excel formula: <code>SUM(Sales[Revenue])</code> means "add up the Revenue column of the Sales table".</p>
+<p>This is why a good "average order value" measure looks like this:</p>
+<p><code>Avg Order Value = DIVIDE( SUM(Sales[Revenue]), SUM(Sales[Orders]) )</code></p>
+<p>It divides <em>totals</em>, so it is automatically weighted, and it stays correct in every row <em>and</em> in the grand-total row. <code>DIVIDE</code> is DAX's safe division: it returns blank instead of an error when the bottom number is 0 (<a href="https://learn.microsoft.com/en-us/dax/divide-function-dax">DAX DIVIDE docs</a>).</p>
+
+<div class="callout">
+  <span class="label">Real-world trap</span>
+  <p>If someone hands you a spreadsheet that <em>only</em> has per-store averages and no counts, you can't combine them correctly. The first question to ask is: "How many orders are behind each average?"</p>
+</div>
+
+<h2>Practice</h2>
+
+<p>Paper first, then click. The last two questions revisit earlier lessons.</p>
+
+<div id="quiz"></div>
+
+<h2>Long day? Do it in Excel</h2>
+
+<ol class="steps">
+  <li>Build this table in <code>A1:C4</code> with headers Region / Customers / Avg spend: North 1,200 / €45, South 300 / €80, West 500 / €60.</li>
+  <li>Predict on paper first: will the overall mean spend be above or below the naive (45 + 80 + 60) ÷ 3 = €61.67? Why?</li>
+  <li>In <code>E1</code>: <code>=AVERAGE(C2:C4)</code>. In <code>E2</code>: <code>=SUMPRODUCT(B2:B4,C2:C4)/SUM(B2:B4)</code>.</li>
+  <li>Add a column D = <code>=B2*C2</code> (totals), then check <code>=SUM(D2:D4)/SUM(B2:B4)</code> matches E2.</li>
+  <li>Change North to 10 customers and watch E2 move while E1 stays put.</li>
+</ol>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p>Microsoft's short video and article <a href="https://support.microsoft.com/en-us/office/video-weighted-average-c1ad3cd4-cf64-4461-b3b7-0767498b2135">"Weighted average"</a> shows the <code>SUMPRODUCT ÷ SUM</code> pattern step by step in Excel, the same tool the Coursera course starts with.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>If you want to see the weighted mean done another way, or you're wondering whether a median can be "weighted" too, ask in the chat. Paste your quiz results there when you're done.</p>
+</div>
+
+<div class="footer">
+  <a href="0002-finding-the-middle-median.html">← 0002 Finding the middle</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+</div>
+
+</main>
+
+<script src="../assets/weightmix.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+WeightMix.mount(document.getElementById("mix"), {
+  countLabel: "Orders",
+  valueLabel: "Mean order (€)",
+  groups: [ { name: "Store A", count: 100, value: 10 }, { name: "Store B", count: 300, value: 20 } ]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0003-weighted",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Weighted mean",
+      q: "<p>Class A: <strong>10</strong> students, mean score <strong>80</strong>. Class B: <strong>30</strong> students, mean score <strong>60</strong>. What is the mean score of all 40 students?</p>",
+      options: ["70", "75", "60", "65"],
+      answer: 3,
+      explain: "Totals: 10 × 80 = 800 and 30 × 60 = 1,800. Sum 2,600 ÷ 40 students = 65. The naive answer 70 ignores that Class B is three times bigger."
+    },
+    {
+      topic: "Weighted mean",
+      q: "<p>What's the correct way to combine the means of groups that have <em>different</em> sizes?</p>",
+      options: ["Total divided by count", "Average of the averages", "Median of the averages", "Largest of the averages"],
+      answer: 0,
+      explain: "Rebuild each group's total (count × mean), add the totals, and divide by the total count. That is the weighted mean."
+    },
+    {
+      topic: "Weighted mean",
+      q: "<p>When does averaging the averages give the <em>right</em> answer?</p>",
+      options: ["When all values are positive", "When there are two groups", "When groups are equally sized", "When averages are whole numbers"],
+      answer: 2,
+      explain: "If every group has the same count, every weight is equal, so the weighted mean and the plain average of averages come out the same."
+    },
+    {
+      topic: "Weighted mean",
+      q: "<p>A course grade is <strong>40%</strong> homework and <strong>60%</strong> exam. You scored <strong>90</strong> on homework and <strong>70</strong> on the exam. What is your grade?</p>",
+      options: ["80", "78", "74", "82"],
+      answer: 1,
+      explain: "Here the weights are given as percentages: 0.4 × 90 + 0.6 × 70 = 36 + 42 = 78. The weights add up to 1 (100%), so there's nothing extra to divide by. The naive answer 80 pretends both parts count equally."
+    },
+    {
+      topic: "Weighted mean",
+      q: "<p>North store: <strong>1,000</strong> orders, mean <strong>€50</strong>. South store: <strong>10</strong> orders, mean <strong>€20</strong>. Roughly what should the grand total for mean order value show?</p>",
+      options: ["€49.70", "€35.00", "€20.30", "€50.00"],
+      answer: 0,
+      explain: "(1,000 × 50 + 10 × 20) ÷ 1,010 = 50,200 ÷ 1,010 ≈ €49.70. With only 10 orders, South barely moves the result. €35 is the naive average of averages, and it would badly mislead."
+    },
+    {
+      topic: "Excel",
+      q: "<p>Order counts are in <code>B2:B4</code> and mean order values in <code>C2:C4</code>. Which formula gives the weighted mean?</p>",
+      options: ["=SUMPRODUCT(B2:B4,C2:C4)/SUM(C2:C4)", "=SUMPRODUCT(B2:B4,C2:C4)/COUNT(B2:B4)", "=SUMPRODUCT(B2:B4,B2:B4)/SUM(B2:B4)", "=SUMPRODUCT(B2:B4,C2:C4)/SUM(B2:B4)"],
+      answer: 3,
+      explain: "SUMPRODUCT(counts, means) builds the grand total. Then you divide by the sum of the <em>weights</em> (the counts in B), not by the means, and not by COUNT, which only counts the 3 rows."
+    },
+    {
+      topic: "Review: median",
+      q: "<p>What is the median of <code>9, 1, 4, 6, 12, 2</code>?</p>",
+      options: ["4", "5", "6", "3"],
+      answer: 1,
+      explain: "Sort: 1, 2, <b>4</b>, <b>6</b>, 9, 12. Six values (even), so the median is the mean of the two middle ones: (4 + 6) ÷ 2 = 5."
+    },
+    {
+      topic: "Review: percentages",
+      q: "<p>Unemployment rose from <strong>5%</strong> to <strong>6%</strong>. As a <em>percent change</em>, how much did it rise?</p>",
+      options: ["1%", "10%", "20%", "6%"],
+      answer: 2,
+      explain: "It rose 1 percentage point. As a percent change, that's (6 − 5) ÷ 5 = 0.2 = 20%. Saying \"it rose 1%\" would be wrong on both counts."
+    }
+  ]
+});
+</script>
+</body>
+</html>

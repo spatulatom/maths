@@ -93,6 +93,13 @@ code, .mono { font-family: var(--mono); font-size: 0.85em; background: var(--cod
   text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.3rem;
 }
 
+/* "New words" box: plain-language definitions shown near the top of a lesson */
+.newwords { border-left-color: var(--muted); }
+.newwords dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; font-size: 0.92rem; }
+.newwords dt { font-weight: 600; }
+.newwords dd { margin: 0; }
+@media (max-width: 520px) { .newwords dl { grid-template-columns: 1fr; } .newwords dd { margin-bottom: 0.5rem; } }
+
 /* Tables */
 table { width: 100%; border-collapse: collapse; margin: 1.2rem 0 1.6rem; font-size: 0.9rem; }
 th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools and Languages</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Reference · Bird's-eye view</p>
+<h1>Tools &amp; languages</h1>
+<p class="subtitle">Which language sits under which tool, and what you need for the exam vs. a job.</p>
+
+<h2>What sits under each tool</h2>
+
+<table>
+  <thead><tr><th>You click in…</th><th>Language behind it</th><th>What it's for</th></tr></thead>
+  <tbody>
+    <tr><td>Excel cells</td><td>Excel formulas</td><td>Calculations in a sheet: <code>=SUM(B2:B9)</code></td></tr>
+    <tr><td>Excel macros</td><td>VBA</td><td>Automating Excel</td></tr>
+    <tr><td>Power Query (Excel &amp; Power BI)</td><td><strong>M</strong></td><td>Getting and cleaning data. Every click writes a step of M for you.</td></tr>
+    <tr><td>Pivot tables on a data model (Power Pivot)</td><td><strong>DAX</strong></td><td>Measures that recalculate for each cell</td></tr>
+    <tr><td><strong>Power BI</strong> calculations</td><td><strong>DAX</strong></td><td>Totals, %, YoY, ratios: the numbers in your visuals</td></tr>
+    <tr><td>Power BI relationships, visuals, layout</td><td>none (clicks)</td><td>Connecting tables, building the report</td></tr>
+    <tr><td>Databases</td><td>SQL</td><td>Asking a database for data</td></tr>
+    <tr><td>Notebooks / scripts</td><td>Python</td><td>Analysis and automation beyond the tools</td></tr>
+  </tbody>
+</table>
+
+<p class="small">Sources: <a href="https://learn.microsoft.com/en-us/dax/dax-overview">DAX overview</a> (DAX is used in Power BI, Power Pivot in Excel, and Analysis Services) · <a href="https://learn.microsoft.com/en-us/powerquery-m/">Power Query M reference</a></p>
+
+<h2>Exam vs job: what you need</h2>
+
+<table>
+  <thead><tr><th>Skill</th><th>Taught by the Coursera course</th><th>On PL-300</th><th>Junior jobs</th></tr></thead>
+  <tbody>
+    <tr><td>Power Query (clicks)</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td>M code</td><td>lightly</td><td>❌ recognise only</td><td>nice to have</td></tr>
+    <tr><td><strong>DAX</strong></td><td>✅</td><td>✅ heavily</td><td>✅ basic–intermediate</td></tr>
+    <tr><td>Data modelling</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td>SQL</td><td>❌</td><td>❌</td><td>✅ very common</td></tr>
+    <tr><td>Python</td><td>❌</td><td>❌</td><td>sometimes</td></tr>
+    <tr><td><strong>Math sense</strong></td><td>assumed</td><td>✅ (statistics, time intelligence, outliers)</td><td>✅ incl. interviews</td></tr>
+  </tbody>
+</table>
+
+<p class="small">Source: <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-300">PL-300 study guide</a>, skills as of April 20, 2026. Job column based on a small sample of 2026 junior postings, so check against ads in your own region.</p>
+
+<h2>Who teaches what</h2>
+
+<div class="callout">
+  <span class="label">The split</span>
+  <p><strong>This project:</strong> the math (percentages, averages, growth, spread, outliers, correlation).<br>
+  <strong>Coursera certificate:</strong> Power BI itself, including DAX.<br>
+  <strong>Keep warm on your own:</strong> SQL (and some Python) for job applications.</p>
+</div>
+
+<h2>The DAX bar for a junior</h2>
+<table>
+  <thead><tr><th>Level</th><th>Examples</th><th>Needed?</th></tr></thead>
+  <tbody>
+    <tr><td>Basic</td><td><code>SUM</code>, <code>DIVIDE</code>, <code>COUNTROWS</code></td><td>✅</td></tr>
+    <tr><td>Intermediate</td><td><code>CALCULATE</code>, filters, YoY</td><td>✅ the real bar</td></tr>
+    <tr><td>Advanced</td><td>Complex context, performance tuning</td><td>learn on the job</td></tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  <a href="roadmap.html">Roadmap</a>
+  <a href="glossary.html">Glossary</a>
+</div>
+
+</main>
+</body>
+</html>
