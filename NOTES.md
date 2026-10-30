@@ -7,6 +7,9 @@
 - Global formatting rules (CLAUDE.md): short paragraphs, real headers, blank lines. Apply the same readability to lessons.
 - Wants technical words explained in plain language (asked about "outliers" etc. in lesson 0002). Every lesson from 0003 on gets a short "New words" box near the top.
 - DAX is new to the user (LR 0004). Show DAX only as a labelled "preview", always translated into plain words or the Excel equivalent. No DAX exercises; the Coursera course teaches it.
+- Sometimes studies on the phone ("on the go"). Local HTML can't open there, so publish lessons as private Artifacts via `node tools/bundle.mjs <lesson> <scratchpad out>`. Keep lessons phone-friendly.
+  - 0003: https://claude.ai/artifact/MAgtRooLbeG1j9hYWQRVv2
+  - 0004: https://claude.ai/artifact/BLhBXxtgaWM2m7d1P6yM4n
 - Language: English (no answer on Polish terms yet; offer once lessons start if useful).
 
 ## Working notes
