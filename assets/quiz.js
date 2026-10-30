@@ -121,7 +121,16 @@
       summary.querySelector("pre").textContent = text;
       const copy = el("button", { class: "quiz-option", type: "button" }, ["Copy results"]);
       copy.onclick = () => {
-        navigator.clipboard?.writeText(text).then(() => (copy.textContent = "Copied ✓"), () => {});
+        const selectText = () => {
+          const range = document.createRange();
+          range.selectNodeContents(summary.querySelector("pre"));
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          copy.textContent = "Selected: copy it manually";
+        };
+        if (!navigator.clipboard) return selectText();
+        navigator.clipboard.writeText(text).then(() => (copy.textContent = "Copied ✓"), selectText);
       };
       const reset = el("button", { class: "quiz-unsure", type: "button" }, ["Retake quiz"]);
       reset.onclick = () => { storageSet(key, {}); location.reload(); };

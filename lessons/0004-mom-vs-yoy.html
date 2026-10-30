@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Compared to When?</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/timeseries.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0004 · Stage 4: Growth over time</p>
+<h1>Compared to when?</h1>
+<p class="subtitle">Month over month vs year over year, and why the wrong one can start a panic.</p>
+
+<div class="meta">
+  <span>⏱ 15–20 minutes, works on a phone</span>
+  <span>✎ Mental math is enough</span>
+  <span>🎯 Win: pick MoM or YoY for a question and calculate it</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Period</dt><dd>One slice of time in a report: a day, month, quarter, or year.</dd>
+    <dt>Time series</dt><dd>The same number measured period after period, like monthly sales.</dd>
+    <dt>MoM</dt><dd>Month over month: this month compared with the month just before.</dd>
+    <dt>YoY</dt><dd>Year over year: this period compared with the same period one year earlier.</dd>
+    <dt>Seasonality</dt><dd>A pattern that repeats every year: ice cream peaks in summer, toy shops in December.</dd>
+    <dt>Time intelligence</dt><dd>Power BI's name for calculations like MoM and YoY. It's on the PL-300 skills list.</dd>
+  </dl>
+</div>
+
+<h2>You already know the formula</h2>
+
+<p>MoM and YoY are both just <strong>percent change</strong>, which you got right every time so far:</p>
+
+<p><code>(new − old) ÷ old</code></p>
+
+<p>The only new question is <em>which</em> old value to use. That choice changes the story completely.</p>
+
+<table>
+  <thead><tr><th></th><th>"Old" value is…</th><th>Answers the question…</th></tr></thead>
+  <tbody>
+    <tr><td><strong>MoM</strong></td><td>last month</td><td>"What changed just now?"</td></tr>
+    <tr><td><strong>YoY</strong></td><td>the same month last year</td><td>"Are we doing better than a year ago?"</td></tr>
+  </tbody>
+</table>
+
+<h2>See it on real-shaped data</h2>
+
+<p>Below are monthly sales for a small ice cream shop (example figures, in thousands of euros). September 2026 is selected. Switch between MoM and YoY, then tap other months.</p>
+
+<div id="ts"></div>
+
+<p>In <strong>MoM</strong> mode, September looks like a disaster: −33%. In <strong>YoY</strong> mode it's +12%, a healthy year. Same shop, same month, opposite stories.</p>
+
+<p>The MoM drop is just <strong>seasonality</strong>: September is always cooler than August. YoY compares September with September, so the season cancels out. Repeating patterns like this are one of the basic shapes analysts look for in any time series (<a href="https://otexts.com/fpp2/">Hyndman &amp; Athanasopoulos, <em>Forecasting: Principles and Practice</em></a>).</p>
+
+<div class="callout">
+  <span class="label">Rule of thumb</span>
+  <p>If the business has seasons, judge performance with <strong>YoY</strong>. Use <strong>MoM</strong> to spot sudden changes, like a website outage or a price change, and always check it against last year before you raise an alarm.</p>
+</div>
+
+<h3>Try these in the chart</h3>
+<ol class="steps">
+  <li>Tap <strong>January 2025</strong> in YoY mode. Why is the answer blank?</li>
+  <li>Find the biggest MoM jump in spring. Is it good news, or just the season?</li>
+  <li>Compare July 2026 YoY with September 2026 YoY. Which month grew more?</li>
+</ol>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> with months in rows, MoM in row 3 is <code>=(B3-B2)/B2</code>. YoY with 12 rows per year is <code>=(B14-B2)/B2</code>, pointing 12 rows up.</p>
+
+<p><strong>In Power BI (preview, nothing to memorise):</strong> DAX has ready-made time functions. <code>SAMEPERIODLASTYEAR</code> means "the same dates, one year back" (<a href="https://learn.microsoft.com/en-us/dax/sameperiodlastyear-function-dax">DAX docs</a>). A YoY measure is your percent-change formula with that function supplying the "old" value. The PL-300 study guide lists "Implement time intelligence measures" as an exam skill (<a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-300">study guide</a>).</p>
+
+<div class="callout">
+  <span class="label">The first period is always blank</span>
+  <p>The first month in the data has no previous month, and the first year has no "last year". The honest answer is <em>blank</em>, not 0% and not 100%. DAX's <code>DIVIDE</code> returns blank here for exactly this reason.</p>
+</div>
+
+<h2>Practice</h2>
+
+<p>Do the calculations in your head or on paper. The last two questions revisit earlier lessons.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p>Microsoft Learn's <a href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-time-intelligence">"Implement time-based calculations in Power BI"</a> shows how Power BI handles these comparisons. Skim the pictures and plain-English parts and skip the code. You'll see the same MoM/YoY ideas from the tool's side.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>If you're wondering about quarters (QoQ), weeks, or what to do with a leap year, ask me in the chat. When you're back, paste your results from Lessons 0003 and 0004 together.</p>
+</div>
+
+<div class="footer">
+  <a href="0003-weighted-averages.html">← 0003 Don't average averages</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+</div>
+
+</main>
+
+<script src="../assets/timeseries.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+TimeSeries.mount(document.getElementById("ts"), {
+  start: { year: 2025, month: 0 },
+  values: [20, 22, 30, 40, 55, 70, 80, 75, 50, 35, 25, 30,
+           24, 25, 33, 46, 60, 77, 92, 84, 56],
+  unit: "k€",
+  mode: "mom",
+  selected: 20
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0004-mom-yoy",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "MoM / YoY",
+      q: "<p>Revenue was <strong>80</strong> in August and <strong>60</strong> in September. What is the MoM change for September?</p>",
+      options: ["−20%", "−33%", "−25%", "+25%"],
+      answer: 2,
+      explain: "MoM uses the previous month as \"old\": (60 − 80) ÷ 80 = −20 ÷ 80 = −25%. −33% comes from dividing by the new value, which is the old trap."
+    },
+    {
+      topic: "MoM / YoY",
+      q: "<p>September sales were <strong>60</strong> last year and <strong>66</strong> this year. What is the YoY change?</p>",
+      options: ["+10%", "+6%", "−10%", "+9%"],
+      answer: 0,
+      explain: "YoY uses the same month last year as \"old\": (66 − 60) ÷ 60 = 6 ÷ 60 = +10%."
+    },
+    {
+      topic: "MoM / YoY",
+      q: "<p>Why do analysts prefer YoY for a business with strong seasons?</p>",
+      options: ["It uses more data points", "It is easier to calculate", "Months always grow over time", "It compares like with like"],
+      answer: 3,
+      explain: "September is compared with September, so the seasonal effect is the same on both sides and cancels out. What's left is real growth or decline."
+    },
+    {
+      topic: "MoM / YoY",
+      q: "<p>An ice cream shop's sales fell <strong>40% MoM</strong> in October. What's the sensible first step?</p>",
+      options: ["Fire the sales team now", "Check October of last year", "Report a crisis to management", "Delete October from the report"],
+      answer: 1,
+      explain: "Autumn is always slower for ice cream. If October was also about 40% below September last year, nothing unusual happened. Check YoY before you raise an alarm."
+    },
+    {
+      topic: "MoM / YoY",
+      q: "<p>Your data starts in <strong>January 2025</strong>. What should MoM show for January 2025?</p>",
+      options: ["It should be zero", "It should be 100%", "It equals January sales", "It should be blank"],
+      answer: 3,
+      explain: "There is no December 2024 in the data, so there's nothing to compare with. Blank is the honest answer. 0% would claim \"no change\", which we don't know."
+    },
+    {
+      topic: "MoM / YoY",
+      q: "<p>January sales: <strong>50</strong> in 2025, <strong>40</strong> in 2026, <strong>50</strong> in 2027. What is the YoY change for January 2027?</p>",
+      options: ["+25%", "+20%", "0%", "+10%"],
+      answer: 0,
+      explain: "(50 − 40) ÷ 40 = +25%. 2026 was −20% and 2027 is +25%, yet sales are back where they started. Percent changes aren't symmetric, the same lesson as in 0001."
+    },
+    {
+      topic: "Review: weighted mean",
+      q: "<p>Shop A: <strong>200</strong> customers, mean spend <strong>€10</strong>. Shop B: <strong>50</strong> customers, mean spend <strong>€30</strong>. What's the mean spend across both shops?</p>",
+      options: ["20", "16", "14", "12"],
+      answer: 2,
+      explain: "Totals: 200 × 10 = 2,000 and 50 × 30 = 1,500. 3,500 ÷ 250 customers = €14. Averaging the averages (20) ignores that Shop A has four times as many customers."
+    },
+    {
+      topic: "Review: median",
+      q: "<p>What is the median of <code>7, 3, 10, 1</code>?</p>",
+      options: ["7", "5", "3", "6"],
+      answer: 1,
+      explain: "Sort: 1, <b>3</b>, <b>7</b>, 10. Even count, so take the mean of the two middle values: (3 + 7) ÷ 2 = 5."
+    }
+  ]
+});
+</script>
+</body>
+</html>

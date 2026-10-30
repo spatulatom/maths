@@ -32,7 +32,25 @@
     --bad-soft: #2f1c1c;
     --card: #1d1d1a;
     --code-bg: #24241f;
+    color-scheme: dark;
   }
+}
+
+/* Same dark values, so an explicit dark choice wins over a light OS setting. */
+:root[data-theme="dark"] {
+  --bg: #161614;
+  --text: #e8e6df;
+  --muted: #a09e96;
+  --rule: #34332e;
+  --accent: #e3876f;
+  --accent-soft: #2e211d;
+  --good: #7fc28f;
+  --good-soft: #1b2a1e;
+  --bad: #e48a8a;
+  --bad-soft: #2f1c1c;
+  --card: #1d1d1a;
+  --code-bg: #24241f;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -51,8 +69,12 @@ body {
 main {
   max-width: 680px;
   margin: 0 auto;
-  padding: 3rem 16px 5rem;
+  padding-block: 3rem 5rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
+main > * { min-width: 0; }
+.table-wrap { overflow-x: auto; }
 
 /* Header block */
 .kicker {
@@ -120,7 +142,7 @@ ol.steps { padding-left: 1.3rem; }
 @media (max-width: 520px) {
   html { font-size: 17px; }
   h1 { font-size: 1.7rem; }
-  main { padding-top: 2rem; }
+  main { padding-block-start: 2rem; }
 }
 
 @media print {

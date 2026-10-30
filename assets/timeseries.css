@@ -1,0 +1,29 @@
+/* Styles for assets/timeseries.js. Relies on tokens from style.css. */
+
+.timeseries {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 0.9rem 1rem 1rem; margin: 1.4rem 0;
+}
+.ts-toggle { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ts-toggle button {
+  font-family: var(--sans); font-size: 0.8rem; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 999px;
+  padding: 0.35rem 0.8rem; cursor: pointer;
+}
+.ts-toggle button[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+.ts-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.ts-svg { width: 100%; height: auto; display: block; margin: 0.6rem 0 0.3rem; }
+.ts-grid { stroke: var(--rule); stroke-width: 1; }
+.ts-axis { fill: var(--muted); font-family: var(--sans); font-size: 11px; }
+.ts-year { fill: var(--text); font-family: var(--sans); font-size: 11px; font-weight: 600; }
+.ts-bar { fill: var(--muted); opacity: 0.45; cursor: pointer; }
+.ts-bar:hover { opacity: 0.7; }
+.ts-bar:focus-visible { outline: none; stroke: var(--accent); stroke-width: 2; }
+.ts-bar.is-selected { fill: var(--accent); opacity: 1; }
+.ts-bar.is-compare { fill: var(--text); opacity: 0.85; }
+
+.ts-readout { font-size: 0.95rem; line-height: 1.5; }
+.ts-calc { font-family: var(--mono); font-size: 0.88rem; }
+.ts-up { color: var(--good); }
+.ts-down { color: var(--bad); }
