@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Growth on Growth</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/growthpath.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0006 · Stage 4: Growth over time</p>
+<h1>Growth on growth</h1>
+<p class="subtitle">Why you can't average yearly growth rates, and the one number that answers "how fast did we grow per year?"</p>
+
+<div class="meta">
+  <span>⏱ 15–20 minutes, works on a phone</span>
+  <span>✎ Mental math for the quiz, Excel for real data</span>
+  <span>🎯 Win: calculate and explain CAGR, and spot the averaging trap</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Compound growth</dt><dd>Growth that builds on last year's result, not on the original starting value. Like interest earning interest.</dd>
+    <dt>CAGR</dt><dd>Compound annual growth rate: the single steady yearly rate that gets you from the start value to the end value. Say it "KAG-er".</dd>
+    <dt>Growth factor</dt><dd>A percent change written as a multiplier: +10% is ×1.10, −20% is ×0.80.</dd>
+    <dt>Exponent</dt><dd>The small raised number: 1.1<sup>2</sup> means 1.1 × 1.1. In Excel it's written <code>1.1^2</code>.</dd>
+  </dl>
+</div>
+
+<h2>The trap: averaging percentages</h2>
+
+<p>A shop made <strong>100</strong> in year one, <strong>150</strong> in year two (+50%), and <strong>120</strong> in year three (−20%).</p>
+
+<p>The average of +50% and −20% is <strong>+15%</strong>. That sounds like a healthy yearly growth rate. Now check it: 100 grown by 15% twice is 100 × 1.15 × 1.15 = <strong>132</strong>. But the shop actually ended at 120.</p>
+
+<p>The average was wrong because each year's percentage is calculated on a <strong>different base</strong>. The −20% came off a bigger number (150) than the +50% was added to (100). You've seen this before: in Lesson 0001, +25% then −20% got you back to where you started.</p>
+
+<h2>The fix: multiply, then share it out</h2>
+
+<p>Growth stacks by <strong>multiplying</strong>, so the yearly rate has to undo a multiplication. That's what CAGR does (<a href="https://corporatefinanceinstitute.com/resources/valuation/what-is-cagr/">Corporate Finance Institute</a>):</p>
+
+<p><code>CAGR = (end ÷ start)<sup>1 / periods</sup> − 1</code></p>
+
+<p>In plain words: find the total growth factor (end ÷ start), then ask "what number, multiplied by itself once per period, gives that?"</p>
+
+<ol class="steps">
+  <li><strong>Total factor:</strong> 120 ÷ 100 = 1.2</li>
+  <li><strong>Periods:</strong> 3 years of data, so 2 periods of growth</li>
+  <li><strong>Share it out:</strong> 1.2<sup>1/2</sup> is the square root of 1.2, which is about 1.095</li>
+  <li><strong>Back to a percent:</strong> 1.095 − 1 = <strong>+9.5% per year</strong></li>
+</ol>
+
+<p>Check it by growing it back: 100 × 1.095 × 1.095 ≈ 120. ✓ The averaging shortcut said 15%, but the real yearly rate was under 10%.</p>
+
+<div class="callout">
+  <span class="label">Count the gaps, not the years</span>
+  <p>2021 to 2025 is <strong>5 years</strong> of data but only <strong>4 periods</strong> of growth. Count the jumps between years, not the years themselves. This is the most common CAGR mistake.</p>
+</div>
+
+<h2>Try it</h2>
+
+<p>An online shop's yearly revenue (example figures, k€). The <span style="color: var(--muted)">dashed line</span> grows by the simple average every year and overshoots. The <span style="color: var(--accent)">solid line</span> grows by the CAGR every year and lands exactly on the last value. Change any number and watch both lines.</p>
+
+<div id="gp"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Set every year to grow by exactly the same percentage, for example 100, 110, 121, 133.1. What happens to the two lines?</li>
+  <li>Make the middle years wild, like 100, 300, 50, 180. Does the CAGR change? (Only the first and last values matter!)</li>
+  <li>Can you make the simple average come out <em>lower</em> than the CAGR? (You can't. When growth bounces around, the simple average always overstates it.)</li>
+</ol>
+
+<div class="callout">
+  <span class="label">What CAGR hides</span>
+  <p>CAGR is a <strong>smoothed</strong> rate. It describes a steady path the business never actually took, and it ignores everything between the first and last year. A year that crashed and recovered looks the same as a calm one (<a href="https://corporatefinanceinstitute.com/resources/valuation/what-is-cagr/">CFI: "Disadvantages of CAGR"</a>). Show the yearly values next to it when the ride was bumpy.</p>
+</div>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> with the start in B2 and the end in B6 (4 periods), type <code>=(B6/B2)^(1/4)-1</code> and format the cell as a percentage. Excel also has a ready-made function, <code>=RRI(4, B2, B6)</code>, meaning "periods, start value, end value" (<a href="https://support.microsoft.com/en-us/office/rri-function-6f5822d8-7ef1-4233-944c-79e8172930f4">Microsoft Support</a>).</p>
+
+<p><strong>In Power BI (preview, nothing to memorise):</strong> there's no built-in CAGR function. A measure uses <code>POWER(end / start, 1 / periods) - 1</code>, where <code>POWER</code> raises a number to an exponent (<a href="https://learn.microsoft.com/en-us/dax/power-function-dax">DAX docs</a>). It's the same formula with different syntax.</p>
+
+<p><strong>In interviews:</strong> "Revenue went +50% then −50%. What's the average growth?" is a classic. The answer is not 0%: 100 → 150 → 75, which is a loss.</p>
+
+<h2>Practice</h2>
+
+<p>The numbers are chosen so you can do them in your head. The last two questions revisit earlier lessons.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p>Corporate Finance Institute's <a href="https://corporatefinanceinstitute.com/resources/valuation/what-is-cagr/">"CAGR (Compound Annual Growth Rate)"</a> covers the formula, a worked example, and a section on smoothing and risk. Read it up to the end of "Disadvantages of CAGR" and skip the calculator.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Curious about the "rule of 72", monthly CAGR, or why an exponent of 1/2 means square root? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0005-running-totals-moving-averages.html">← 0005 Which months count?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+</div>
+
+</main>
+
+<script src="../assets/growthpath.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+GrowthPath.mount(document.getElementById("gp"), {
+  startYear: 2022,
+  values: [100, 150, 120, 180],
+  unit: "k€"
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0006-cagr",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "CAGR",
+      q: "<p>Revenue grew from <strong>100</strong> to <strong>121</strong> over <strong>2</strong> years. What is the CAGR?</p>",
+      options: ["21%", "10%", "11%", "12%"],
+      answer: 1,
+      explain: "121 ÷ 100 = 1.21. Which number times itself is 1.21? 1.1 × 1.1 = 1.21, so the CAGR is 10%. 21% is the total growth, and 10.5% would be the total split evenly, which ignores compounding."
+    },
+    {
+      topic: "Periods",
+      q: "<p>You have yearly sales for every year from <strong>2020</strong> to <strong>2025</strong>. How many periods of growth go into the CAGR?</p>",
+      options: ["6", "4", "5", "3"],
+      answer: 2,
+      explain: "Six years of data, but count the jumps: 2020→21, 21→22, 22→23, 23→24, 24→25. That's 5 periods."
+    },
+    {
+      topic: "Averaging trap",
+      q: "<p>Starting at <strong>200</strong>, revenue grew <strong>+100%</strong> in year one, then fell <strong>−50%</strong> in year two. Where does it end?</p>",
+      options: ["200", "250", "300", "150"],
+      answer: 0,
+      explain: "200 × 2 = 400, then 400 × 0.5 = 200, right back where it started. The CAGR is 0%. The simple average of +100% and −50% is +25%, which would suggest strong growth that never happened."
+    },
+    {
+      topic: "Averaging trap",
+      q: "<p>Why can't you just average the yearly percentage changes?</p>",
+      options: ["It is too slow by hand", "Excel cannot average percentages", "It ignores the bad years", "Each year uses a different base"],
+      answer: 3,
+      explain: "Each percentage is calculated on the previous year's value, which keeps changing. Growth stacks by multiplying, so you need a rate that undoes a multiplication: that's CAGR."
+    },
+    {
+      topic: "Excel",
+      q: "<p>The start value is in <strong>B2</strong> (2021) and the end value is in <strong>B6</strong> (2025). Which formula gives the CAGR?</p>",
+      options: ["=(B6/B2)^(1/4)-1", "=(B6-B2)/B2/4", "=(B6/B2)^(1/5)-1", "=AVERAGE(B2:B6)"],
+      answer: 0,
+      explain: "Total factor B6/B2, raised to 1 ÷ periods, minus 1. Five years of data means 4 periods, so the exponent is 1/4. =(B6-B2)/B2/4 splits the total growth evenly and ignores compounding."
+    },
+    {
+      topic: "Meaning",
+      q: "<p>A report says: \"Revenue CAGR 2020–2025: <strong>8%</strong>.\" What does that tell you?</p>",
+      options: ["It grew exactly 8% every year", "Same ending as steady 8% yearly", "Total growth over five years: 8%", "Average of yearly changes was 8%"],
+      answer: 1,
+      explain: "CAGR is the steady rate that gets from start to end. The real years may have bounced around a lot, and the CAGR hides that. The total growth was about 47% (1.08<sup>5</sup> ≈ 1.47)."
+    },
+    {
+      topic: "Review: YTD",
+      q: "<p>It's the end of October. This year's YTD is <strong>300</strong>. What's the fair comparison?</p>",
+      options: ["Full twelve months last year", "October of last year only", "Jan to Oct last year", "This year's September YTD figure"],
+      answer: 2,
+      explain: "Compare like with like: the same 10 months last year. Last year's full total has 12 months, so this year would always look behind."
+    },
+    {
+      topic: "Review: percentage points",
+      q: "<p>A website's conversion rate went from <strong>4%</strong> to <strong>5%</strong>. Which statement is correct?</p>",
+      options: ["Up 1 percent overall", "Up 5 percentage points", "Up 20 percent overall", "Up 1 percentage point"],
+      answer: 3,
+      explain: "The gap between two percentages is in percentage points: 5 − 4 = 1 point. As a percent change it's (5 − 4) ÷ 4 = +25%, not 1% and not 20%."
+    }
+  ]
+});
+</script>
+</body>
+</html>
