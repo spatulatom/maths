@@ -1,7 +1,10 @@
 /*
- * Interactive monthly bar chart for period-over-period comparisons.
- * Tap a bar to select a month; the chart highlights the period it is compared with
- * (previous month for MoM, same month last year for YoY) and shows the calculation.
+ * Interactive monthly bar chart for comparisons and windows over time.
+ * Tap a bar to select a month. Depending on the mode the chart highlights:
+ *   "mom"  the previous month, and shows the percent change
+ *   "yoy"  the same month last year, and shows the percent change
+ *   "ytd"  every month from January of that year, and shows the year-to-date total
+ *   "ma3"  the last three months, and shows their average (plus a moving-average line)
  *
  * Usage:
  *   <link rel="stylesheet" href="../assets/timeseries.css">
@@ -12,7 +15,8 @@
  *       start: { year: 2025, month: 0 },   // month is 0-based (0 = Jan)
  *       values: [20, 22, 30, ...],
  *       unit: "k€",
- *       mode: "mom",                       // "mom" or "yoy"
+ *       modes: ["mom", "yoy"],             // buttons to show (default mom + yoy); one mode hides the toggle
+ *       mode: "mom",                       // mode selected at load
  *       selected: 20,                      // index of the month selected at load
  *     });
  *   </script>
@@ -20,6 +24,12 @@
 (function () {
   const SVG = "http://www.w3.org/2000/svg";
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const MODE_LABELS = {
+    mom: "Month over month (MoM)",
+    yoy: "Year over year (YoY)",
+    ytd: "Year to date (YTD)",
+    ma3: "3-month moving average",
+  };
 
   function svgEl(tag, attrs) {
     const node = document.createElementNS(SVG, tag);
@@ -27,27 +37,44 @@
     return node;
   }
 
+  const sum = (arr) => arr.reduce((a, b) => a + b, 0);
+  const fmt = (v) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
+  const pctText = (now, then) => {
+    const pct = ((now - then) / then) * 100;
+    return `<b class="${pct >= 0 ? "ts-up" : "ts-down"}">${pct > 0 ? "+" : ""}${pct.toFixed(1)}%</b>`;
+  };
+
   function mount(root, config) {
-    let mode = config.mode || "mom";
+    const modes = config.modes || ["mom", "yoy"];
+    let mode = config.mode || modes[0];
     let selected = config.selected ?? config.values.length - 1;
     const values = config.values;
     const unit = config.unit || "";
-    const label = (i) => {
-      const m = (config.start.month + i) % 12;
-      const y = config.start.year + Math.floor((config.start.month + i) / 12);
-      return `${MONTHS[m]} ${y}`;
-    };
+    const monthOf = (i) => (config.start.month + i) % 12;
+    const yearOf = (i) => config.start.year + Math.floor((config.start.month + i) / 12);
+    const label = (i) => `${MONTHS[monthOf(i)]} ${yearOf(i)}`;
+
+    // Indices highlighted alongside the selected month.
+    function windowFor(i) {
+      if (mode === "mom") return i - 1 >= 0 ? [i - 1] : [];
+      if (mode === "yoy") return i - 12 >= 0 ? [i - 12] : [];
+      if (mode === "ytd") {
+        const from = Math.max(0, i - monthOf(i));
+        return Array.from({ length: i - from }, (_, k) => from + k);
+      }
+      return i >= 2 ? [i - 2, i - 1] : [];
+    }
 
     root.classList.add("timeseries");
     const toggle = document.createElement("div");
     toggle.className = "ts-toggle";
     toggle.setAttribute("role", "group");
-    toggle.setAttribute("aria-label", "Comparison");
+    toggle.setAttribute("aria-label", "Calculation");
     const buttons = {};
-    [["mom", "Month over month (MoM)"], ["yoy", "Year over year (YoY)"]].forEach(([key, text]) => {
+    modes.forEach((key) => {
       const b = document.createElement("button");
       b.type = "button";
-      b.textContent = text;
+      b.textContent = MODE_LABELS[key];
       b.addEventListener("click", () => { mode = key; draw(); });
       buttons[key] = b;
       toggle.append(b);
@@ -57,7 +84,8 @@
     const readout = document.createElement("div");
     readout.className = "ts-readout";
     readout.setAttribute("aria-live", "polite");
-    root.append(toggle, svg, readout);
+    if (modes.length > 1) root.append(toggle);
+    root.append(svg, readout);
 
     function draw() {
       Object.entries(buttons).forEach(([k, b]) => b.setAttribute("aria-pressed", String(k === mode)));
@@ -69,8 +97,7 @@
       const barW = Math.max(6, slot * 0.68);
       const max = Math.max(...values) * 1.1;
       const y = (v) => base - (v / max) * (base - top);
-      const back = mode === "mom" ? 1 : 12;
-      const compare = selected - back;
+      const win = windowFor(selected);
 
       // Gridlines at round values, labelled on the left.
       const raw = max / 4;
@@ -88,34 +115,66 @@
         const x = left + i * slot + (slot - barW) / 2;
         let cls = "ts-bar";
         if (i === selected) cls += " is-selected";
-        else if (i === compare) cls += " is-compare";
+        else if (win.includes(i)) cls += mode === "mom" || mode === "yoy" ? " is-compare" : " is-window";
         const bar = svgEl("rect", { x, y: y(v), width: barW, height: base - y(v), rx: 2, class: cls, tabindex: 0, "aria-label": `${label(i)}: ${v} ${unit}` });
         bar.addEventListener("click", () => { selected = i; draw(); });
         bar.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selected = i; draw(); } });
         svg.append(bar);
 
-        const m = (config.start.month + i) % 12;
         const t = svgEl("text", { x: x + barW / 2, y: base + 14, class: "ts-axis", "text-anchor": "middle" });
-        t.textContent = MONTHS[m][0];
+        t.textContent = MONTHS[monthOf(i)][0];
         svg.append(t);
-        if (m === 0 || i === 0) {
+        if (monthOf(i) === 0 || i === 0) {
           const yr = svgEl("text", { x: x, y: base + 28, class: "ts-year" });
-          yr.textContent = config.start.year + Math.floor((config.start.month + i) / 12);
+          yr.textContent = yearOf(i);
           svg.append(yr);
         }
       });
 
-      const name = mode === "mom" ? "MoM" : "YoY";
-      if (compare < 0) {
-        readout.innerHTML = `<b>${label(selected)}</b>: ${values[selected]} ${unit}. There is no ${mode === "mom" ? "previous month" : "same month last year"} in the data, so ${name} is <b>blank</b>.`;
+      if (mode === "ma3") {
+        const points = values
+          .map((_, i) => (i >= 2 ? `${left + i * slot + slot / 2},${y(sum(values.slice(i - 2, i + 1)) / 3)}` : null))
+          .filter(Boolean)
+          .join(" ");
+        svg.append(svgEl("polyline", { points, class: "ts-line" }));
+      }
+
+      const now = values[selected];
+      if (mode === "ytd") {
+        const months = [...win, selected];
+        const total = sum(months.map((i) => values[i]));
+        let html =
+          `<b>${label(months[0])} → ${label(selected)}</b> (${months.length} month${months.length > 1 ? "s" : ""})<br>` +
+          `<span class="ts-calc">${months.map((i) => values[i]).join(" + ")} = <b>${total}</b> ${unit}</span>`;
+        const lastYear = months.map((i) => i - 12);
+        if (lastYear[0] >= 0) {
+          const before = sum(lastYear.map((i) => values[i]));
+          html += `<br><span class="ts-note">Same months last year: ${before} ${unit}, so YTD vs last year is ${pctText(total, before)}</span>`;
+        }
+        readout.innerHTML = html;
         return;
       }
-      const now = values[selected], then = values[compare];
-      const pct = ((now - then) / then) * 100;
-      const sign = pct > 0 ? "+" : "";
+      if (mode === "ma3") {
+        if (selected < 2) {
+          readout.innerHTML = `<b>${label(selected)}</b>: ${now} ${unit}. A 3-month average needs three months of data, so it is <b>blank</b> here.`;
+          return;
+        }
+        const three = [selected - 2, selected - 1, selected].map((i) => values[i]);
+        readout.innerHTML =
+          `<b>${label(selected - 2)} → ${label(selected)}</b><br>` +
+          `<span class="ts-calc">(${three.join(" + ")}) ÷ 3 = <b>${fmt(sum(three) / 3)}</b> ${unit}</span>`;
+        return;
+      }
+
+      const name = mode === "mom" ? "MoM" : "YoY";
+      if (win.length === 0) {
+        readout.innerHTML = `<b>${label(selected)}</b>: ${now} ${unit}. There is no ${mode === "mom" ? "previous month" : "same month last year"} in the data, so ${name} is <b>blank</b>.`;
+        return;
+      }
+      const then = values[win[0]];
       readout.innerHTML =
-        `<b>${label(selected)}</b> vs <b>${label(compare)}</b><br>` +
-        `<span class="ts-calc">(${now} − ${then}) ÷ ${then} = <b class="${pct >= 0 ? "ts-up" : "ts-down"}">${sign}${pct.toFixed(1)}%</b></span>`;
+        `<b>${label(selected)}</b> vs <b>${label(win[0])}</b><br>` +
+        `<span class="ts-calc">(${now} − ${then}) ÷ ${then} = ${pctText(now, then)}</span>`;
     }
 
     draw();

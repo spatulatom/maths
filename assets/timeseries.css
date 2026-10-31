@@ -22,6 +22,9 @@
 .ts-bar:focus-visible { outline: none; stroke: var(--accent); stroke-width: 2; }
 .ts-bar.is-selected { fill: var(--accent); opacity: 1; }
 .ts-bar.is-compare { fill: var(--text); opacity: 0.85; }
+.ts-bar.is-window { fill: var(--accent); opacity: 0.4; }
+.ts-line { fill: none; stroke: var(--text); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; pointer-events: none; }
+.ts-note { font-size: 0.88rem; color: var(--muted); }
 
 .ts-readout { font-size: 0.95rem; line-height: 1.5; }
 .ts-calc { font-family: var(--mono); font-size: 0.88rem; }

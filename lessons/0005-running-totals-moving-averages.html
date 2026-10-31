@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Which Months Count?</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/timeseries.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0005 · Stage 4: Growth over time</p>
+<h1>Which months count?</h1>
+<p class="subtitle">Year-to-date totals and moving averages: one window that grows, one that slides.</p>
+
+<div class="meta">
+  <span>⏱ 15–20 minutes, works on a phone</span>
+  <span>✎ Mental math is enough</span>
+  <span>🎯 Win: calculate YTD and a 3-month average, and know when to use each</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Running total</dt><dd>A sum that keeps adding each new period to everything before it.</dd>
+    <dt>YTD</dt><dd>Year to date: the running total since 1 January. It starts again from zero every new year.</dd>
+    <dt>Moving average</dt><dd>The mean (the everyday average) of the last few periods, recalculated each period. Also called a rolling average.</dd>
+    <dt>Window</dt><dd>The set of periods that go into one calculation.</dd>
+    <dt>Noise</dt><dd>Random ups and downs that don't mean anything, like a rainy week.</dd>
+  </dl>
+</div>
+
+<h2>The only question: which months go in?</h2>
+
+<p>In Lesson 0004 you compared <em>one</em> month with <em>one</em> other month. Today each calculation uses a <strong>group</strong> of months, called a window.</p>
+
+<p>There are two common windows. The maths inside each is something you already know: a sum, or a mean.</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th></th><th>The window…</th><th>Inside it you…</th><th>Answers…</th></tr></thead>
+  <tbody>
+    <tr><td><strong>YTD</strong></td><td>grows from January, resets each year</td><td>add</td><td>"How much so far this year?"</td></tr>
+    <tr><td><strong>3-month moving average</strong></td><td>always the last 3 months, slides forward</td><td>take the mean</td><td>"What's the real trend, ignoring the wobbles?"</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Year to date: a window that grows</h2>
+
+<p>The same ice cream shop as last lesson (example figures, k€). September 2026 is selected. The lighter bars are the months inside the window. Tap other months and watch the window grow, then jump back to one bar in January.</p>
+
+<div id="ytd"></div>
+
+<p>Look at the grey note under the sum. The fair way to judge a YTD figure is against the <strong>same months last year</strong>. Jan–Sep 2026 compared with Jan–Sep 2025 is a YoY comparison of two windows, so the seasons cancel out just like in Lesson 0004.</p>
+
+<div class="callout">
+  <span class="label">The YTD trap</span>
+  <p>In September, never compare YTD with <em>last year's full total</em>. That pits 9 months against 12, so this year always looks behind until December.</p>
+</div>
+
+<h2>Moving average: a window that slides</h2>
+
+<p>A different business: an online shop's monthly orders. The bars zigzag up and down, which makes it hard to see if things are improving. The dark line is the 3-month moving average.</p>
+
+<div id="ma"></div>
+
+<p>Each point on the line is the mean of that month and the two before it. Single good or bad months get averaged with their neighbours, so the noise shrinks and the trend shows. Smoothing like this is one of the oldest tools for finding the trend in a time series (<a href="https://otexts.com/fpp2/moving-averages.html">Hyndman &amp; Athanasopoulos, <em>Forecasting: Principles and Practice</em>, §6.2</a>).</p>
+
+<div class="callout">
+  <span class="label">The price of smoothing</span>
+  <p>A moving average reacts <strong>late</strong>. If orders suddenly crash, the line only drops partly at first, because two older months still hold it up. Use it to see trends, not to catch sudden events.</p>
+</div>
+
+<h3>Try these in the charts</h3>
+<ol class="steps">
+  <li>In the YTD chart, tap <strong>January 2026</strong>. How many months are in the window?</li>
+  <li>In the moving-average chart, tap <strong>February 2025</strong>. Why is it blank?</li>
+  <li>Is the line going up over the 18 months, even though many single months dropped?</li>
+</ol>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> a running total in C2 is <code>=SUM($B$2:B2)</code>, copied down. The <code>$</code> pins the start, so the window grows. A 3-month moving average in row 4 is <code>=AVERAGE(B2:B4)</code>, copied down. With no <code>$</code>, both ends move, so the window slides.</p>
+
+<p><strong>In Power BI (preview, nothing to memorise):</strong> DAX has a ready-made <code>TOTALYTD</code> function, which means "add up from the start of the year to this date" (<a href="https://learn.microsoft.com/en-us/dax/totalytd-function-dax">DAX docs</a>). Power BI's <a href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-quick-measures">quick measures</a> can build both a running total and a rolling average for you without typing any DAX.</p>
+
+<h2>Practice</h2>
+
+<p>Do the calculations in your head or on paper. The last two questions revisit earlier lessons.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p>Read the first part of <a href="https://otexts.com/fpp2/moving-averages.html">§6.2 "Moving averages"</a> in <em>Forecasting: Principles and Practice</em>, a free textbook by two leading forecasting researchers. Stop at "Moving averages of moving averages". Their example puts the window in the <em>middle</em> (centred), while business reports usually use the last few months (trailing). The idea is the same.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering why 3 months and not 12, or what "fiscal year" does to YTD? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0004-mom-vs-yoy.html">← 0004 Compared to when?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+</div>
+
+</main>
+
+<script src="../assets/timeseries.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+TimeSeries.mount(document.getElementById("ytd"), {
+  start: { year: 2025, month: 0 },
+  values: [20, 22, 30, 40, 55, 70, 80, 75, 50, 35, 25, 30,
+           24, 25, 33, 46, 60, 77, 92, 84, 56],
+  unit: "k€",
+  modes: ["ytd"],
+  selected: 20
+});
+
+TimeSeries.mount(document.getElementById("ma"), {
+  start: { year: 2025, month: 0 },
+  values: [120, 95, 140, 110, 150, 125, 160, 130, 175, 145, 185, 160,
+           195, 150, 205, 170, 215, 185],
+  unit: "orders",
+  modes: ["ma3"],
+  selected: 17
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0005-ytd-moving-average",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "YTD",
+      q: "<p>Sales were <strong>10</strong> in January, <strong>20</strong> in February, and <strong>30</strong> in March. What is the YTD figure at the end of March?</p>",
+      options: ["60", "30", "20", "50"],
+      answer: 0,
+      explain: "YTD adds every month since January: 10 + 20 + 30 = 60. 30 is just March on its own, and 20 is the mean."
+    },
+    {
+      topic: "YTD",
+      q: "<p>YTD at the end of December 2025 was <strong>500</strong>. January 2026 sales were <strong>40</strong>. What is YTD for January 2026?</p>",
+      options: ["540", "40", "460", "500"],
+      answer: 1,
+      explain: "YTD resets on 1 January, so the window holds only January 2026: 40. 540 would be a running total that never resets."
+    },
+    {
+      topic: "Moving average",
+      q: "<p>Sales: April <strong>30</strong>, May <strong>60</strong>, June <strong>30</strong>. What is the 3-month moving average for June?</p>",
+      options: ["30", "45", "40", "60"],
+      answer: 2,
+      explain: "Mean of the last three months: (30 + 60 + 30) ÷ 3 = 120 ÷ 3 = 40."
+    },
+    {
+      topic: "Moving average",
+      q: "<p>Why would you add a moving average line to a chart of monthly orders?</p>",
+      options: ["It makes all numbers bigger", "It fixes errors in data", "It predicts next month exactly", "It smooths out random noise"],
+      answer: 3,
+      explain: "Averaging each month with its neighbours shrinks the random ups and downs, so the underlying trend is easier to see. It can't fix bad data or predict the future."
+    },
+    {
+      topic: "YTD",
+      q: "<p>In September a manager says: \"We're behind! YTD is <strong>497</strong>, but last year we sold <strong>532</strong>.\" The 532 is last year's full total. What's wrong?</p>",
+      options: ["The totals were added wrongly", "Nine months compared with twelve", "YTD should never be compared", "2025 was a leap year"],
+      answer: 1,
+      explain: "Compare like with like: Jan–Sep this year vs Jan–Sep last year. In the shop data that's 497 vs 442, which is about 12% ahead, not behind."
+    },
+    {
+      topic: "Excel",
+      q: "<p>In C2 you type <code>=SUM($B$2:B2)</code> and copy it down. What does C5 calculate?</p>",
+      options: ["Just the value in B5", "Average of B2 to B5", "Sum of B5 to B8", "Sum of B2 to B5"],
+      answer: 3,
+      explain: "The $ pins B2 as the start. The end moves down with the row, so C5 becomes =SUM($B$2:B5): a running total of everything so far."
+    },
+    {
+      topic: "Review: MoM",
+      q: "<p>Sales were <strong>50</strong> in March and <strong>60</strong> in April. What is the MoM change for April?</p>",
+      options: ["+17%", "+10%", "+20%", "−17%"],
+      answer: 2,
+      explain: "(60 − 50) ÷ 50 = 10 ÷ 50 = +20%. +17% comes from dividing by the new value (10 ÷ 60), the classic trap."
+    },
+    {
+      topic: "Review: median",
+      q: "<p>Five salaries, in thousands: <code>3, 3, 4, 4, 30</code>. Which number best describes a typical salary?</p>",
+      options: ["The median, which is 4", "The mean, which is 8.8", "The maximum, which is 30", "The minimum, which is 3"],
+      answer: 0,
+      explain: "The one salary of 30 pulls the mean up to 8.8, higher than four of the five people earn. The median (4) sits in the middle and ignores how extreme the outlier is."
+    }
+  ]
+});
+</script>
+</body>
+</html>
