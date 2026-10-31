@@ -15,7 +15,7 @@
 ## Working notes
 - PL-300 study guide (skills as of 2026-04-20), math-relevant bullets to tie lessons to: "Evaluate data, including data statistics" (profiling), "Group and aggregate rows", "Use basic statistical functions", "Implement time intelligence measures", "Create semi-additive measures", "Use grouping, binning, and clustering", "Use reference lines, error bars, and forecasting", "Detect outliers and anomalies". No M-code writing, Python, R, or SQL in the skills list.
 - Practice tool: Excel first (matches Coursera course 1), with optional JS/Python equivalents since the user knows JS.
-- Diagnostic done (LR 0002). 0002 median: 8/8 (LR 0003). 0003 weighted averages written. Then stage 4 growth over time (MoM/YoY, running totals).
+- Diagnostic done (LR 0002). 0002 median: 8/8 (LR 0003). 0003 weighted: topic lines 5/5 etc., but headline pasted as 6/8 (asked user to clarify; LR 0005). 0004 MoM/YoY: 8/8 (LR 0006). Next: stage 4 running totals (YTD) and moving averages, reusing timeseries.js.
 - Could later offer a short lesson on the mode (user may ask) and on Simpson's paradox (a natural follow-on to weighted means, using weightmix.js).
 - Each lesson ends with 1–2 spaced review questions from earlier lessons.
 - Glossary lives at reference/glossary.html. Add terms only after quiz evidence. Pending: median (after 0002 results).

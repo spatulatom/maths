@@ -23,7 +23,11 @@
   border: 1px solid var(--rule); border-radius: 4px;
   padding: 0.55rem 0.7rem; cursor: pointer; text-align: center;
   transition: border-color 0.15s, background 0.15s;
+  min-width: 0; overflow-wrap: anywhere;
 }
+/* Long options (e.g. Excel formulas) get one full-width row each. */
+.quiz-options.is-long { grid-template-columns: 1fr; }
+.quiz-options.is-long .quiz-option { text-align: left; }
 .quiz-option:hover:not(:disabled) { border-color: var(--accent); }
 .quiz-option:disabled, .quiz-unsure:disabled { cursor: default; }
 .quiz-option.is-correct { background: var(--good-soft); border-color: var(--good); color: var(--good); font-weight: 600; }

@@ -55,7 +55,7 @@
       const card = el("section", { class: "quiz-q" }, [
         el("div", { class: "quiz-num" }, [`Question ${qi + 1} of ${config.questions.length} · ${item.topic}`]),
         el("div", { class: "quiz-prompt", html: item.q }),
-        el("div", { class: "quiz-options" }, buttons),
+        el("div", { class: item.options.some((o) => o.length > 18) ? "quiz-options is-long" : "quiz-options" }, buttons),
         ...(unsure ? [el("div", { class: "quiz-actions" }, [unsure])] : []),
         feedback,
       ]);

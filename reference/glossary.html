@@ -49,6 +49,24 @@
   <dt>Skewed data</dt>
   <dd>Data where most values bunch together and a few stretch far out to one side, pulling the mean away from the median.</dd>
   <dd class="avoid">Avoid: "lopsided" in reports (fine for intuition).</dd>
+
+  <dt>Weighted mean</dt>
+  <dd>A mean where each value counts in proportion to its weight: <code>sum of (weight × value) ÷ sum of weights</code>. The <em>value</em> is the thing being averaged (its unit is the answer's unit); the <em>weight</em> says how many or how much. Excel <code>SUMPRODUCT(weights, values) / SUM(weights)</code>.</dd>
+  <dd class="avoid">Avoid: averaging averages directly. Turn averages back into totals, add the totals, then divide.</dd>
+</dl>
+
+<h2>Growth over time</h2>
+<dl>
+  <dt>MoM (month over month)</dt>
+  <dd>Percent change from the previous month: <code>(this month − last month) ÷ last month</code>.</dd>
+  <dd class="avoid">Avoid: reading a MoM drop as bad news in seasonal data without checking YoY.</dd>
+
+  <dt>YoY (year over year)</dt>
+  <dd>Percent change from the same period one year earlier. It compares like with like, so the season cancels out.</dd>
+
+  <dt>Seasonality</dt>
+  <dd>A pattern that repeats at the same time every year (ice cream peaks in summer, retail in December).</dd>
+  <dd class="avoid">Avoid: "trend" for a seasonal swing. A trend is the longer-run direction underneath.</dd>
 </dl>
 
 <p class="small"><a href="roadmap.html">← Roadmap</a></p>
