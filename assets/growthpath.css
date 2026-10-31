@@ -1,0 +1,32 @@
+/* Styles for assets/growthpath.js. Relies on tokens from style.css. */
+
+.growthpath {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 0.9rem 1rem 1rem; margin: 1.4rem 0;
+}
+.gp-inputs { display: flex; flex-wrap: wrap; gap: 0.5rem 0.8rem; }
+.gp-inputs label { display: flex; flex-direction: column; font-family: var(--sans); font-size: 0.75rem; color: var(--muted); }
+.gp-inputs input {
+  width: 4.5rem; font-family: var(--mono); font-size: 0.95rem; color: var(--text);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: 0.3rem 0.4rem;
+}
+.gp-inputs input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.gp-svg { width: 100%; height: auto; display: block; margin: 0.6rem 0 0.2rem; }
+.gp-grid { stroke: var(--rule); stroke-width: 1; }
+.gp-axis { fill: var(--muted); font-family: var(--sans); font-size: 11px; }
+.gp-value { fill: var(--text); font-family: var(--sans); font-size: 11px; font-weight: 600; }
+.gp-change { font-family: var(--sans); font-size: 11px; }
+.gp-up { fill: var(--good); color: var(--good); }
+.gp-down { fill: var(--bad); color: var(--bad); }
+.gp-bar { fill: var(--muted); opacity: 0.35; }
+.gp-line { fill: none; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.gp-naive { stroke: var(--muted); stroke-dasharray: 6 5; }
+.gp-cagr { stroke: var(--accent); }
+
+.gp-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-family: var(--sans); font-size: 0.78rem; color: var(--muted); margin-bottom: 0.6rem; }
+.gp-key { display: inline-block; width: 1.4rem; height: 0; vertical-align: middle; margin-right: 0.4rem; border-top: 2.5px solid var(--accent); }
+.gp-key-naive { border-top: 2.5px dashed var(--muted); }
+
+.gp-readout { font-size: 0.95rem; line-height: 1.55; }
+.gp-calc { font-size: 0.9rem; }

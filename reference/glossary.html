@@ -67,6 +67,17 @@
   <dt>Seasonality</dt>
   <dd>A pattern that repeats at the same time every year (ice cream peaks in summer, retail in December).</dd>
   <dd class="avoid">Avoid: "trend" for a seasonal swing. A trend is the longer-run direction underneath.</dd>
+
+  <dt>Running total</dt>
+  <dd>A sum that adds each new period to everything before it. Excel: <code>=SUM($B$2:B2)</code> copied down.</dd>
+
+  <dt>YTD (year to date)</dt>
+  <dd>The running total since the start of the year. It resets to zero every January.</dd>
+  <dd class="avoid">Avoid: comparing YTD with last year's full total. Compare it with the same months last year.</dd>
+
+  <dt>Moving average</dt>
+  <dd>The mean of the last few periods (for example 3 months), recalculated each period. It smooths out noise so the trend shows. Also called a rolling average.</dd>
+  <dd class="avoid">Avoid: using it to spot sudden events. It reacts late.</dd>
 </dl>
 
 <p class="small"><a href="roadmap.html">← Roadmap</a></p>
