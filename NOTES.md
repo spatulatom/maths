@@ -7,15 +7,14 @@
 - Global formatting rules (CLAUDE.md): short paragraphs, real headers, blank lines. Apply the same readability to lessons.
 - Wants technical words explained in plain language (asked about "outliers" etc. in lesson 0002). Every lesson from 0003 on gets a short "New words" box near the top.
 - DAX is new to the user (LR 0004). Show DAX only as a labelled "preview", always translated into plain words or the Excel equivalent. No DAX exercises; the Coursera course teaches it.
-- Sometimes studies on the phone ("on the go"). Local HTML can't open there, so publish lessons as private Artifacts via `node tools/bundle.mjs <lesson> <scratchpad out>`. Keep lessons phone-friendly.
-  - 0003: https://claude.ai/artifact/MAgtRooLbeG1j9hYWQRVv2
-  - 0004: https://claude.ai/artifact/BLhBXxtgaWM2m7d1P6yM4n
+- 2026-10-31: user said lessons do NOT need mirroring as Artifacts; local files only. Don't publish unless asked. Keep lessons phone-friendly anyway.
+  - Old private copies (outdated, quiz Q6 layout bug in 0003): https://claude.ai/artifact/MAgtRooLbeG1j9hYWQRVv2 (0003), https://claude.ai/artifact/BLhBXxtgaWM2m7d1P6yM4n (0004). `tools/bundle.mjs` remains if publishing is ever wanted.
 - Language: English (no answer on Polish terms yet; offer once lessons start if useful).
 
 ## Working notes
 - PL-300 study guide (skills as of 2026-04-20), math-relevant bullets to tie lessons to: "Evaluate data, including data statistics" (profiling), "Group and aggregate rows", "Use basic statistical functions", "Implement time intelligence measures", "Create semi-additive measures", "Use grouping, binning, and clustering", "Use reference lines, error bars, and forecasting", "Detect outliers and anomalies". No M-code writing, Python, R, or SQL in the skills list.
 - Practice tool: Excel first (matches Coursera course 1), with optional JS/Python equivalents since the user knows JS.
-- Diagnostic done (LR 0002). 0002 median: 8/8 (LR 0003). 0003 weighted: topic lines 5/5 etc., but headline pasted as 6/8 (asked user to clarify; LR 0005). 0004 MoM/YoY: 8/8 (LR 0006). Next: stage 4 running totals (YTD) and moving averages, reusing timeseries.js.
+- Diagnostic done (LR 0002). 0002 median: 8/8 (LR 0003). 0003 weighted: 8/8 (LR 0005). 0004 MoM/YoY: 8/8 (LR 0006). Next: stage 4 running totals (YTD) and moving averages, reusing timeseries.js.
 - Could later offer a short lesson on the mode (user may ask) and on Simpson's paradox (a natural follow-on to weighted means, using weightmix.js).
 - Each lesson ends with 1–2 spaced review questions from earlier lessons.
 - Glossary lives at reference/glossary.html. Add terms only after quiz evidence. Pending: median (after 0002 results).

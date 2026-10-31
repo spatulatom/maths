@@ -4,4 +4,4 @@ Lesson 0004 quiz scored 8/8: MoM and YoY calculations, choosing YoY for seasonal
 
 **Evidence**: pasted quiz results, 2026-10-31. Done on the phone "on the go", together with lesson 0003.
 
-**Implications**: MoM, YoY, and seasonality are in the glossary. Stage 4 continues: running totals (YTD) and moving averages next, reusing assets/timeseries.js. Phone publishing works well; publish every lesson as an artifact.
+**Implications**: MoM, YoY, and seasonality are in the glossary. Stage 4 continues: running totals (YTD) and moving averages next, reusing assets/timeseries.js. The user later said lessons don't need publishing as Artifacts; local files are enough.
