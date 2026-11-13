@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Give or Take</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/sampler.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0014 · Stage 7: Uncertainty</p>
+<h1>Give or take</h1>
+<p class="subtitle">A sample gives you one number. A confidence interval adds the honest part: "…give or take this much".</p>
+
+<div class="meta">
+  <span>⏱ 20–30 minutes, works on a phone</span>
+  <span>✎ Light arithmetic: one square root, one multiply</span>
+  <span>🎯 Win: read and build a rough 95% interval, and know when "52%" isn't really a majority</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Estimate</dt><dd>Your best single guess from a sample, such as the sample's average.</dd>
+    <dt>Margin of error</dt><dd>The "give or take" part: how far the truth could plausibly be from the estimate.</dd>
+    <dt>Confidence interval</dt><dd>Estimate ± margin of error, written as a range: "£37 to £47".</dd>
+    <dt>Standard error (SE)</dt><dd>How much the estimate typically wobbles from sample to sample. For an average: SD ÷ √n.</dd>
+    <dt>Error bars</dt><dd>Lines on a chart showing an interval around each value.</dd>
+  </dl>
+</div>
+
+<h2>One sample, one number, plus a range</h2>
+
+<p>In <a href="0013-sampling-bias.html">Lesson 0013</a>, every sample landed a bit off the truth. In real life you get <strong>one</strong> sample and can't see the truth. A confidence interval puts a range around your one answer that will usually contain the truth.</p>
+
+<div class="callout">
+  <p style="font-size:1.1rem;margin:0"><strong>95% interval ≈ estimate ± 2 × SE</strong>, &nbsp; where for an average <strong>SE = SD ÷ √n</strong></p>
+</div>
+
+<p>The "2" comes from the 68–95–99.7 rule in <a href="0008-standard-deviation.html">Lesson 0008</a>. Sample averages form a bell shape around the truth, so about 95% of them land within 2 SE of it. (Tools use 1.96, or a slightly bigger number for small samples. 2 is close enough to read results.)</p>
+
+<h3>A worked example</h3>
+
+<ol class="steps">
+  <li>You survey <strong>100</strong> customers. Their average order is <strong>£42</strong>, with SD <strong>£25</strong>.</li>
+  <li>SE = 25 ÷ √100 = 25 ÷ 10 = <strong>£2.50</strong>.</li>
+  <li>Margin = 2 × 2.50 = <strong>£5</strong>.</li>
+  <li>95% interval: 42 − 5 to 42 + 5 = <strong>£37 to £47</strong>.</li>
+</ol>
+
+<p>In a report: "Average order value is about £42 (95% CI: £37–£47)."</p>
+
+<h2>What "95%" really means</h2>
+
+<p>It's about the <em>method</em>, not about this one interval. If you repeated the survey many times and built an interval each time, about 95% of those intervals would contain the truth. About 1 in 20 would miss.</p>
+
+<p>For everyday speech, "we're fairly confident the true average is between £37 and £47" is fine.</p>
+
+<h2>Try it</h2>
+
+<p>Same 5,000 customers as last lesson. Now each sample draws its interval as a line. Red ones missed the true average.</p>
+
+<div id="sm"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>At size <strong>50</strong>, press <strong>Draw 20 samples</strong> a few times. Roughly what share of intervals catch the green line? Is it near 95%?</li>
+  <li>Switch to <strong>1000</strong>. The intervals get much shorter. Do they still catch the truth about 95% of the time?</li>
+  <li>Size <strong>10</strong>: wide intervals, and a few more misses than 5%. (Small samples from skewed data are where the "2 × SE" shortcut gets rough.)</li>
+  <li>Tick <strong>Biased survey</strong> at 1000. Short, confident-looking intervals that almost all miss. An interval only covers wobble, never bias.</li>
+</ol>
+
+<h2>Percentages: the 1 ÷ √n shortcut</h2>
+
+<p>For a survey percentage, a handy worst-case margin is <strong>1 ÷ √n</strong>. With 1,000 people: 1 ÷ √1000 ≈ 0.03, so about <strong>± 3 points</strong>. That's why polls of 1,000 people quote "± 3%".</p>
+
+<p>So "52% prefer the new design" from 1,000 people means somewhere around 49% to 55%. That range includes 50%, so you can't honestly call it a majority.</p>
+
+<h2>What makes an interval wider</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Change</th><th>Interval</th><th>Why</th></tr>
+  <tr><td>Bigger sample</td><td>Narrower</td><td>SE divides by √n</td></tr>
+  <tr><td>More spread in the data</td><td>Wider</td><td>SE multiplies by SD</td></tr>
+  <tr><td>99% instead of 95%</td><td>Wider</td><td>To be surer of catching the truth, you need a bigger net</td></tr>
+</table>
+</div>
+
+<h2>Comparing two intervals</h2>
+
+<p>Store A's average basket: £40–£48. Store B's: £70–£80. The intervals don't overlap, so B really is higher. If they overlap a lot, such as £40–£48 and £44–£52, you can't claim a difference from this data. For anything in between, use a proper test, which is the next lesson.</p>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> <code>=CONFIDENCE.T(0.05, STDEV.S(B2:B101), COUNT(B2:B101))</code> returns the <strong>margin</strong>, not the interval (<a href="https://support.microsoft.com/office/confidence-t-function-e8eca395-6c3a-4ba9-9003-79ccc61d3c53">Microsoft Support: CONFIDENCE.T</a>). 0.05 means 95% confidence. Subtract it from and add it to the average to get the two ends.</p>
+
+<p><strong>In Power BI:</strong> the PL-300 study guide lists "error bars" among the analytics features (<a href="https://learn.microsoft.com/certifications/resources/study-guides/pl-300">Microsoft Learn: PL-300 study guide</a>). On line and bar charts, you add them from the Analytics pane, using measures for the upper and lower bound. Power BI draws them; you supply the interval.</p>
+
+<p><strong>In interviews:</strong> "Version B's survey score is 52% vs 50% for A, from 1,000 people each. Did B win?" A strong answer: "Each has a margin of about ± 3 points, so the ranges overlap heavily. I wouldn't call it yet. I'd run a proper significance test or collect more responses."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF), Chapter 5, section 5.2 "Confidence intervals for a proportion": read "Capturing the population parameter" and "Interpreting confidence intervals" (about 5 pages). Skip the formulas you don't need.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering where 1.96 comes from, or why the interval is about the method and not this one interval? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0013-sampling-bias.html">← 0013 Who did you ask?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0015-ab-tests-p-values.html">Next: 0015 Did it really work? →</a>
+</div>
+
+</main>
+
+<script src="../assets/sampler.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+Sampler.mount(document.getElementById("sm"), { sizes: [10, 50, 200, 1000], size: 50, showCI: true, allowBias: true });
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0014-confidence",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Reading a CI",
+      q: "<p>A report says: average order <strong>£42</strong> (95% CI: <strong>£37–£47</strong>). What's the best reading?</p>",
+      options: ["95% of orders are £37–£47", "Every order is about £42", "The sample had 95 customers", "True average is likely £37–£47"],
+      answer: 3,
+      explain: "The interval is about the <em>average</em>, not individual orders. Individual orders spread much wider."
+    },
+    {
+      topic: "Building a CI",
+      q: "<p>Sample of <strong>100</strong>, average <strong>50</strong>, SD <strong>20</strong>. Rough 95% interval?</p>",
+      options: ["30 to 70", "46 to 54", "48 to 52", "10 to 90"],
+      answer: 1,
+      explain: "SE = 20 ÷ √100 = 2. Margin = 2 × 2 = 4. So 50 − 4 to 50 + 4 = 46 to 54. (30 to 70 is ±1 SD of individual values, not the interval for the average.)"
+    },
+    {
+      topic: "Percentages",
+      q: "<p>A survey of <strong>1,000</strong> people finds <strong>52%</strong> prefer the new design. Can you say most people prefer it?</p>",
+      options: ["Not really; ± 3 points includes 50%", "Yes, 1,000 is a big sample", "No, surveys are never useful", "Yes, 52% is over half"],
+      answer: 0,
+      explain: "The margin is about 1 ÷ √1000 ≈ 3 points, so the truth could be 49%–55%. That range includes 50%."
+    },
+    {
+      topic: "Width",
+      q: "<p>Which change makes a confidence interval <strong>narrower</strong>?</p>",
+      options: ["Asking for 99% confidence", "More spread in the data", "A bigger sample", "Rounding the average"],
+      answer: 2,
+      explain: "A bigger sample shrinks SE = SD ÷ √n. Higher confidence and more spread both make it wider."
+    },
+    {
+      topic: "Meaning of 95%",
+      q: "<p>You build <strong>20</strong> separate 95% intervals from 20 random samples. How many would you expect to <em>miss</em> the truth?</p>",
+      options: ["None of them", "About 5", "About 19", "About 1"],
+      answer: 3,
+      explain: "95% catch it, so about 5% miss: 5% of 20 = 1. That's what you saw with the red lines."
+    },
+    {
+      topic: "Excel",
+      q: "<p>What does <code>=CONFIDENCE.T(0.05, STDEV.S(B2:B101), 100)</code> return?</p>",
+      options: ["The sample's average", "The lower end of the interval", "The margin to add and subtract", "The chance the mean is right"],
+      answer: 2,
+      explain: "CONFIDENCE.T gives the margin (the ± part). The interval is average − margin to average + margin."
+    },
+    {
+      topic: "Comparing",
+      q: "<p>Store A's average basket: <strong>£40–£48</strong>. Store B's: <strong>£70–£80</strong> (both 95% CIs). What can you say?</p>",
+      options: ["B really is higher", "They are probably the same", "A is probably higher", "Nothing; intervals can't be compared"],
+      answer: 0,
+      explain: "The intervals don't overlap at all, so the difference is much bigger than the wobble. B's average is clearly higher."
+    },
+    {
+      topic: "Review: bias",
+      q: "<p>A survey is sent only to <strong>app users</strong>. To make it more accurate for all customers, what helps?</p>",
+      options: ["Double the number of app users asked", "Include customers who don't use the app", "Report a 99% interval instead", "Use the median instead of the mean"],
+      answer: 1,
+      explain: "It's selection bias. More of the same people only makes the wrong answer more precise. Fix who gets asked."
+    }
+  ]
+});
+</script>
+</body>
+</html>

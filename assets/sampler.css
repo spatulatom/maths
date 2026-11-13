@@ -1,0 +1,35 @@
+/* Styles for assets/sampler.js. Relies on tokens from style.css. */
+
+.sampler {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0; font-family: var(--sans); font-size: 0.9rem;
+}
+.sm-controls { display: flex; flex-direction: column; gap: 0.5rem; }
+.sm-sizes, .sm-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.sm-label { color: var(--muted); margin-right: 0.3rem; }
+.sampler button {
+  font: inherit; font-size: 0.85rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 0.35rem 0.8rem; cursor: pointer;
+}
+.sampler button:hover { border-color: var(--accent); }
+.sampler button.is-active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.sampler button.sm-tool { border-style: dashed; color: var(--muted); }
+.sampler button:focus-visible, .sm-bias input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sm-bias { display: flex; gap: 0.4rem; align-items: center; }
+
+.sm-svg { width: 100%; height: auto; display: block; margin: 0.6rem 0 0.2rem; }
+.sm-plot { fill: var(--bg); stroke: var(--rule); }
+.sm-grid { stroke: var(--rule); }
+.sm-tick { fill: var(--muted); font-family: var(--sans); font-size: 12px; }
+.sm-axis { fill: var(--muted); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+.sm-dot { fill: var(--accent); }
+.sm-dot.is-miss { fill: var(--bad); }
+.sm-ci { stroke: var(--accent); stroke-width: 2.5; opacity: 0.55; }
+.sm-ci.is-miss { stroke: var(--bad); opacity: 0.9; }
+.sm-true { stroke: var(--good); stroke-width: 2.5; }
+.sm-true-label { fill: var(--good); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+
+.sm-out { margin-top: 0.4rem; }
+.sm-out p { margin: 0 0 0.4rem; }
+
+@media print { .sm-controls { display: none; } }

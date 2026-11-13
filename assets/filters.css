@@ -1,0 +1,29 @@
+/* Styles for assets/filters.js. Relies on tokens from style.css. */
+
+.filters {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0; font-family: var(--sans); font-size: 0.88rem;
+}
+.fl-conds { display: flex; flex-direction: column; gap: 0.35rem; }
+.fl-cond { display: flex; gap: 0.6rem; align-items: center; }
+.fl-cond label { display: flex; gap: 0.35rem; align-items: center; cursor: pointer; }
+.fl-combine { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-top: 0.7rem; }
+.fl-label { color: var(--muted); margin-right: 0.2rem; }
+.filters button {
+  font: inherit; font-size: 0.8rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 0.25rem 0.75rem; cursor: pointer;
+}
+.filters button:hover { border-color: var(--accent); }
+.filters button.is-active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.filters button.fl-not { border-style: dashed; color: var(--muted); min-width: 3.4rem; }
+.filters button.fl-not.is-active { border-style: solid; color: var(--bad); border-color: var(--bad); background: var(--bad-soft); }
+.filters button:focus-visible, .fl-cond input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.fl-expr { margin: 0.8rem 0 0.3rem; line-height: 1.9; }
+.fl-out { margin: 0 0 0.4rem; }
+.filters table { border-collapse: collapse; width: 100%; font-size: 0.84rem; margin: 0; }
+.filters th, .filters td { border: 1px solid var(--rule); padding: 0.2rem 0.5rem; text-align: left; white-space: nowrap; }
+.filters th { background: var(--bg); }
+.filters tr.is-kept td { background: var(--good-soft); }
+.filters tr.is-dropped td { color: var(--muted); opacity: 0.6; }
+.fl-blank { font-style: italic; color: var(--muted); }

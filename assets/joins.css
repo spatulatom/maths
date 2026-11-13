@@ -1,0 +1,38 @@
+/* Styles for assets/joins.js. Relies on tokens from style.css. */
+
+.joins {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0; font-family: var(--sans); font-size: 0.86rem;
+}
+.jn-bar { display: flex; flex-direction: column; gap: 0.5rem; }
+.jn-presets, .jn-kinds { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.joins button {
+  font: inherit; font-size: 0.82rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 0.3rem 0.75rem; cursor: pointer;
+}
+.joins button:hover { border-color: var(--accent); }
+.joins button.is-active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.jn-presets button { border-style: dashed; }
+.joins button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.jn-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+@media (max-width: 560px) { .jn-sources { grid-template-columns: 1fr; } }
+.jn-title { font-weight: 600; margin: 0 0 0.3rem; }
+.joins table { border-collapse: collapse; width: 100%; font-size: 0.84rem; margin: 0; }
+.joins th, .joins td { border: 1px solid var(--rule); padding: 0.2rem 0.45rem; text-align: left; white-space: nowrap; }
+.joins th { background: var(--bg); }
+.jn-src tr.is-orphan td { color: var(--muted); font-style: italic; }
+.jn-src tr.is-dup td { background: var(--bad-soft); }
+.jn-null { color: var(--muted); font-style: italic; }
+
+.jn-mid { display: flex; gap: 0.8rem; align-items: center; margin: 0.8rem 0; }
+.jn-venn { width: 200px; max-width: 45%; flex: none; height: auto; }
+.jn-desc { margin: 0; }
+.jn-on { fill: var(--accent); fill-opacity: 0.45; }
+.jn-off { fill: var(--bg); }
+.jn-edge { fill: none; stroke: var(--text); stroke-width: 1.5; }
+.jn-vlabel { fill: var(--text); font-family: var(--sans); font-size: 13px; font-weight: 600; }
+
+.jn-result tr.jn-z-l td, .jn-result tr.jn-z-r td { background: var(--bg); }
+.jn-result th.jn-r { color: var(--accent); }
+.jn-bad { color: var(--bad); }

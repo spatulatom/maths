@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course Glossary</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  dl { margin: 0; }
+  dt { font-weight: 600; margin-top: 1.4rem; }
+  dd { margin: 0.2rem 0 0; }
+  .avoid { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<main>
+
+<p class="kicker">Reference · Math for Data Analysis</p>
+<h1>Glossary</h1>
+<p class="subtitle">The words this course uses, and only terms you've already shown you can use.</p>
+
+<p>Each lesson sticks to these words. Terms are added once a quiz shows you've got them, not before.</p>
+
+<h2>Percentages</h2>
+<dl>
+  <dt>Percent change</dt>
+  <dd>How much a value moved, relative to where it <em>started</em>: <code>(new − old) ÷ old</code>.</dd>
+  <dd class="avoid">Avoid: "growth" when the direction is unclear; never divide by the new value.</dd>
+
+  <dt>Percentage point</dt>
+  <dd>The plain difference between two percentages: 4% → 5% is +1 percentage point (and a +25% percent change).</dd>
+  <dd class="avoid">Avoid: "went up 1%" when you mean one percentage point.</dd>
+</dl>
+
+<h2>Averages</h2>
+<dl>
+  <dt>Mean</dt>
+  <dd>The sum of the values divided by how many there are. Excel <code>AVERAGE</code>.</dd>
+  <dd class="avoid">Avoid: plain "average" in this course. Say mean, median, or weighted average, since "average" alone is ambiguous.</dd>
+  <dd class="avoid">Why the odd name: from Latin <em>medianus</em>, "middle". It has nothing to do with "mean" as in unkind.</dd>
+
+  <dt>Median</dt>
+  <dd>The middle value once the values are sorted. With an even count, it's the mean of the two middle values. Excel and DAX <code>MEDIAN</code>.</dd>
+
+  <dt>Outlier</dt>
+  <dd>A value an abnormal distance from the rest of the data. Standard flag: outside the 1.5 × IQR fences (see below). A flag means "go and look", and judgement decides.</dd>
+  <dd class="avoid">Avoid: "error" or "bad data" until you know why it's there.</dd>
+
+  <dt>Weighted mean</dt>
+  <dd>A mean where each value counts in proportion to its weight: <code>sum of (weight × value) ÷ sum of weights</code>. The <em>value</em> is the thing being averaged (its unit is the answer's unit); the <em>weight</em> says how many or how much. Excel <code>SUMPRODUCT(weights, values) / SUM(weights)</code>.</dd>
+  <dd class="avoid">Avoid: averaging averages directly. Turn averages back into totals, add the totals, then divide.</dd>
+</dl>
+
+<h2>Growth over time</h2>
+<dl>
+  <dt>MoM (month over month)</dt>
+  <dd>Percent change from the previous month: <code>(this month − last month) ÷ last month</code>.</dd>
+  <dd class="avoid">Avoid: reading a MoM drop as bad news in seasonal data without checking YoY.</dd>
+
+  <dt>YoY (year over year)</dt>
+  <dd>Percent change from the same period one year earlier. It compares like with like, so the season cancels out.</dd>
+
+  <dt>Seasonality</dt>
+  <dd>A pattern that repeats at the same time every year (ice cream peaks in summer, retail in December).</dd>
+  <dd class="avoid">Avoid: "trend" for a seasonal swing. A trend is the longer-run direction underneath.</dd>
+
+  <dt>Running total</dt>
+  <dd>A sum that adds each new period to everything before it. Excel: <code>=SUM($B$2:B2)</code> copied down.</dd>
+
+  <dt>YTD (year to date)</dt>
+  <dd>The running total since the start of the year. It resets to zero every January.</dd>
+  <dd class="avoid">Avoid: comparing YTD with last year's full total. Compare it with the same months last year.</dd>
+
+  <dt>Moving average</dt>
+  <dd>The mean of the last few periods (for example 3 months), recalculated each period. It smooths out noise so the trend shows. Also called a rolling average.</dd>
+  <dd class="avoid">Avoid: using it to spot sudden events. It reacts late.</dd>
+
+  <dt>Growth factor</dt>
+  <dd>A percent change written as a multiplier: +10% is ×1.10, −20% is ×0.80. Multiply factors to chain changes.</dd>
+
+  <dt>Compound growth</dt>
+  <dd>Growth that builds on last period's result, not on the original start. Like interest earning interest.</dd>
+
+  <dt>CAGR (compound annual growth rate)</dt>
+  <dd>The single steady yearly rate that gets from the start value to the end value. Excel: <code>=(End/Start)^(1/Years)-1</code>.</dd>
+  <dd class="avoid">Avoid: averaging the yearly percentages. +50% then −20% is not +15% a year.</dd>
+
+  <dt>Spread</dt>
+  <dd>How far apart the values are. Also called variability or dispersion. Two datasets can share a mean and still have very different spreads.</dd>
+
+  <dt>Range</dt>
+  <dd>Largest value minus smallest value.</dd>
+  <dd class="avoid">Avoid: relying on it for messy data. One extreme value takes it over.</dd>
+
+  <dt>Quartiles (Q1, Q2, Q3)</dt>
+  <dd>Cut points that split sorted data into four equal groups. Q2 is the median. Q1 and Q3 are the medians of the lower and upper halves (with an odd count, leave the median out). Excel: <code>=QUARTILE.INC(range, 1)</code> and <code>=QUARTILE.INC(range, 3)</code>.</dd>
+  <dd class="avoid">Avoid: worrying when Excel differs slightly from a hand calculation. Several accepted methods exist.</dd>
+
+  <dt>IQR (interquartile range)</dt>
+  <dd>Q3 − Q1: the width of the middle half of the data. Extreme values don't affect it.</dd>
+
+  <dt>Fences (1.5 × IQR rule)</dt>
+  <dd>Lower fence = Q1 − 1.5 × IQR. Upper fence = Q3 + 1.5 × IQR. Values outside the fences are flagged as outliers.</dd>
+  <dd class="avoid">Avoid: adding 1.5 × IQR to the median or the max. It's added to Q3 and subtracted from Q1.</dd>
+
+  <dt>Box plot</dt>
+  <dd>A chart with a box from Q1 to Q3, a line at the median, and whiskers out to the furthest values inside the fences. Outliers are drawn as separate dots. Also called a box-and-whisker chart.</dd>
+
+  <dt>Deviation</dt>
+  <dd>How far one value is from the mean: value − mean. Deviations always add up to 0.</dd>
+
+  <dt>Standard deviation (SD)</dt>
+  <dd>Roughly, the typical distance of a value from the mean. Calculated as: square the deviations, average them, take the square root. Use it with the mean for roughly symmetric data.</dd>
+  <dd class="avoid">Avoid: using it for skewed data or data with outliers. Squaring makes extreme values count extra; use median + IQR instead.</dd>
+
+  <dt>Variance</dt>
+  <dd>The standard deviation before the square root, in squared units. Rarely reported on its own.</dd>
+
+  <dt>Population vs sample (STDEV.P vs STDEV.S)</dt>
+  <dd>Every value you care about → <code>STDEV.P</code> (divides by n). A subset standing in for a bigger group → <code>STDEV.S</code> (divides by n − 1). Nearly identical for large data.</dd>
+
+  <dt>68–95–99.7 rule</dt>
+  <dd>In bell-shaped data, about 68% of values are within 1 SD of the mean, 95% within 2 SD, and 99.7% within 3 SD.</dd>
+  <dd class="avoid">Avoid: applying it to skewed data such as salaries or order values.</dd>
+
+  <dt>Distribution</dt>
+  <dd>How values are spread across their range: where they pile up and where they thin out. Its "shape".</dd>
+
+  <dt>Histogram and bins</dt>
+  <dd>A bar chart of a distribution. Each bar counts the values in one equal-width range (a bin). Excel: Insert → Statistic Chart → Histogram. Power BI: create bins on a column, then use a column chart.</dd>
+  <dd class="avoid">Avoid: trusting one bin width blindly. Too wide or too narrow can hide the shape.</dd>
+
+  <dt>Skewed (right / left)</dt>
+  <dd>Lopsided. Right-skewed: long tail of big values, mean above the median (incomes, order values, delivery times). Left-skewed: long tail to the left, mean below the median.</dd>
+  <dd class="avoid">Avoid: reporting the mean alone for skewed data; use median + IQR. Also avoid "lopsided" in reports (fine for intuition).</dd>
+
+  <dt>Percentile (P90, P95…)</dt>
+  <dd>The value with that percentage of the data at or below it. P25 = Q1, P50 = median, P75 = Q3. Excel: <code>=PERCENTILE.INC(range, 0.9)</code>, with a fraction from 0 to 1.</dd>
+
+  <dt>Scatter plot</dt>
+  <dd>A chart with one dot per item (a store, a month), placed by two numbers: one across, one up. Excel: Insert → Scatter. Power BI: the scatter chart visual.</dd>
+
+  <dt>Correlation (r)</dt>
+  <dd>How closely two numbers move together in a straight line, from −1 to +1. The sign gives the direction; the size gives the strength (|r| ≥ 0.7 is roughly strong). Excel: <code>=CORREL(range1, range2)</code>.</dd>
+  <dd class="avoid">Avoid: trusting r without the plot. It misses curves, and one extreme point can fake a high r.</dd>
+
+  <dt>Causation</dt>
+  <dd>One thing actually making the other happen. Shown by a controlled experiment (such as an A/B test), not by correlation alone.</dd>
+  <dd class="avoid">Avoid: "X drives Y" from correlation alone. Say "is associated with".</dd>
+
+  <dt>Confounder</dt>
+  <dd>A hidden third factor that drives both numbers and makes them look connected. Example: sunny weather behind both ice cream sales and sunburns.</dd>
+
+  <dt>Reverse cause</dt>
+  <dd>The cause runs the other way. Example: big fires get more firefighters; the firefighters don't cause the damage.</dd>
+
+  <dt>Spurious correlation</dt>
+  <dd>Two unrelated series that match by coincidence. See Tyler Vigen's collection.</dd>
+
+  <dt>Trend line (line of best fit)</dt>
+  <dd>The straight line closest to all the dots on a scatter plot, written Y ≈ intercept + slope × X. Excel: right-click the dots → Add Trendline. Power BI: Analytics pane → Trend line.</dd>
+
+  <dt>Slope</dt>
+  <dd>How much Y changes, on average, for each 1-unit step in X. Negative means the line goes down. Excel: <code>=SLOPE(y_range, x_range)</code>, with Y first.</dd>
+  <dd class="avoid">Avoid: reading the slope as a promise ("each £1k of ads earns £3k"). It's a pattern, not proven cause.</dd>
+
+  <dt>Intercept</dt>
+  <dd>The line's value when X = 0. Excel: <code>=INTERCEPT(y_range, x_range)</code>. Often just a setting of the line if X = 0 was never observed.</dd>
+
+  <dt>Extrapolation</dt>
+  <dd>Predicting outside the range of the data the line was built from.</dd>
+  <dd class="avoid">Avoid: presenting extrapolated numbers without a warning.</dd>
+
+  <dt>r² (R-squared)</dt>
+  <dd>r × r, from 0 to 1. Roughly, the share of the ups and downs in Y that the trend line accounts for. Excel: <code>=RSQ(y_range, x_range)</code>.</dd>
+</dl>
+
+<p class="small"><a href="roadmap.html">← Roadmap</a></p>
+
+</main>
+</body>
+</html>

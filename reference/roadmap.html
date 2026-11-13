@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course Roadmap</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Reference · Math for Data Analysis</p>
+<h1>The roadmap</h1>
+<p class="subtitle">What to learn, in what order, and where each piece shows up in Power BI.</p>
+
+<p>Each stage builds on the one before it. We move on once the quizzes show a stage is solid, not when the calendar says so.</p>
+
+<p><strong>Where you are:</strong> stages 1–6 are done (every quiz passed). All the remaining lessons are written: stage 7 (0012–0015), the logic lessons (0016–0018), and the wrap-up (0019). A score after a lesson means its quiz is done.</p>
+
+<table>
+  <thead><tr><th>Stage</th><th>Topics</th><th>Where you'll meet it</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>1 · Number basics</strong></td>
+      <td>Order of operations, negatives, fractions ↔ decimals, rounding, units</td>
+      <td>Every Excel formula and DAX measure</td>
+    </tr>
+    <tr>
+      <td><strong>2 · Percentages</strong></td>
+      <td>Percent of, percent change, percentage points, ratios, margin vs markup</td>
+      <td>KPI cards, "% of total", MoM / YoY measures</td>
+    </tr>
+    <tr>
+      <td><strong>3 · Averages</strong></td>
+      <td>Mean, median, mode, weighted average, average of averages trap</td>
+      <td>Summaries, <code>AVERAGE</code> vs <code>DIVIDE(SUM, SUM)</code></td>
+    </tr>
+    <tr>
+      <td><strong>4 · Growth over time</strong></td>
+      <td>MoM, YoY, running totals, moving averages, compound growth</td>
+      <td>Time intelligence in DAX, trend visuals</td>
+    </tr>
+    <tr>
+      <td><strong>5 · Spread &amp; shape</strong></td>
+      <td>Range, standard deviation, percentiles, quartiles, outliers, distributions</td>
+      <td>Box plots, histograms, data-quality checks</td>
+    </tr>
+    <tr>
+      <td><strong>6 · Relationships</strong></td>
+      <td>Correlation, causation, trend lines, slope</td>
+      <td>Scatter charts, Analytics pane, interview questions</td>
+    </tr>
+    <tr>
+      <td><strong>7 · Uncertainty (concepts)</strong></td>
+      <td>Probability, sampling, bias, confidence intervals, p-values, A/B tests</td>
+      <td>Reading other people's analyses, interviews</td>
+    </tr>
+    <tr>
+      <td><strong>Throughout · Logic</strong></td>
+      <td>Sets (joins), AND/OR/NOT (filters), cardinality (one-to-many)</td>
+      <td>Power Query merges, relationships, <code>CALCULATE</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Lessons so far</h2>
+<ul>
+  <li><a href="../lessons/0001-where-am-i-diagnostic.html">0001 · Where am I?</a>: diagnostic check (10/12: stages 1–2 solid)</li>
+  <li><a href="../lessons/0002-finding-the-middle-median.html">0002 · Finding the middle</a>: the median, and when it beats the mean (8/8)</li>
+  <li><a href="../lessons/0003-weighted-averages.html">0003 · Don't average averages</a>: weighted means, <code>SUMPRODUCT</code>, and <code>DIVIDE(SUM, SUM)</code> (8/8)</li>
+  <li><a href="../lessons/0004-mom-vs-yoy.html">0004 · Compared to when?</a>: MoM vs YoY, seasonality, blank first periods (8/8)</li>
+  <li><a href="../lessons/0005-running-totals-moving-averages.html">0005 · Which months count?</a>: YTD running totals and 3-month moving averages (8/8)</li>
+  <li><a href="../lessons/0006-compound-growth-cagr.html">0006 · Growth on growth</a>: compound growth, CAGR, and the averaging trap (8/8)</li>
+  <li><a href="../lessons/0007-quartiles-iqr-outliers.html">0007 · How far is too far?</a>: range, quartiles, IQR, the 1.5 × IQR outlier rule, and box plots (8/8)</li>
+  <li><a href="../lessons/0008-standard-deviation.html">0008 · How far from average?</a>: standard deviation, <code>STDEV.S</code> vs <code>STDEV.P</code>, the 68–95–99.7 rule, SD vs IQR (8/8)</li>
+  <li><a href="../lessons/0009-shape-histograms-percentiles.html">0009 · What shape is it?</a>: histograms, skew, percentiles (P90/P95), and picking a summary by shape (8/8)</li>
+  <li><a href="../lessons/0010-correlation-causation.html">0010 · Moving together</a>: scatter plots, correlation (r), and the three alternatives to causation (8/8)</li>
+  <li><a href="../lessons/0011-trend-lines-slope.html">0011 · Drawing the line</a>: trend lines, slope, intercept, r², and why predicting outside your data is risky (8/8)</li>
+  <li><a href="../lessons/0012-probability-basics.html">0012 · What are the chances?</a>: probability, AND/OR rules, funnels, and expected value</li>
+  <li><a href="../lessons/0013-sampling-bias.html">0013 · Who did you ask?</a>: samples vs populations, sample size, and the biases a bigger sample can't fix</li>
+  <li><a href="../lessons/0014-confidence-intervals.html">0014 · Give or take</a>: margin of error, confidence intervals, and error bars</li>
+  <li><a href="../lessons/0015-ab-tests-p-values.html">0015 · Did it really work?</a>: A/B tests, p-values, and "statistically significant"</li>
+  <li><a href="../lessons/0016-sets-joins.html">0016 · Which rows survive?</a>: sets, Venn diagrams, and the six Power Query join kinds</li>
+  <li><a href="../lessons/0017-and-or-not-filters.html">0017 · AND, OR, NOT</a>: combining filters in Excel, slicers, and DAX</li>
+  <li><a href="../lessons/0018-cardinality-relationships.html">0018 · One to many</a>: keys, cardinality, star schemas, and double counting</li>
+  <li><a href="../lessons/0019-wrap-up.html">0019 · Putting it together</a>: mixed review across all stages and the analyst's checklist</li>
+</ul>
+
+<p class="small">Bird's-eye view of tools, languages, and exam vs job: <a href="tools-and-languages.html">Tools &amp; languages</a></p>
+
+<h2>Out of scope</h2>
+<p>Calculus, linear algebra, proofs, and machine-learning math. They're useful for data <em>science</em> but not needed for this mission.</p>
+
+<p class="small">Scope checked against the <a href="https://learn.microsoft.com/certifications/resources/study-guides/pl-300">PL-300 study guide</a> and the <a href="https://www.coursera.org/professional-certificates/microsoft-power-bi-data-analyst">Coursera certificate</a>.</p>
+
+</main>
+</body>
+</html>

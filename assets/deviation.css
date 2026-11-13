@@ -1,0 +1,37 @@
+/* Styles for assets/deviation.js. Relies on tokens from style.css. */
+
+.deviation {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0;
+}
+.deviation-label { display: block; font-family: var(--sans); font-size: 0.78rem; color: var(--muted); }
+.deviation-input {
+  display: block; width: 100%; margin-top: 0.3rem;
+  font-family: var(--mono); font-size: 0.95rem; color: var(--text);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.6rem;
+}
+.deviation-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.deviation-svg { width: 100%; height: auto; display: block; margin: 0.6rem 0 0.2rem; }
+.dv-band { fill: var(--accent-soft); }
+.dv-band-label { fill: var(--accent); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+.dv-mean { stroke: var(--text); stroke-width: 2; stroke-dasharray: 5 4; opacity: 0.8; }
+.dv-mean-label { fill: var(--text); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+.dv-bar { stroke-width: 3; stroke-linecap: round; }
+.dv-bar.is-up { stroke: var(--good); }
+.dv-bar.is-down { stroke: var(--bad); }
+.dv-dot { fill: var(--text); }
+.dv-axis { stroke: var(--rule); stroke-width: 2; }
+.dv-tick { fill: var(--muted); font-family: var(--sans); font-size: 12px; }
+
+.deviation-summary { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-size: 0.92rem; align-items: baseline; }
+.deviation-summary .small { flex-basis: 100%; }
+.dv-sd { color: var(--accent); }
+
+.dv-table { font-family: var(--mono); font-size: 0.85rem; margin: 0.8rem 0 0; }
+.dv-table th { font-family: var(--sans); }
+.dv-table td, .dv-table th { text-align: right; }
+.dv-table td:first-child, .dv-table th:first-child { text-align: left; }
+.dv-table tfoot td { border-top: 1px solid var(--rule); font-family: var(--sans); }
+
+@media print { .deviation-input { border: 0; padding: 0; } }

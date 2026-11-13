@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>One to Many</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/joins.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0018 · Logic</p>
+<h1>One to many</h1>
+<p class="subtitle">How tables relate decides whether your totals are right. One duplicate key in the wrong place, and sales quietly double.</p>
+
+<div class="meta">
+  <span>⏱ 25–30 minutes, best on a wider screen</span>
+  <span>✎ Counting only</span>
+  <span>🎯 Win: name the "one" and "many" sides, spot double counting, and sketch a star schema</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Cardinality</dt><dd>How many rows on one side can match how many on the other: one-to-one, one-to-many, many-to-many.</dd>
+    <dt>Unique key</dt><dd>A column where every value appears only once, such as ProductID in a product list.</dd>
+    <dt>Fact table</dt><dd>The big table of events: sales, orders, clicks. Many rows, mostly numbers.</dd>
+    <dt>Dimension table</dt><dd>A lookup table describing things: products, customers, dates. One row per thing.</dd>
+    <dt>Star schema</dt><dd>A fact table in the middle, with dimension tables around it, each linked one-to-many.</dd>
+  </dl>
+</div>
+
+<h2>One customer, many orders</h2>
+
+<p>Each customer appears <strong>once</strong> in the Customers table. The same customer can appear <strong>many times</strong> in Orders. That's a <strong>one-to-many</strong> relationship, and it's the shape of nearly every relationship in a good Power BI model.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Cardinality</th><th>Example</th><th>How common</th></tr>
+  <tr><td><strong>One-to-many</strong> (1:*)</td><td>Product → Sales lines</td><td>The normal case</td></tr>
+  <tr><td><strong>One-to-one</strong> (1:1)</td><td>Employee → Employee's payroll record</td><td>Rare; often the two tables could be one</td></tr>
+  <tr><td><strong>Many-to-many</strong> (*:*)</td><td>Students ↔ Courses</td><td>Needs care; easy to get wrong totals</td></tr>
+</table>
+</div>
+
+<h2>The star schema</h2>
+
+<p>Power BI works best with a <strong>star schema</strong>: one fact table (Sales) in the middle, joined one-to-many to dimension tables (Products, Customers, Dates, Stores) around it (<a href="https://learn.microsoft.com/power-bi/guidance/star-schema">Microsoft Learn: Star schema</a>). Drawn out, it looks like a star.</p>
+
+<ul>
+  <li><strong>Dimensions</strong> are the "one" side. You slice and filter by them: "by product", "by month".</li>
+  <li><strong>Facts</strong> are the "many" side. You add up their numbers: sum of sales, count of orders.</li>
+  <li>Filters flow from the one side to the many side. Picking "Tea" in a Products slicer narrows the Sales rows to Tea.</li>
+</ul>
+
+<h2>How totals double</h2>
+
+<p>The "one" side must really be one: <strong>each key exactly once</strong>. If the product list has P2 twice (say, an old name kept by mistake), every P2 sale finds <em>two</em> partners. A merge copies those sale rows, and the totals inflate.</p>
+
+<p>Power BI protects you in the model: it won't create a one-to-many relationship if the "one" column has duplicates. Power Query merges have no such protection, though, which is why the row-count check from <a href="0016-sets-joins.html">Lesson 0016</a> matters.</p>
+
+<h2>Try it</h2>
+
+<p>Sales (many) merged with Products (one). Start with the clean list, then switch to the list with a duplicate key. Pink rows in Products share a key, which breaks the "one" side. Repeats in Sales are normal: that's the "many" side.</p>
+
+<div id="jn"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>With <strong>Clean product list</strong> and <strong>Left outer</strong>: 6 sales rows in, how many out? Does the total match 205?</li>
+  <li>Switch to <strong>Product list with a duplicate</strong>. How many rows now, and what's the total? Which sales were counted twice?</li>
+  <li>Try <strong>Inner</strong> on the duplicate list. Does inner join protect you? (No: it's about matching, not uniqueness.)</li>
+  <li>How would you fix it: change the join, or fix the product list?</li>
+</ol>
+
+<h2>Counting rows vs counting things</h2>
+
+<p>On the many side, the same customer appears again and again. So "how many customers bought?" is <strong>not</strong> the number of order rows. You need a <strong>distinct count</strong>: count each customer once.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Question</th><th>Count</th></tr>
+  <tr><td>How many orders?</td><td>Rows in Orders</td></tr>
+  <tr><td>How many customers ordered?</td><td>Distinct CustomerIDs in Orders</td></tr>
+  <tr><td>How many customers do we have?</td><td>Rows in Customers</td></tr>
+</table>
+</div>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> <code>=COUNTA(UNIQUE(B2:B500))</code> counts distinct customer IDs. A pivot table can do it too, if you tick "Add this data to the Data Model" and choose Distinct Count.</p>
+
+<p><strong>In Power BI:</strong> Model view shows relationships as lines marked <strong>1</strong> and <strong>*</strong> (<a href="https://learn.microsoft.com/power-bi/transform-model/desktop-relationships-understand">Microsoft Learn: Model relationships</a>). PL-300 lists "define a relationship's cardinality and cross-filter direction" and "create a common date table". Both build on this lesson.</p>
+
+<p class="small">DAX preview, don't learn it yet: <code>Customers who bought = DISTINCTCOUNT(Orders[CustomerID])</code>. In plain words: count each customer ID once, however many orders it has.</p>
+
+<p><strong>In interviews:</strong> "After adding a Products table, total sales went up by 8%. What happened?" A strong answer: "Probably duplicate ProductIDs in the product table, so some sales rows matched twice in a merge, or the relationship became many-to-many. I'd check the row count before and after, and check whether the key column is unique."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://learn.microsoft.com/power-bi/guidance/star-schema">Microsoft Learn: Understand star schema and the importance for Power BI</a>. Read the opening sections on fact and dimension tables (about 10 minutes). The Coursera certificate's data modelling course goes deeper.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering why many-to-many is risky, or what "cross-filter direction: both" does? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0017-and-or-not-filters.html">← 0017 AND, OR, NOT</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0019-wrap-up.html">Next: 0019 Putting it together →</a>
+</div>
+
+</main>
+
+<script src="../assets/joins.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+const sales = {
+  name: "Sales", key: "ProductID", cols: ["SaleID", "ProductID", "Amount"],
+  rows: [[1, "P1", 30], [2, "P2", 45], [3, "P1", 25], [4, "P3", 20], [5, "P2", 50], [6, "P1", 35]]
+};
+Joins.mount(document.getElementById("jn"), {
+  sumCol: "Amount",
+  kinds: ["Left outer", "Inner"],
+  presets: [
+    { name: "Clean product list", left: sales,
+      right: { name: "Products", key: "ProductID", cols: ["ProductID", "Product"], rows: [["P1", "Tea"], ["P2", "Coffee"], ["P3", "Cocoa"]] } },
+    { name: "Product list with a duplicate", left: sales,
+      right: { name: "Products", key: "ProductID", cols: ["ProductID", "Product"], rows: [["P1", "Tea"], ["P2", "Coffee"], ["P2", "Coffee (old name)"], ["P3", "Cocoa"]] } }
+  ]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0018-cardinality",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "One vs many",
+      q: "<p>In a Customers → Orders relationship, which table is on the <strong>\"one\"</strong> side?</p>",
+      options: ["Customers", "Both equally", "Orders", "Neither"],
+      answer: 0,
+      explain: "Each customer appears once in Customers but can appear many times in Orders."
+    },
+    {
+      topic: "Fact vs dimension",
+      q: "<p>A table has one row per sale: date, product, store, quantity, amount. What kind of table is it?</p>",
+      options: ["A lookup table", "A dimension table", "A date table", "A fact table"],
+      answer: 3,
+      explain: "Events with numbers to add up are facts. Products, stores, and dates are the dimensions that describe them."
+    },
+    {
+      topic: "Double counting",
+      q: "<p>After merging Products into Sales, total sales is <strong>higher</strong> than in the original Sales table. Most likely cause?</p>",
+      options: ["The merge rounded the amounts", "Duplicate keys in Products", "An inner join was used", "Some sales had no product"],
+      answer: 1,
+      explain: "A product ID listed twice makes each of its sales match twice, copying rows. Missing products would make totals lower or equal, not higher."
+    },
+    {
+      topic: "Row-count check",
+      q: "<p>Sales has <strong>1,000</strong> rows. After a left outer merge with Products, it has <strong>1,040</strong>. What does that tell you?</p>",
+      options: ["40 sales had no product", "40 products were never sold", "Some keys matched more than once", "Everything worked as expected"],
+      answer: 2,
+      explain: "A left outer join with unique keys on the right keeps exactly 1,000 rows. Extra rows mean some sales found two or more partners."
+    },
+    {
+      topic: "Filter direction",
+      q: "<p>In a star schema, a user picks <strong>Tea</strong> in a slicer built on the Products table. What happens to the Sales visuals?</p>",
+      options: ["Nothing; slicers only filter their own table", "Products is filtered, not Sales", "Sales narrow to Tea sales only", "Sales show every product but Tea"],
+      answer: 2,
+      explain: "Filters flow from the one side (Products) to the many side (Sales), so the Sales rows narrow to Tea."
+    },
+    {
+      topic: "Distinct count",
+      q: "<p>Orders has <strong>5,000</strong> rows. How do you find how many <strong>customers</strong> placed orders?</p>",
+      options: ["Average orders per row", "Count the rows in Orders", "Sum the CustomerID column", "Count distinct CustomerIDs"],
+      answer: 3,
+      explain: "Customers repeat on the many side. A distinct count counts each one once. Counting rows gives orders, not customers."
+    },
+    {
+      topic: "Star schema",
+      q: "<p>Which best describes a <strong>star schema</strong>?</p>",
+      options: ["Fact in the middle, dimensions around it", "Dimensions linked in a long chain", "One big table with every column", "Every table linked many-to-many"],
+      answer: 0,
+      explain: "One fact table at the centre, each dimension linked to it one-to-many. It's Microsoft's recommended shape for Power BI models."
+    },
+    {
+      topic: "Review: filters",
+      q: "<p>A user ticks <strong>North</strong> and <strong>South</strong> in <em>one</em> Region slicer. Which rows count?</p>",
+      options: ["Rows in both North and South", "Rows in North or South", "Rows in neither region", "Only the North rows"],
+      answer: 1,
+      explain: "Several values in one slicer combine with OR."
+    }
+  ]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>What Are the Chances</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/funnel.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0012 · Stage 7: Uncertainty</p>
+<h1>What are the chances?</h1>
+<p class="subtitle">Probability for analysts: four rules that cover conversion rates, funnels, and "what's this worth per customer?"</p>
+
+<div class="meta">
+  <span>⏱ 20–30 minutes, works on a phone</span>
+  <span>✎ Light arithmetic: multiply and add decimals</span>
+  <span>🎯 Win: multiply a funnel, handle overlaps, and compute revenue per visitor</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Probability</dt><dd>How likely something is, from 0 (never) to 1 (certain). 0.25 = 25% = "1 in 4".</dd>
+    <dt>Complement</dt><dd>The chance something does <em>not</em> happen: 1 minus the chance it does.</dd>
+    <dt>Independent</dt><dd>One event doesn't change the chance of the other.</dd>
+    <dt>Funnel</dt><dd>A chain of steps customers go through (visit → view → basket → pay), losing some at each step.</dd>
+    <dt>Expected value</dt><dd>Chance × value: what something is worth on average, per try.</dd>
+  </dl>
+</div>
+
+<h2>You already use probability</h2>
+
+<p>A <strong>conversion rate</strong> of 3% is a probability: any one visitor has a 0.03 chance of buying. A <strong>churn rate</strong> of 8% is the chance a customer leaves this month. Stage 7 is about reading numbers like these with the right amount of trust.</p>
+
+<p>Probability is written three ways that mean the same thing: <strong>0.25</strong>, <strong>25%</strong>, and <strong>1 in 4</strong>. For calculations, always use the decimal.</p>
+
+<h2>Four rules</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Rule</th><th>When</th><th>Do this</th><th>Example</th></tr>
+  <tr><td><strong>NOT</strong> (complement)</td><td>"doesn't happen"</td><td>1 − p</td><td>Churn 8% → 92% of customers stay.</td></tr>
+  <tr><td><strong>AND</strong></td><td>Both happen, one after the other</td><td>Multiply</td><td>40% view a product × 25% of those add it to the basket = 0.4 × 0.25 = 10%.</td></tr>
+  <tr><td><strong>OR</strong>, no overlap</td><td>Either happens; they can't both happen</td><td>Add</td><td>Pay by card 70% or PayPal 20% (only one method per order) → 90%.</td></tr>
+  <tr><td><strong>OR</strong>, with overlap</td><td>Either happens; some do both</td><td>Add, then subtract the overlap</td><td>Bought shoes 30%, bags 20%, both 5% → 30 + 20 − 5 = 45%.</td></tr>
+</table>
+</div>
+
+<p>The overlap rule stops you counting the "both" customers twice. You'll see the same idea as a Venn diagram in the joins lesson.</p>
+
+<h3>Why AND multiplies</h3>
+
+<p>Start with 10,000 visitors. 40% view a product, which is 4,000 people. 25% <em>of those</em> add it to the basket, which is 1,000 people. That's 1,000 of the original 10,000, or 10%.</p>
+
+<p>"25% of 40%" means multiplying, just as "percent of" did in stage 2. Each step takes a percentage of what's left, not of the starting crowd.</p>
+
+<div class="callout">
+  <span class="label">Watch out</span>
+  <p>Multiplying assumes each chance is measured <em>among the people who passed the previous step</em>. That's how funnel reports are usually built, so check the report says "% of previous step" and not "% of all visitors".</p>
+</div>
+
+<h2>Expected value: chance × value</h2>
+
+<p>If 3% of visitors buy, and the average order is £60, then each visitor is worth 0.03 × £60 = <strong>£1.80</strong> on average. Nobody spends exactly £1.80. It's a long-run average, like the mean.</p>
+
+<p>Businesses use this constantly. "Can we pay £1.50 per visitor for ads?" Yes, if each visitor is worth £1.80. "A £10 coupon that 15% of 1,000 customers redeem costs about 0.15 × 1,000 × £10 = £1,500."</p>
+
+<h2>Try it</h2>
+
+<p>An online shop's funnel. Each percentage is "of the people who reached the step before". Change any of them.</p>
+
+<div id="fn"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Check the AND rule: 0.4 × 0.25 × 0.6 × 0.5. Does it match the overall percentage?</li>
+  <li>Raise <strong>Add to basket</strong> from 25 to 30 (a 20% improvement). What happens to the overall rate and the revenue per visitor?</li>
+  <li>Put it back to 25. Now raise <strong>View a product</strong> from 40 to 48 (also +20%). Compare. What does that tell you about where to improve?</li>
+  <li>Set any step to 0. Why does everything after it collapse?</li>
+</ol>
+
+<h2>Small numbers bounce</h2>
+
+<p>A 1-in-1,000 event sounds rare. Across 1,000 stores, though, you'd expect it about once a day somewhere. Across a small group, a rate can swing wildly: 2 sales out of 10 visitors is "20%" but means very little.</p>
+
+<p>How much a rate can bounce, and how many customers you need before you trust it, is the topic of the next three lessons.</p>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> conversion rate = <code>=B3/B2</code>; whole-funnel rate = <code>=PRODUCT(C2:C5)</code> on a column of step rates; expected value = <code>=rate*value</code>.</p>
+
+<p><strong>In Power BI:</strong> the funnel chart visual shows each stage as a bar, with each stage as a share of the first and of the previous one (<a href="https://learn.microsoft.com/power-bi/visuals/power-bi-visualization-funnel-charts">Microsoft Learn: Funnel charts</a>). A conversion rate is usually a measure.</p>
+
+<p class="small">DAX preview, don't learn it yet: <code>Conversion = DIVIDE([Orders], [Visitors])</code>. In plain words: orders divided by visitors, returning blank instead of an error if there are no visitors.</p>
+
+<p><strong>In interviews:</strong> "Our funnel converts 3%. Product wants to redesign the home page, marketing wants to fix checkout. Where would you look?" A strong answer: "Every step multiplies, so a 20% lift anywhere lifts the total by 20%. I'd compare which step is cheapest to improve and where we lose the most people, and check the numbers per step are '% of previous'."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF), Chapter 3, section 3.1 "Defining probability": read the parts on complements, the addition rule, and independence (about 6 pages). Skip anything about "random variables" for now.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering why AND multiplies but OR adds, or how probability links to the bell curve? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0011-trend-lines-slope.html">← 0011 Drawing the line</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0013-sampling-bias.html">Next: 0013 Who did you ask? →</a>
+</div>
+
+</main>
+
+<script src="../assets/funnel.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+Funnel.mount(document.getElementById("fn"), {
+  visitors: 10000,
+  aov: 60,
+  steps: [
+    { name: "View a product", pct: 40 },
+    { name: "Add to basket", pct: 25 },
+    { name: "Start checkout", pct: 60 },
+    { name: "Pay", pct: 50 }
+  ]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0012-probability",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Complement",
+      q: "<p>Monthly churn is <strong>8%</strong>. What share of customers <em>stay</em> this month?</p>",
+      options: ["8%", "80%", "92%", "108%"],
+      answer: 2,
+      explain: "Staying is the complement of leaving: 1 − 0.08 = 0.92, so 92%."
+    },
+    {
+      topic: "AND rule",
+      q: "<p>50% of visitors sign up, and 20% of sign-ups buy. What share of <em>all visitors</em> buy?</p>",
+      options: ["10%", "20%", "35%", "70%"],
+      answer: 0,
+      explain: "Both steps must happen, so multiply: 0.5 × 0.2 = 0.1 = 10%. Each step is a share of the previous step."
+    },
+    {
+      topic: "OR with overlap",
+      q: "<p>30% of customers bought shoes, 20% bought bags, and 5% bought both. What share bought shoes <strong>or</strong> bags?</p>",
+      options: ["50%", "55%", "25%", "45%"],
+      answer: 3,
+      explain: "Add, then subtract the overlap so 'both' isn't counted twice: 30 + 20 − 5 = 45%."
+    },
+    {
+      topic: "Expected value",
+      q: "<p>Conversion is <strong>2%</strong> and the average order is <strong>£50</strong>. What's the expected revenue per visitor?</p>",
+      options: ["£0.50", "£1.00", "£2.50", "£25.00"],
+      answer: 1,
+      explain: "Chance × value: 0.02 × £50 = £1.00. It's a long-run average per visitor, not what any one visitor spends."
+    },
+    {
+      topic: "Funnels",
+      q: "<p>A funnel converts <strong>3%</strong> overall. One step improves from 25% to 30% (a 20% lift). What's the new overall rate?</p>",
+      options: ["3.05%", "8%", "3.6%", "5%"],
+      answer: 2,
+      explain: "Every step multiplies, so a 20% lift in any step lifts the total by 20%: 3% × 1.2 = 3.6%."
+    },
+    {
+      topic: "OR, no overlap",
+      q: "<p>Each order uses exactly one payment method: card <strong>70%</strong>, PayPal <strong>20%</strong>. Chance an order used card <strong>or</strong> PayPal?</p>",
+      options: ["90%", "14%", "50%", "84%"],
+      answer: 0,
+      explain: "They can't both happen on one order, so just add: 70 + 20 = 90%. 14% would be the AND rule, which doesn't apply here."
+    },
+    {
+      topic: "Big numbers",
+      q: "<p>A till glitch hits any one store on any one day with chance <strong>1 in 1,000</strong>. You have 1,000 stores. What should you expect?</p>",
+      options: ["It should almost never happen", "Every store fails every day", "Exactly 1,000 glitches a day", "About one glitch somewhere daily"],
+      answer: 3,
+      explain: "Expected count = chance × tries = 0.001 × 1,000 = 1 per day. Rare per store isn't rare across a big chain."
+    },
+    {
+      topic: "Review: trend lines",
+      q: "<p>A trend line reads <strong>Units ≈ 200 − 5 × Price</strong>. What does it predict at a price of <strong>£20</strong>?</p>",
+      options: ["195", "100", "300", "180"],
+      answer: 1,
+      explain: "Multiply first: 5 × 20 = 100. Then 200 − 100 = 100 units."
+    }
+  ]
+});
+</script>
+</body>
+</html>

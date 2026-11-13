@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Putting It Together</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0019 · Wrap-up</p>
+<h1>Putting it together</h1>
+<p class="subtitle">Eighteen lessons boil down to a short list of questions a good analyst asks of every number. Here's the list, and a mixed quiz to prove it's stuck.</p>
+
+<div class="meta">
+  <span>⏱ 30–40 minutes, works on a phone</span>
+  <span>✎ Mixed: a little arithmetic, mostly judgement</span>
+  <span>🎯 Win: 12 questions across every stage, and a checklist to keep</span>
+</div>
+
+<h2>The analyst's checklist</h2>
+
+<p>Keep this next to you during the Coursera course and your first projects. Each row is a stage, the question it trains you to ask, and where to look it up again.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Stage</th><th>Ask yourself</th><th>Lessons</th></tr>
+  <tr><td><strong>Percentages</strong></td><td>Percent of what base? Percent change or percentage points?</td><td><a href="0001-where-am-i-diagnostic.html">0001</a></td></tr>
+  <tr><td><strong>Averages</strong></td><td>Mean or median? Is this an average of averages that needs weighting?</td><td><a href="0002-finding-the-middle-median.html">0002</a>, <a href="0003-weighted-averages.html">0003</a></td></tr>
+  <tr><td><strong>Growth</strong></td><td>Compared to when: last month or last year? Is it smoothed? Over several years, CAGR?</td><td><a href="0004-mom-vs-yoy.html">0004</a>–<a href="0006-compound-growth-cagr.html">0006</a></td></tr>
+  <tr><td><strong>Spread &amp; shape</strong></td><td>How spread out? Skewed? Which outliers did I check, and how?</td><td><a href="0007-quartiles-iqr-outliers.html">0007</a>–<a href="0009-shape-histograms-percentiles.html">0009</a></td></tr>
+  <tr><td><strong>Relationships</strong></td><td>Did I look at the plot? Correlation, or proven cause? Am I extrapolating?</td><td><a href="0010-correlation-causation.html">0010</a>, <a href="0011-trend-lines-slope.html">0011</a></td></tr>
+  <tr><td><strong>Uncertainty</strong></td><td>Who's in the sample? What's the margin? Significant <em>and</em> big enough to matter?</td><td><a href="0012-probability-basics.html">0012</a>–<a href="0015-ab-tests-p-values.html">0015</a></td></tr>
+  <tr><td><strong>Logic</strong></td><td>Which rows survived the join and the filters? Did the row count change? AND or OR?</td><td><a href="0016-sets-joins.html">0016</a>–<a href="0018-cardinality-relationships.html">0018</a></td></tr>
+</table>
+</div>
+
+<h2>Three habits that tie it together</h2>
+
+<ol class="steps">
+  <li><strong>Look before you summarise.</strong> Plot it first: a histogram before an average, a scatter before r, a row count before a total.</li>
+  <li><strong>Always say "compared to what".</strong> A number alone means little. Last year, the target, the other store, or the margin of error give it meaning.</li>
+  <li><strong>Pick words that match the evidence.</strong> "Is associated with" for correlations, "about £42, give or take £5" for samples, "drives" only after an experiment.</li>
+</ol>
+
+<h2>The scenario</h2>
+
+<p>You've just joined an online homeware shop as a junior analyst. Your manager forwards a monthly report and a few questions. The quiz below walks through them, with one question from each part of the course.</p>
+
+<div id="quiz"></div>
+
+<h2>What next</h2>
+
+<ul>
+  <li><strong>Coursera:</strong> the Microsoft Power BI Data Analyst certificate covers the tools. Whenever a course uses a statistic, check it against the checklist above.</li>
+  <li><strong>The glossary:</strong> <a href="../reference/glossary.html">reference/glossary.html</a> has every term from this course, with Excel and Power BI equivalents.</li>
+  <li><strong>Practice:</strong> pick a public dataset (Kaggle, your country's statistics office) and write a one-page report that answers the checklist questions.</li>
+  <li><strong>PL-300:</strong> the math-heavy exam topics are profiling data, grouping and binning, statistical functions, time intelligence, outliers, reference lines, error bars, and forecasting. Every one of them now has a lesson behind it.</li>
+</ul>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Want extra lessons? Candidates are business metrics (margin, churn, LTV, funnels in depth), the mode, Simpson's paradox, and margin vs markup. Or ask for a practice project brief. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0018-cardinality-relationships.html">← 0018 One to many</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+</div>
+
+</main>
+
+<script src="../assets/quiz.js"></script>
+<script>
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0019-wrap-up",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Percentages",
+      q: "<p>Conversion went from <strong>4%</strong> to <strong>5%</strong>. Which description is correct?</p>",
+      options: ["Up 1% and up 25 points", "Up 1 point, a 25% rise", "Up 25 points", "Up 5%, a 1% rise"],
+      answer: 1,
+      explain: "5 − 4 = 1 percentage point. As a percent change: 1 ÷ 4 = 25%."
+    },
+    {
+      topic: "Averages",
+      q: "<p>The report shows the <strong>mean</strong> customer spend. A few corporate buyers spend 100× more than everyone else. What should you also report?</p>",
+      options: ["The maximum spend", "The sum of all spend", "The mode of spend", "The median spend"],
+      answer: 3,
+      explain: "A few huge values drag the mean up. The median shows what a typical customer spends."
+    },
+    {
+      topic: "Weighted average",
+      q: "<p>Store A: <strong>100</strong> orders averaging £20. Store B: <strong>300</strong> orders averaging £40. What's the average order across both?</p>",
+      options: ["£35", "£30", "£40", "£25"],
+      answer: 0,
+      explain: "Weight by orders: (100 × 20 + 300 × 40) ÷ 400 = 14,000 ÷ 400 = £35. Averaging the two averages (£30) ignores that B has 3× the orders."
+    },
+    {
+      topic: "Growth",
+      q: "<p>January sales fell <strong>40%</strong> from December. Your manager is worried. What's the most useful comparison?</p>",
+      options: ["Last December's sales", "The three-month total", "Last January's sales", "This December again"],
+      answer: 2,
+      explain: "Homeware sales spike before Christmas, so January always drops versus December. YoY (January vs last January) removes the seasonality."
+    },
+    {
+      topic: "CAGR",
+      q: "<p>Revenue went from <strong>£100k</strong> to <strong>£121k</strong> over <strong>2</strong> years. What's the CAGR?</p>",
+      options: ["21%", "10%", "10.5%", "11%"],
+      answer: 1,
+      explain: "(121 ÷ 100)^(1/2) − 1 = 1.1 − 1 = 10%. Check: 100 × 1.1 × 1.1 = 121. Halving the 21% gives 10.5%, which is the averaging trap."
+    },
+    {
+      topic: "Outliers",
+      q: "<p>Delivery days have <strong>Q1 = 2</strong> and <strong>Q3 = 4</strong>. One order took <strong>8 days</strong>. Is it an outlier by the 1.5 × IQR rule?</p>",
+      options: ["No; it is under the fence", "Can't tell without the mean", "No; outliers need 3 × IQR", "Yes; it's above the fence of 7"],
+      answer: 3,
+      explain: "IQR = 4 − 2 = 2. Upper fence = 4 + 1.5 × 2 = 7. 8 is above 7, so it's flagged and worth investigating."
+    },
+    {
+      topic: "Spread",
+      q: "<p>Two warehouses both average <strong>3-day</strong> delivery. Warehouse X has SD <strong>0.5</strong> days; Y has SD <strong>2</strong> days. Which is more predictable?</p>",
+      options: ["X, the smaller SD", "Y, the bigger SD", "Both the same; same mean", "Can't say without the median"],
+      answer: 0,
+      explain: "Same centre, but X's deliveries cluster much more tightly around 3 days. SD measures that spread."
+    },
+    {
+      topic: "Percentiles",
+      q: "<p>The site's page load <strong>P95 = 3 seconds</strong>. What does that mean?</p>",
+      options: ["Average load is 3 seconds", "5% load in under 3 seconds", "95% load in 3 s or less", "95 pages took 3 seconds"],
+      answer: 2,
+      explain: "P95 is the value with 95% of the data at or below it. Only the slowest 5% take longer than 3 seconds."
+    },
+    {
+      topic: "Correlation",
+      q: "<p>Customers who use the wishlist spend more (r = 0.6). Marketing wants to force everyone to make a wishlist. Your view?</p>",
+      options: ["Agree; r = 0.6 proves it works", "Keen shoppers may do both; test it", "Disagree; 0.6 means no link", "Agree, if r rises above 0.7"],
+      answer: 1,
+      explain: "Probably a confounder: keen shoppers both use wishlists and spend more. An A/B test would show whether wishlists cause the extra spend."
+    },
+    {
+      topic: "Intervals",
+      q: "<p>A survey of <strong>1,000</strong> customers says <strong>52%</strong> want free returns over faster delivery. How should you report it?</p>",
+      options: ["Roughly even: ± 3 points", "A clear majority want returns", "Exactly 52% of customers", "The survey is too small to use"],
+      answer: 0,
+      explain: "Margin ≈ 1 ÷ √1000 ≈ 3 points, so 49%–55%. It includes 50%, so call it roughly even."
+    },
+    {
+      topic: "A/B tests",
+      q: "<p>A new checkout button shows <strong>+0.3 points</strong> conversion, <strong>p = 0.20</strong>, 3,000 visitors each. What do you tell your manager?</p>",
+      options: ["The button is proven to work", "The button is proven useless", "Ship it; any lift is good", "Not shown yet; run it longer"],
+      answer: 3,
+      explain: "p = 0.20 means luck easily explains the gap. It's not proven either way. A bigger, pre-planned test could settle it."
+    },
+    {
+      topic: "Joins",
+      q: "<p>After you merge a Products table into Sales, the row count goes from <strong>10,000</strong> to <strong>10,120</strong>. What's the first thing to check?</p>",
+      options: ["Whether sales are seasonal", "Whether the filter uses OR", "Duplicate keys in Products", "Whether r is above 0.7"],
+      answer: 2,
+      explain: "A left outer join with unique keys keeps the row count. Extra rows mean some product IDs appear more than once, which would double-count those sales."
+    }
+  ]
+});
+</script>
+</body>
+</html>

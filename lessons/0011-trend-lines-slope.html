@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Drawing the Line</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/scatter.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0011 · Stage 6: Relationships</p>
+<h1>Drawing the line</h1>
+<p class="subtitle">Trend lines turn a cloud of dots into a rule of thumb: "each extra £1 of this goes with about £3 of that". Here's how to read one, and when to stop trusting it.</p>
+
+<div class="meta">
+  <span>⏱ 20–30 minutes, works on a phone</span>
+  <span>✎ Light arithmetic: one multiply, one add</span>
+  <span>🎯 Win: read a trend line equation, make a safe prediction, and explain r²</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Trend line</dt><dd>The straight line that best fits the dots on a scatter plot. Also called the line of best fit, a regression line, or a linear trend.</dd>
+    <dt>Slope</dt><dd>How much the line goes up (or down) for each 1 step to the right. The "per unit" number.</dd>
+    <dt>Intercept</dt><dd>Where the line crosses the up-axis: the value the line gives when the across-number is 0.</dd>
+    <dt>Extrapolation</dt><dd>Using the line to predict outside the range of your data. Risky.</dd>
+    <dt>r² (r-squared)</dt><dd>r multiplied by itself. Roughly, the share of the ups and downs in Y that the line accounts for.</dd>
+  </dl>
+</div>
+
+<h2>From r to a line</h2>
+
+<p>In <a href="0010-correlation-causation.html">Lesson 0010</a>, r told you <em>whether</em> two numbers move together. A trend line tells you <strong>by how much</strong>. It's the one straight line that sits closest to all the dots at once.</p>
+
+<p>Tools pick the line by "least squares": they measure how far each dot sits above or below the line, square those gaps, and choose the line that makes the total as small as possible (<a href="https://www.openintro.org/book/os/">OpenIntro Statistics, Ch. 8</a>). Squaring should feel familiar: standard deviation in <a href="0008-standard-deviation.html">Lesson 0008</a> did the same thing.</p>
+
+<h2>Reading the equation</h2>
+
+<p>Every straight trend line can be written as:</p>
+
+<div class="callout">
+  <p style="font-size:1.15rem;margin:0"><strong>Y ≈ intercept + slope × X</strong></p>
+</div>
+
+<p>Take a shop's 12 months of data, with both numbers in £ thousands. The line comes out as <strong>Sales ≈ 30 + 3 × Ad spend</strong>.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Part</th><th>Value</th><th>Plain words</th></tr>
+  <tr><td><strong>Slope</strong></td><td>3</td><td>Each extra £1k of ad spend goes with about £3k more sales, on average.</td></tr>
+  <tr><td><strong>Intercept</strong></td><td>30</td><td>Where the line would be at £0 ad spend: about £30k of sales.</td></tr>
+  <tr><td><strong>Prediction</strong></td><td>30 + 3 × 20 = 90</td><td>In a month with £20k of ads, the line expects about £90k of sales.</td></tr>
+</table>
+</div>
+
+<p>A <strong>negative slope</strong> means the line goes down. If Units ≈ 500 − 4 × Price, every £1 added to the price goes with about 4 fewer units sold. A £10 rise goes with about 40 fewer.</p>
+
+<h2>Three cautions</h2>
+
+<ol class="steps">
+  <li><strong>Don't predict far outside your data.</strong> The shop's ad spend ran from £8k to £40k. Asking the line about £200k is extrapolation: ads may stop working long before then. The same goes for the intercept. Nobody tested £0 of ads, so treat "30" as a line setting, not a fact.</li>
+  <li><strong>The slope is a pattern, not a promise.</strong> "Slope = 3" does not mean every extra £1k of ads <em>earns</em> £3k. All of Lesson 0010's warnings still apply: busy months could have both more ads and more sales.</li>
+  <li><strong>One odd point can tilt the whole line.</strong> Just as one point could fake r, one extreme month can drag the line. Look at the plot.</li>
+</ol>
+
+<h2>r²: how well the line fits</h2>
+
+<p>r² is just r × r, so it's always between 0 and 1. If r = 0.9, then r² = 0.81. A common reading is that about 81% of the ups and downs in Y line up with the trend line, and the other 19% is everything else.</p>
+
+<p>Excel and Power BI both show r² next to trend lines, usually written as <strong>R²</strong>. Higher means the dots hug the line more closely. It says nothing about cause.</p>
+
+<h2>Try it</h2>
+
+<p>The chart starts with the shop's 12 months. Read the equation and r² under the chart. Then type a number into the predict box.</p>
+
+<div id="sc"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Predict sales at ad spend <strong>25</strong>. Check it by hand: 30.6 + 3 × 25.</li>
+  <li>Now predict at <strong>0</strong>, then at <strong>100</strong>. Why does the box warn you both times?</li>
+  <li>Open <strong>Plus one odd month</strong>. One month had £45k of ads but only £40k of sales. What happens to the slope and to r²?</li>
+  <li>Open <strong>A noisier year</strong>. The slope is still positive. How does r² tell you the line is much less reliable here?</li>
+  <li>Tap a few points of your own in the top-left corner and watch the line tilt.</li>
+</ol>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> right-click the dots on a scatter chart → Add Trendline, then tick "Display equation" and "Display R-squared". Or use formulas:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Formula</th><th>Gives</th></tr>
+  <tr><td><code>=SLOPE(B2:B13, A2:A13)</code></td><td>The slope</td></tr>
+  <tr><td><code>=INTERCEPT(B2:B13, A2:A13)</code></td><td>The intercept</td></tr>
+  <tr><td><code>=RSQ(B2:B13, A2:A13)</code></td><td>r²</td></tr>
+  <tr><td><code>=FORECAST.LINEAR(20, B2:B13, A2:A13)</code></td><td>The line's prediction at X = 20</td></tr>
+</table>
+</div>
+
+<p>Watch the order: the <strong>Y range (what you predict) comes first</strong>, then the X range. Swap them and you get a different, wrong slope (<a href="https://support.microsoft.com/office/slope-function-11fb8f97-3117-4813-98aa-61d7e01276b9">Microsoft Support: SLOPE</a>).</p>
+
+<p><strong>In Power BI:</strong> select a scatter or line chart and open the <strong>Analytics pane</strong> (the magnifying glass icon) to add a trend line. Line charts with a date axis also offer a <strong>Forecast</strong> option (<a href="https://learn.microsoft.com/power-bi/transform-model/desktop-analytics-pane">Microsoft Learn: Analytics pane</a>). The PL-300 exam lists "reference lines, error bars, and forecasting" by name.</p>
+
+<p><strong>In interviews:</strong> "Our trend line says sales will hit £2 million next year. Do you trust it?" A strong answer: "It depends how far it reaches past our data and how well the line fits, so I'd check R². I'd also ask what could change, like a new competitor or saturation, since a straight line assumes the past pattern continues."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF), Chapter 8, sections on "Line fitting" and "Interpreting the slope and intercept" (about 5 pages). Skip anything about formulas for the standard error.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering how Power BI's forecast differs from a trend line, or what "regression" means in job ads? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0010-correlation-causation.html">← 0010 Moving together</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0012-probability-basics.html">Next: 0012 What are the chances? →</a>
+</div>
+
+</main>
+
+<script src="../assets/scatter.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+const shop = [[8,58],[12,60],[15,83],[18,81],[20,95],[22,87],[25,112],[28,112],[30,114],[33,138],[36,134],[40,153]];
+const noisy = [[8,90],[12,60],[15,120],[18,70],[20,140],[22,80],[25,100],[28,150],[30,85],[33,130],[36,95],[40,125]];
+
+Scatter.mount(document.getElementById("sc"), {
+  xLabel: "Ad spend £k", yLabel: "Sales £k",
+  xMax: 50, yMax: 200,
+  showTrend: true, predict: true,
+  presets: [
+    { name: "Shop: 12 months", points: shop },
+    { name: "Plus one odd month", points: [...shop, [45, 40]] },
+    { name: "A noisier year", points: noisy }
+  ]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0011-trend-lines",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Slope",
+      q: "<p>A trend line reads <strong>Sales ≈ 30 + 3 × Ad spend</strong> (both in £k). What does the <strong>3</strong> mean?</p>",
+      options: ["Sales start at £3k with no ads", "Each extra £1k of ads goes with ~£3k more sales", "Ads explain 3% of sales", "Sales triple whenever ads double"],
+      answer: 1,
+      explain: "The slope is the 'per unit' number: one step right on X (£1k of ads) goes with about 3 steps up on Y (£3k of sales), on average."
+    },
+    {
+      topic: "Predicting",
+      q: "<p>Using <strong>Sales ≈ 30 + 3 × Ad spend</strong>, what does the line predict for a month with <strong>£20k</strong> of ads?</p>",
+      options: ["£50k", "£60k", "£80k", "£90k"],
+      answer: 3,
+      explain: "Multiply first, then add: 3 × 20 = 60, and 30 + 60 = 90. So about £90k. (Order of operations from Lesson 0001.)"
+    },
+    {
+      topic: "Extrapolation",
+      q: "<p>The data covers ad spend from <strong>£8k to £40k</strong>. A manager asks what the line predicts at <strong>£200k</strong>. Best response?</p>",
+      options: ["Warn it's far outside the data", "Give the number; the line is exact", "Use the intercept instead", "Say the slope must be zero there"],
+      answer: 0,
+      explain: "That's extrapolation. Nothing in the data shows ads still working the same way at five times the highest spend. You can give the number, but flag that it's a guess."
+    },
+    {
+      topic: "Negative slope",
+      q: "<p>A line reads <strong>Units ≈ 500 − 4 × Price</strong>. If the price rises by <strong>£10</strong>, what does the line expect?</p>",
+      options: ["About 4 fewer units", "About 10 fewer units", "About 40 fewer units", "About 460 units in total"],
+      answer: 2,
+      explain: "Each £1 goes with 4 fewer units, so £10 goes with 4 × 10 = 40 fewer. The minus sign means the line goes down as price goes up."
+    },
+    {
+      topic: "r²",
+      q: "<p>Two metrics have <strong>r = 0.9</strong>. What is r², and how is it usually read?</p>",
+      options: ["0.18: the line fits poorly", "0.81: about 81% follows the line", "0.95: nearly a perfect fit", "0.90: same as r, just renamed"],
+      answer: 1,
+      explain: "r² = 0.9 × 0.9 = 0.81. Roughly 81% of the ups and downs in Y line up with the trend line. The other 19% is other factors and noise."
+    },
+    {
+      topic: "Excel",
+      q: "<p>Ad spend is in <strong>A2:A13</strong> and sales in <strong>B2:B13</strong>. Which formula gives the slope of sales against ads?</p>",
+      options: ["=SLOPE(B2:B13, A2:A13)", "=SLOPE(A2:A13, B2:B13)", "=CORREL(B2:B13, A2:A13)", "=INTERCEPT(A2:A13, B2:B13)"],
+      answer: 0,
+      explain: "SLOPE takes the Y range (what you predict) first, then the X range. Swapping them gives the slope of ads against sales, a different number. CORREL gives r, not the slope."
+    },
+    {
+      topic: "Causation",
+      q: "<p>A manager says: \"The slope is 3, so every £1k we add to ads <em>will earn</em> £3k.\" What's the best reply?</p>",
+      options: ["Agree; that is what slope means", "Disagree; the slope should be 1", "Agree, but only if r² is above 0.5", "The slope shows a pattern, not cause"],
+      answer: 3,
+      explain: "A trend line is still correlation. Busy months might have both bigger ad budgets and more sales. To show cause, run a test (stage 7)."
+    },
+    {
+      topic: "Review: SD",
+      q: "<p>Bell-shaped delivery weights have <strong>mean 50 kg</strong> and <strong>SD 5 kg</strong>. About 95% of packages weigh between…</p>",
+      options: ["45 and 55 kg", "35 and 65 kg", "40 and 60 kg", "48 and 52 kg"],
+      answer: 2,
+      explain: "The 68–95–99.7 rule: about 95% fall within 2 SD of the mean. 2 × 5 = 10, so 50 − 10 = 40 to 50 + 10 = 60 kg."
+    }
+  ]
+});
+</script>
+</body>
+</html>

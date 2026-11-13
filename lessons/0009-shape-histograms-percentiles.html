@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>What Shape Is It</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/histogram.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0009 · Stage 5: Spread &amp; shape</p>
+<h1>What shape is it?</h1>
+<p class="subtitle">Histograms, skewed data, and percentiles: look at the shape first, then pick the right summary.</p>
+
+<div class="meta">
+  <span>⏱ 20–25 minutes, works on a phone</span>
+  <span>✎ Mostly reasoning, a little counting</span>
+  <span>🎯 Win: read a histogram, name its shape, and say which average and spread to report</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Distribution</dt><dd>How the values are spread across their range: where they pile up and where they thin out. Its "shape".</dd>
+    <dt>Histogram</dt><dd>A bar chart of a distribution. Each bar counts how many values fall in one range.</dd>
+    <dt>Bin</dt><dd>One of those ranges, for example €20 to €40. All bins have the same width.</dd>
+    <dt>Skewed</dt><dd>Lopsided. <strong>Right-skewed</strong> means a long tail of big values on the right. <strong>Left-skewed</strong> means a long tail on the left.</dd>
+    <dt>Percentile</dt><dd>The value with a given percentage of the data at or below it. P90 has 90% of values at or below it.</dd>
+  </dl>
+</div>
+
+<h2>From a list to a picture</h2>
+
+<p>A dot plot works for 10 values, but not for 10,000. A <strong>histogram</strong> groups values into equal-width <strong>bins</strong> and draws one bar per bin showing how many values landed there.</p>
+
+<p>Example: 30 order values with bins €0–20, €20–40, €40–60 and so on. If 15 orders fall between €20 and €40, that bar is 15 high. Tools differ on where a value sitting exactly on an edge goes. The chart below puts €40 in €40–60, but other tools may put it in the bin below, so don't be surprised if the counts shift by one.</p>
+
+<h2>Three shapes to recognise</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Shape</th><th>Looks like</th><th>Mean vs median</th><th>Typical business data</th></tr>
+  <tr><td><strong>Symmetric</strong></td><td>One hump in the middle, even on both sides (bell-shaped)</td><td>About equal</td><td>Heights, measurement errors, test scores</td></tr>
+  <tr><td><strong>Right-skewed</strong></td><td>Hump on the left, long tail to the right</td><td>Mean <strong>above</strong> median</td><td>Order values, incomes, house prices, delivery times, website session lengths</td></tr>
+  <tr><td><strong>Left-skewed</strong></td><td>Long tail to the left, hump on the right</td><td>Mean <strong>below</strong> median</td><td>Scores on an easy exam, product ratings out of 5</td></tr>
+</table>
+</div>
+
+<p>Why does the mean move? It gets <strong>pulled toward the tail</strong>, because a few huge values add a lot to the total. The median only cares about the middle position, so it stays put (<a href="https://www.openintro.org/book/os/">OpenIntro Statistics, §2.1</a>). This is the same effect you saw with one outlier in <a href="0002-finding-the-middle-median.html">Lesson 0002</a>, spread across a whole tail.</p>
+
+<div class="callout">
+  <span class="label">Most business money data is right-skewed</span>
+  <p>Amounts can't go below zero, but a few customers, deals or houses can be enormous. That's why "average salary" usually sounds higher than what a typical person earns. When you see money, expect a right skew and check the median.</p>
+</div>
+
+<h2>Percentiles: the general version of quartiles</h2>
+
+<p>You've already met three percentiles without the name: <strong>Q1 = P25</strong>, <strong>median = P50</strong>, <strong>Q3 = P75</strong>. Any other percentage works the same way.</p>
+
+<p>Businesses love <strong>P90 and P95</strong> because they describe the bad-but-normal case. "Median delivery is 3 days" sounds great. But "P95 delivery is 9 days" tells you that 1 order in 20 takes 9 days or longer, and those are the customers who complain.</p>
+
+<p>In Excel: <code>=PERCENTILE.INC(B2:B500, 0.9)</code>. The second argument is a fraction from 0 to 1, so 0.9 means P90 (<a href="https://support.microsoft.com/office/percentile-inc-function-680f9539-45eb-410b-9a5e-c1355e5fe2ed">Microsoft Support</a>).</p>
+
+<h2>Try it</h2>
+
+<p>Thirty order values (example figures, €). The <span style="color: var(--accent)">solid line</span> is the median, the dashed line is the mean, and the <span style="color: var(--good)">green dotted line</span> is the percentile you choose.</p>
+
+<div id="hist"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Change the bin width to <strong>5</strong>, then to <strong>50</strong>. Same data, but does the shape look the same? Bin width is a choice, and a bad one can hide the shape.</li>
+  <li>Delete the <code>120</code> and <code>160</code>. Which line moves more, the mean or the median?</li>
+  <li>Set the percentile to <strong>50</strong>. What do you notice? Then try 25 and 75. (They may differ slightly from your hand-calculated quartiles, for the same reason as in Lesson 0007.)</li>
+  <li>Type in something symmetric, like <code>2, 3, 3, 4, 4, 4, 5, 5, 6</code>, with bin width 1. Where do the mean and median sit?</li>
+</ol>
+
+<h2>The stage 5 decision, in one table</h2>
+
+<p>This closes stage 5. Everything comes down to one habit: <strong>look at the shape before you summarise</strong>.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Shape</th><th>Report the centre as</th><th>Report the spread as</th><th>Check for outliers with</th></tr>
+  <tr><td>Roughly symmetric</td><td>Mean</td><td>Standard deviation</td><td>1.5 × IQR fences (or a 2–3 SD distance)</td></tr>
+  <tr><td>Skewed</td><td>Median</td><td>IQR, plus P90/P95 if the tail matters</td><td>1.5 × IQR fences</td></tr>
+</table>
+</div>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> Insert → Insert Statistic Chart → Histogram. Excel picks a bin width automatically, and you can change it under Format Axis (<a href="https://support.microsoft.com/office/create-a-histogram-85680173-064b-4024-b39d-80f17ff2f4e8">Microsoft Support: Create a histogram</a>).</p>
+
+<p><strong>In Power BI:</strong> there's no one-click histogram. Instead you create <strong>bins</strong> on a numeric column (right-click the field → New group, set the bin size) and then put the bins on a column chart (<a href="https://learn.microsoft.com/power-bi/create-reports/desktop-grouping-and-binning">Microsoft Learn: Grouping and binning</a>). "Use grouping, binning, and clustering" is a listed PL-300 skill (<a href="https://learn.microsoft.com/certifications/resources/study-guides/pl-300">study guide</a>). <em>DAX preview, nothing to memorise:</em> <code>PERCENTILE.INC(Orders[Value], 0.9)</code>.</p>
+
+<p><strong>In interviews:</strong> "Our average order value went up 20%. Is that good news?" A strong answer: "Maybe. Order values are usually right-skewed, so a few huge orders could have moved the mean while the typical order didn't change. I'd check the median and the histogram."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF). In Chapter 2, read the parts on histograms and shape (skew, modes) and on robust statistics. They sit around the sections you read for lessons 0007 and 0008, about 4 pages in total.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering what "bimodal" means, how to choose a bin width, or what a log scale does to skewed data? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0008-standard-deviation.html">← 0008 How far from average?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0010-correlation-causation.html">Next: 0010 Moving together →</a>
+</div>
+
+</main>
+
+<script src="../assets/histogram.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+Histogram.mount(document.getElementById("hist"), {
+  values: [12, 15, 18, 19, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 33, 34, 35, 37, 38, 40, 42, 45, 48, 52, 58, 65, 75, 90, 120, 160],
+  binWidth: 20,
+  percentile: 90,
+  unit: "€"
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0009-shape-percentiles",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Histogram",
+      q: "<p>Values: <code>3, 7, 12, 14, 18, 25</code>. Bins are 0–10, 10–20 and 20–30. How tall is the 10–20 bar?</p>",
+      options: ["2", "3", "4", "6"],
+      answer: 1,
+      explain: "12, 14 and 18 fall between 10 and 20, so the bar is 3 high. 3 and 7 go in 0–10, and 25 goes in 20–30."
+    },
+    {
+      topic: "Skew",
+      q: "<p>A histogram has a hump on the left and a long tail stretching to the right. How do the mean and median compare?</p>",
+      options: ["Mean lower than median", "Mean equal to median", "Mean higher than median", "Cannot compare the two"],
+      answer: 2,
+      explain: "That's right-skewed. The few big values in the tail pull the mean up, while the median stays in the middle position. So the mean is above the median."
+    },
+    {
+      topic: "Skew",
+      q: "<p>Which of these is most likely to be strongly right-skewed?</p>",
+      options: ["Adult heights in a country", "Shoe sizes of adult men", "Daily temperatures in one July", "Household incomes in a country"],
+      answer: 3,
+      explain: "Incomes can't go below zero, but a few households earn many times the typical amount, which creates a long right tail. Heights, shoe sizes and temperatures in one month are roughly symmetric."
+    },
+    {
+      topic: "Percentiles",
+      q: "<p>A report says: \"P90 delivery time: <strong>4 days</strong>.\" What does that mean?</p>",
+      options: ["Ninety percent arrive within four days", "Ninety percent take exactly four days", "The average delivery takes four days", "Ten percent arrive within four days"],
+      answer: 0,
+      explain: "90% of deliveries take 4 days or less, and the slowest 10% take longer. It says nothing directly about the average."
+    },
+    {
+      topic: "Percentiles",
+      q: "<p>Which percentile is the median?</p>",
+      options: ["P25", "P50", "P75", "P100"],
+      answer: 1,
+      explain: "The median has half the values at or below it, so it's P50. P25 is Q1, P75 is Q3, and P100 is the maximum."
+    },
+    {
+      topic: "Excel",
+      q: "<p>Order values are in <strong>B2:B500</strong>. Which formula gives P95?</p>",
+      options: ["=PERCENTILE.INC(B2:B500,0.95)", "=PERCENTILE.INC(B2:B500,95)", "=QUARTILE.INC(B2:B500,0.95)", "=PERCENTILE.INC(B2:B500,9.5)"],
+      answer: 0,
+      explain: "PERCENTILE.INC takes a fraction from 0 to 1, so P95 is 0.95. Giving it 95 returns an error. QUARTILE.INC only takes 0–4."
+    },
+    {
+      topic: "Choosing a summary",
+      q: "<p>Order values are strongly right-skewed with a few huge orders. Which pair best summarises a typical order?</p>",
+      options: ["Mean and standard deviation", "Mean and full range", "Minimum and maximum values", "Median and interquartile range"],
+      answer: 3,
+      explain: "Skewed data → median and IQR, which both ignore the extreme tail. The mean and SD get pulled around by the huge orders, and the range and min/max only describe the extremes."
+    },
+    {
+      topic: "Review: CAGR",
+      q: "<p>Revenue grew from <strong>100</strong> to <strong>144</strong> over <strong>2</strong> years. What's the CAGR?</p>",
+      options: ["22%", "44%", "20%", "12%"],
+      answer: 2,
+      explain: "144 ÷ 100 = 1.44, and √1.44 = 1.2, because 1.2 × 1.2 = 1.44. So the CAGR is 20%. 22% splits the 44% total in half, which ignores compounding."
+    }
+  ]
+});
+</script>
+</body>
+</html>

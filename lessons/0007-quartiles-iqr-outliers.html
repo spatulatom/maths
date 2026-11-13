@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>How Far Is Too Far</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/boxplot.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0007 · Stage 5: Spread &amp; shape</p>
+<h1>How far is too far?</h1>
+<p class="subtitle">Measuring how spread out data is, and a simple rule that tells you when a value counts as an outlier.</p>
+
+<div class="meta">
+  <span>⏱ 20–25 minutes, works on a phone</span>
+  <span>✎ Pen and paper or mental math for the quiz</span>
+  <span>🎯 Win: find quartiles, the IQR, and outliers by hand, and read a box plot</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Spread</dt><dd>How far apart the values are. Also called variability or dispersion.</dd>
+    <dt>Range</dt><dd>Largest value minus smallest value.</dd>
+    <dt>Quartiles</dt><dd>Three cut points that split sorted data into four equal-sized groups. <strong>Q1</strong> is a quarter of the way up, <strong>Q2</strong> is the median, and <strong>Q3</strong> is three quarters of the way up.</dd>
+    <dt>IQR</dt><dd>Interquartile range: Q3 − Q1. The width of the middle half of the data.</dd>
+    <dt>Fences</dt><dd>The two cut-off lines for outliers. Anything outside them gets flagged.</dd>
+    <dt>Box plot</dt><dd>A chart that draws the quartiles as a box, with lines (called "whiskers") reaching out to the rest of the data. Also called a box-and-whisker chart.</dd>
+  </dl>
+</div>
+
+<h2>The average isn't the whole story</h2>
+
+<p>Two couriers deliver five parcels each. Delivery times in days:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Courier</th><th>Days</th><th>Mean</th><th>Median</th></tr>
+  <tr><td>A</td><td>4, 5, 5, 5, 6</td><td>5</td><td>5</td></tr>
+  <tr><td>B</td><td>1, 2, 5, 8, 9</td><td>5</td><td>5</td></tr>
+</table>
+</div>
+
+<p>Same mean (the everyday average), same median. But you'd trust courier A, because its times are <strong>bunched together</strong>. Courier B might take a day or nine. That difference is <strong>spread</strong>, and the mean and median can't show it.</p>
+
+<h2>Range: quick, but easily fooled</h2>
+
+<p>The simplest measure of spread is the <strong>range</strong>: max − min. Courier A: 6 − 4 = <strong>2</strong>. Courier B: 9 − 1 = <strong>8</strong>.</p>
+
+<p>The problem is that the range uses only the two most extreme values. One lost parcel that took 40 days would push courier A's range to 36, even though the other four deliveries were fine. It's the same weakness as the mean in <a href="0002-finding-the-middle-median.html">Lesson 0002</a>: one extreme value pulls the whole number.</p>
+
+<h2>Quartiles: medians of the halves</h2>
+
+<p>The fix mirrors the median: ignore the extremes and look at the middle. You already know how to find the middle of a list. Quartiles just do it twice more (<a href="https://www.openintro.org/book/os/">OpenIntro Statistics, §2.1</a>).</p>
+
+<p>Here are 11 delivery times, already sorted:</p>
+
+<p><code>2, 3, 3, 4, 4, <strong>5</strong>, 5, 6, 7, 8, 21</code></p>
+
+<ol class="steps">
+  <li><strong>Median (Q2):</strong> 11 values, so the 6th one: <strong>5</strong>.</li>
+  <li><strong>Split into halves.</strong> With an odd count, leave the median out. Lower half: <code>2, 3, 3, 4, 4</code>. Upper half: <code>5, 6, 7, 8, 21</code>.</li>
+  <li><strong>Q1</strong> is the median of the lower half: <strong>3</strong>.</li>
+  <li><strong>Q3</strong> is the median of the upper half: <strong>7</strong>.</li>
+  <li><strong>IQR</strong> = Q3 − Q1 = 7 − 3 = <strong>4</strong>.</li>
+</ol>
+
+<p>So the middle half of all deliveries took between 3 and 7 days. Notice that the 21 didn't affect the IQR at all. Change it to 210 and the IQR is still 4. That's why the IQR is the spread measure to use for messy, real-world data.</p>
+
+<div class="callout">
+  <span class="label">Even count?</span>
+  <p>With an even number of values, there's no single middle value to leave out. Just cut the list exactly in half. With 8 values, the lower half is the first 4 and the upper half is the last 4.</p>
+</div>
+
+<h2>The 1.5 × IQR rule</h2>
+
+<p>On 27 October you asked how far is "far enough" for an outlier. Here's the standard answer. A value is flagged as an outlier if it's more than <strong>1.5 × IQR</strong> beyond the box (<a href="https://courses.lumenlearning.com/suny-fmcc-introstats1/chapter/outliers/">Lumen Learning: Outliers</a>):</p>
+
+<ul>
+  <li><strong>Lower fence</strong> = Q1 − 1.5 × IQR</li>
+  <li><strong>Upper fence</strong> = Q3 + 1.5 × IQR</li>
+</ul>
+
+<p>For the delivery times: 1.5 × 4 = 6. Lower fence: 3 − 6 = <strong>−3</strong>. Upper fence: 7 + 6 = <strong>13</strong>. Nothing is below −3, but <strong>21 is above 13, so it's an outlier</strong>.</p>
+
+<div class="callout">
+  <span class="label">A rule of thumb, not a law</span>
+  <p>The 1.5 is a convention statisticians agreed on, not something that comes out of a proof. A flagged value means "go and look", not "delete it". Lumen Learning puts it as: potential outliers "always require further investigation".</p>
+</div>
+
+<h2>Try it: the box plot</h2>
+
+<p>The <span style="color: var(--accent)">box</span> runs from Q1 to Q3, and the thick line inside it is the median. The whiskers reach out to the furthest values that are still inside the fences. Outliers show up as <span style="color: var(--bad)">red dots</span>, and the dashed lines are the fences.</p>
+
+<div id="box"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Change the 21 to 12. Is it still an outlier? What value is the exact cut-off?</li>
+  <li>Change the 21 to 210. Watch the range jump while the IQR stays at 4.</li>
+  <li>Type in courier A (<code>4, 5, 5, 5, 6</code>) and then courier B (<code>1, 2, 5, 8, 9</code>). Compare the width of the boxes.</li>
+  <li>Change the 2 to a 0. Is it a low outlier? Look at where the lower fence is, and think about why delivery times here can never have a low outlier.</li>
+</ol>
+
+<h2>Found an outlier. Now what?</h2>
+
+<p>An outlier is a question, not an answer. In real data it's usually one of three things:</p>
+
+<ul>
+  <li><strong>A mistake:</strong> a typo (210 instead of 21), a test order, wrong units. Fix it or remove it, and write down that you did.</li>
+  <li><strong>A real but unusual event:</strong> one huge business customer, a parcel lost in a strike. Keep it, but maybe report the median instead of the mean.</li>
+  <li><strong>The actual story:</strong> fraud, a broken process, a viral product. Sometimes the outlier is the most important thing in the report.</li>
+</ul>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> <code>=QUARTILE.INC(A2:A20, 1)</code> gives Q1 and <code>=QUARTILE.INC(A2:A20, 3)</code> gives Q3 (<a href="https://support.microsoft.com/office/quartile-inc-function-1bbacc80-5075-42f1-aed6-47d735c4819d">Microsoft Support</a>). Excel uses a slightly different method from the hand method above, so on small lists its answers can be a little off from yours. Both are correct, they just follow different rules. Excel also has a built-in <a href="https://support.microsoft.com/office/create-a-box-and-whisker-chart-62f4219f-db4b-4754-aca8-4743f6190f0d">box and whisker chart</a>.</p>
+
+<p><strong>In Power BI (preview, nothing to memorise):</strong> a measure for Q1 looks like <code>PERCENTILE.INC(Orders[Days], 0.25)</code>, where 0.25 means "25% of the way up" (<a href="https://learn.microsoft.com/en-us/dax/percentile-inc-function-dax">DAX docs</a>). The PL-300 exam lists "Detect outliers and anomalies" as a skill (<a href="https://learn.microsoft.com/certifications/resources/study-guides/pl-300">study guide</a>), and this rule is the standard starting point.</p>
+
+<p><strong>In interviews:</strong> "How would you find outliers in this column?" A strong short answer: "Quartiles, then the 1.5 × IQR fences, and then I'd investigate each flagged value before deciding what to do with it."</p>
+
+<h2>Practice</h2>
+
+<p>Pen and paper helps for this one. The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF). Read the section on box plots, quartiles, and the median in Chapter 2 (about 3 pages). It uses the same "median of each half" idea and has a worked box plot.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering why it's 1.5 and not 2, what QUARTILE.EXC does, or how a box plot compares to a histogram? Ask me in the chat. Next up is standard deviation, the other big way to measure spread. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0006-compound-growth-cagr.html">← 0006 Growth on growth</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0008-standard-deviation.html">Next: 0008 How far from average? →</a>
+</div>
+
+</main>
+
+<script src="../assets/boxplot.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+BoxPlot.mount(document.getElementById("box"), {
+  values: [2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 21],
+  unit: "days"
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0007-iqr-outliers",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Range",
+      q: "<p>What is the range of <code>4, 9, 2, 15, 7</code>?</p>",
+      options: ["13", "11", "15", "9"],
+      answer: 0,
+      explain: "Range = max − min = 15 − 2 = 13. The order of the list doesn't matter; just find the biggest and smallest."
+    },
+    {
+      topic: "IQR",
+      q: "<p>Find the IQR of <code>1, 3, 5, 7, 9, 11, 13, 15</code>.</p>",
+      options: ["4", "12", "8", "14"],
+      answer: 2,
+      explain: "8 values, so cut in half. Lower half 1, 3, 5, 7 → Q1 = (3 + 5) ÷ 2 = 4. Upper half 9, 11, 13, 15 → Q3 = (11 + 13) ÷ 2 = 12. IQR = 12 − 4 = 8. (4 and 12 are Q1 and Q3, and 14 is the range.)"
+    },
+    {
+      topic: "Fences",
+      q: "<p>A dataset has <strong>Q1 = 20</strong> and <strong>Q3 = 30</strong>. Where is the upper fence?</p>",
+      options: ["40", "45", "50", "35"],
+      answer: 1,
+      explain: "IQR = 30 − 20 = 10. 1.5 × 10 = 15. Upper fence = Q3 + 15 = 45. Note that you add to Q3, not to the median or the max."
+    },
+    {
+      topic: "Outliers",
+      q: "<p>Order values (€) have <strong>Q1 = 10</strong> and <strong>Q3 = 18</strong>. Which of these orders is an outlier?</p>",
+      options: ["€0", "€25", "€29", "€31"],
+      answer: 3,
+      explain: "IQR = 8, and 1.5 × 8 = 12. Fences: 10 − 12 = −2 and 18 + 12 = 30. Only €31 is outside. €0 looks odd, but it's inside the lower fence of −2."
+    },
+    {
+      topic: "IQR vs range",
+      q: "<p>Why is the IQR usually better than the range for messy real-world data?</p>",
+      options: ["It always gives larger numbers", "It uses every single value", "It ignores the extreme quarters", "It is quicker to calculate"],
+      answer: 2,
+      explain: "The IQR only looks at the middle half, so one wild value can't move it. The range uses only the two most extreme values, so a single outlier hijacks it."
+    },
+    {
+      topic: "Judgement",
+      q: "<p>The 1.5 × IQR rule flags one order as an outlier. What should you do first?</p>",
+      options: ["Check what caused the value", "Delete it from the dataset", "Replace it with the mean", "Ignore it, fences are approximate"],
+      answer: 0,
+      explain: "A flag means \"go and look\". It could be a typo (fix it), a real big customer (keep it), or the most important finding in the report. Deleting it without checking hides information."
+    },
+    {
+      topic: "Excel",
+      q: "<p>Your data is in <strong>A2:A20</strong>. Which formula gives Q3?</p>",
+      options: ["=QUARTILE.INC(A2:A20,1)", "=QUARTILE.INC(A2:A20,4)", "=PERCENTILE.INC(A2:A20,3)", "=QUARTILE.INC(A2:A20,3)"],
+      answer: 3,
+      explain: "The second argument picks the quartile: 1 = Q1, 2 = median, 3 = Q3, 4 = max. PERCENTILE.INC wants a fraction from 0 to 1, so for Q3 it would need 0.75, not 3."
+    },
+    {
+      topic: "Review: weighted mean",
+      q: "<p>Store A had <strong>100</strong> orders averaging <strong>€20</strong>. Store B had <strong>300</strong> orders averaging <strong>€40</strong>. What's the average order across both stores?</p>",
+      options: ["€30", "€35", "€32.50", "€37.50"],
+      answer: 1,
+      explain: "Total revenue ÷ total orders: (100 × 20 + 300 × 40) ÷ 400 = (2,000 + 12,000) ÷ 400 = €35. €30 is the average of averages, which ignores that store B had three times as many orders."
+    }
+  ]
+});
+</script>
+</body>
+</html>

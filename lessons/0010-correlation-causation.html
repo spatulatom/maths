@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Moving Together</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/scatter.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0010 · Stage 6: Relationships</p>
+<h1>Moving together</h1>
+<p class="subtitle">Scatter plots, the correlation number r, and the three other explanations to rule out before anyone says "X causes Y".</p>
+
+<div class="meta">
+  <span>⏱ 20–25 minutes, works on a phone</span>
+  <span>✎ No calculation, all reasoning</span>
+  <span>🎯 Win: read r, spot when it lies, and challenge a "causes" claim in an interview</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Scatter plot</dt><dd>A chart with one dot per item (a store, a month, a customer), placed by two numbers: one across, one up.</dd>
+    <dt>Correlation</dt><dd>How closely two numbers move together in a straight-line pattern.</dd>
+    <dt>r</dt><dd>The correlation coefficient: one number from −1 to +1 that measures correlation. Say "r equals 0.8".</dd>
+    <dt>Causation</dt><dd>One thing actually <em>making</em> the other happen. Much harder to show than correlation.</dd>
+    <dt>Confounder</dt><dd>A hidden third factor that drives both numbers and makes them look connected. Also called a lurking variable.</dd>
+  </dl>
+</div>
+
+<h2>One dot per thing</h2>
+
+<p>Every chart so far showed <strong>one</strong> number per item. A scatter plot shows <strong>two</strong>. For example, each dot is a store, placed across by its advertising spend and up by its sales. If the dots drift up and to the right, stores that spend more also tend to sell more.</p>
+
+<h2>r: direction and strength in one number</h2>
+
+<p>The correlation coefficient <strong>r</strong> compresses that drift into a single number (<a href="https://www.openintro.org/book/os/">OpenIntro Statistics, Ch. 8</a>):</p>
+
+<ul>
+  <li>The <strong>sign</strong> gives the direction. Positive means they rise together. Negative means one rises as the other falls.</li>
+  <li>The <strong>size</strong> gives the strength. +1 or −1 means the dots sit perfectly on a straight line. 0 means no straight-line pattern at all.</li>
+</ul>
+
+<div class="table-wrap">
+<table>
+  <tr><th>|r| (size, ignoring the sign)</th><th>Rough reading</th></tr>
+  <tr><td>0.7 to 1</td><td>Strong</td></tr>
+  <tr><td>0.4 to 0.7</td><td>Moderate</td></tr>
+  <tr><td>0.1 to 0.4</td><td>Weak</td></tr>
+  <tr><td>below 0.1</td><td>Little or none</td></tr>
+</table>
+</div>
+
+<p class="small">These cut-offs are a common rule of thumb, not a standard. Different fields draw the lines in different places.</p>
+
+<p>So r = −0.9 is <strong>stronger</strong> than r = +0.6. The minus sign only tells you the direction.</p>
+
+<h2>Two ways r can lie</h2>
+
+<ol class="steps">
+  <li><strong>It only sees straight lines.</strong> Dots forming a perfect U-shape can have r ≈ 0, even though the two numbers are clearly related. r measures straight-line relationships only.</li>
+  <li><strong>One point can fake it.</strong> A shapeless cloud plus one extreme dot far away can produce r = 0.85. The single point does all the work.</li>
+</ol>
+
+<p>Both traps have the same fix: <strong>always look at the scatter plot before you trust r.</strong> It's the same habit as "look at the shape first" from <a href="0009-shape-histograms-percentiles.html">Lesson 0009</a>.</p>
+
+<h2>Try it</h2>
+
+<p>Pick a pattern and read r. Then tap inside the chart to add your own points.</p>
+
+<div id="sc"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Go through the first four patterns. Which has the biggest |r|? Is "strong negative" weaker than "strong positive"?</li>
+  <li>Open <strong>U-shape</strong>. The pattern is obvious, so why is r about 0?</li>
+  <li>Open <strong>Shapeless cluster</strong> (r ≈ 0). Now tap <em>once</em> in the far top-right corner. What happens to r?</li>
+  <li>Open <strong>Strong positive</strong> and add three points in the bottom-right corner. How fast does r drop?</li>
+</ol>
+
+<h2>Correlation is not causation</h2>
+
+<p>Suppose shops that spend more on ads have higher sales, with r = 0.8. That does <em>not</em> mean the ads caused the sales. Before believing "X causes Y", rule out three other explanations:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Explanation</th><th>What's really going on</th><th>Example</th></tr>
+  <tr><td><strong>Confounder</strong></td><td>A third factor drives both</td><td>Ice cream sales and sunburns rise together. Neither causes the other; sunny weather drives both.</td></tr>
+  <tr><td><strong>Reverse cause</strong></td><td>Y causes X, not the other way round</td><td>Fires with more firefighters cause more damage? No: bigger fires get more firefighters sent.</td></tr>
+  <tr><td><strong>Coincidence</strong></td><td>Two unrelated series happen to match</td><td>Tyler Vigen's <a href="https://tylervigen.com/spurious-correlations">Spurious Correlations</a> collects hundreds of these, such as cheese consumption tracking deaths from bedsheet tangling.</td></tr>
+</table>
+</div>
+
+<p>In the ads example, a likely confounder is <strong>store size</strong>. Big stores have bigger ad budgets <em>and</em> more customers. The usual way to actually test causation is a <strong>controlled experiment</strong>, such as an A/B test. You'll meet those in stage 7.</p>
+
+<div class="callout">
+  <span class="label">Words to use at work</span>
+  <p>Say "is associated with" or "moves with", not "drives" or "causes", unless there was an experiment. "Stores with higher ad spend tend to have higher sales (r = 0.8)" is accurate. "Ads drive sales" is a claim you can't back up from this data.</p>
+</div>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> <code>=CORREL(A2:A13, B2:B13)</code> returns r for two columns of the same length (<a href="https://support.microsoft.com/office/correl-function-995dcef7-0c0a-4bed-a3fb-239d7b68ca92">Microsoft Support: CORREL</a>). For a scatter plot, use Insert → Scatter.</p>
+
+<p><strong>In Power BI:</strong> the scatter chart visual plots one dot per category, using two measures (<a href="https://learn.microsoft.com/power-bi/visuals/power-bi-visualization-scatter">Microsoft Learn: Scatter charts</a>). There's no one-click r, but you can add a trend line, which is the topic of the next lesson.</p>
+
+<p><strong>In interviews:</strong> "Ad spend and sales correlate at 0.8. Should we double the ad budget?" A strong answer: "Not from this alone. Bigger stores might simply spend more and sell more. I'd check for confounders like store size, and ideally run a test: raise ads in some stores, not others, and compare."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF), Chapter 8: read the opening section on fitting a line and the part on correlation (about 4 pages). Then spend five minutes on <a href="https://tylervigen.com/spurious-correlations">Spurious Correlations</a>, purely for fun.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering what r² is, why correlation can't spot curves, or how A/B tests prove cause? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0009-shape-histograms-percentiles.html">← 0009 What shape is it?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0011-trend-lines-slope.html">Next: 0011 Drawing the line →</a>
+</div>
+
+</main>
+
+<script src="../assets/scatter.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+const cluster = Scatter.generate("none", 10, 20).map(([x, y]) => [Math.round(10 + x * 0.3), Math.round(10 + y * 0.3)]);
+
+Scatter.mount(document.getElementById("sc"), {
+  xLabel: "X", yLabel: "Y",
+  presets: [
+    { name: "Strong positive", points: Scatter.generate("positive", 1) },
+    { name: "Weak positive", points: Scatter.generate("weak", 4) },
+    { name: "Strong negative", points: Scatter.generate("negative", 3) },
+    { name: "No pattern", points: Scatter.generate("none", 11) },
+    { name: "U-shape", points: Scatter.generate("curve", 27) },
+    { name: "Shapeless cluster", points: cluster }
+  ]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0010-correlation",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Reading r",
+      q: "<p>Which of these shows the <strong>strongest</strong> relationship?</p>",
+      options: ["r = 0.45", "r = −0.10", "r = −0.90", "r = 0.70"],
+      answer: 2,
+      explain: "Strength is the size of r, ignoring the sign. |−0.90| = 0.90 is the biggest. The minus sign only means one goes up as the other goes down."
+    },
+    {
+      topic: "Reading r",
+      q: "<p>Across 50 products, price and units sold have <strong>r = −0.85</strong>. What does that tell you?</p>",
+      options: ["Higher price, usually fewer sold", "Higher price, usually more sold", "Price does not affect sales", "Price definitely causes lower sales"],
+      answer: 0,
+      explain: "Strong and negative: pricier products tend to sell fewer units. It's a pattern, not proof of cause. For example, pricier products might be niche items for other reasons."
+    },
+    {
+      topic: "Causation",
+      q: "<p>Across a summer, ice cream sales and sunburn cases are strongly correlated. What's the most likely explanation?</p>",
+      options: ["Ice cream causes sunburn", "Sunburn makes people buy ice cream", "It is pure coincidence", "Hot sunny weather drives both"],
+      answer: 3,
+      explain: "A confounder: sunny weather increases both ice cream sales and time in the sun. Neither causes the other."
+    },
+    {
+      topic: "r's blind spot",
+      q: "<p>A scatter plot shows a clear U-shape, but <strong>r ≈ 0</strong>. What's true?</p>",
+      options: ["There is no relationship at all", "There is a curved relationship", "The data must contain errors", "The variables are perfectly related"],
+      answer: 1,
+      explain: "r only measures straight-line relationships. A U-shape is a strong relationship, just not a straight one, so r misses it. That's why you always look at the plot."
+    },
+    {
+      topic: "Causation",
+      q: "<p>Data shows fires with more firefighters present end up with more damage. What's the best reading?</p>",
+      options: ["Firefighters cause the extra damage", "Send fewer firefighters to fires", "Bigger fires get more firefighters", "The correlation must be zero"],
+      answer: 2,
+      explain: "Reverse cause: the size of the fire decides how many firefighters are sent and how much damage happens. Sending fewer would make things worse."
+    },
+    {
+      topic: "Excel",
+      q: "<p>Monthly ad spend is in <strong>A2:A13</strong> and sales are in <strong>B2:B13</strong>. Which formula gives r?</p>",
+      options: ["=CORREL(A2:A13)", "=CORREL(A2:A13,B2:B13)", "=AVERAGE(A2:B13)", "=STDEV.S(A2:A13,B2:B13)"],
+      answer: 1,
+      explain: "CORREL takes two ranges of the same length and returns r. With one range there's nothing to correlate with."
+    },
+    {
+      topic: "Habit",
+      q: "<p>A colleague reports r = 0.85 between two metrics. What should you do before trusting it?</p>",
+      options: ["Round it to one decimal", "Square it to get a percent", "Compare it with the mean", "Look at the scatter plot"],
+      answer: 3,
+      explain: "One extreme point can create a high r from a shapeless cloud, and a curve can hide behind a low r. The plot shows you which situation you're in."
+    },
+    {
+      topic: "Review: fences",
+      q: "<p>A dataset has <strong>Q1 = 40</strong> and <strong>Q3 = 60</strong>. Where is the <em>lower</em> fence for outliers?</p>",
+      options: ["10", "20", "0", "30"],
+      answer: 0,
+      explain: "IQR = 60 − 40 = 20. 1.5 × 20 = 30. Lower fence = Q1 − 30 = 40 − 30 = 10. Anything below 10 is flagged."
+    }
+  ]
+});
+</script>
+</body>
+</html>

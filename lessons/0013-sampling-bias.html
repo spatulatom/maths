@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Who Did You Ask</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/sampler.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0013 · Stage 7: Uncertainty</p>
+<h1>Who did you ask?</h1>
+<p class="subtitle">Most numbers come from a sample, not from everyone. Size decides how much a sample wobbles. Bias decides whether it's aimed at the right target, and no amount of size fixes bias.</p>
+
+<div class="meta">
+  <span>⏱ 20–30 minutes, works on a phone</span>
+  <span>✎ No calculation, mostly reasoning</span>
+  <span>🎯 Win: tell "too small" apart from "biased", and name four common biases</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Population</dt><dd>Everyone you want to know about: all customers, all orders.</dd>
+    <dt>Sample</dt><dd>The part you actually measured: the 400 who answered the survey.</dd>
+    <dt>Random sample</dt><dd>A sample where every member of the population had the same chance of being picked.</dd>
+    <dt>Sampling error</dt><dd>The natural wobble between one sample's answer and the truth. Shrinks as the sample grows.</dd>
+    <dt>Bias</dt><dd>A <em>systematic</em> lean: the sample keeps missing in the same direction. Doesn't shrink as the sample grows.</dd>
+  </dl>
+</div>
+
+<h2>Samples are everywhere</h2>
+
+<p>You met the population/sample split in <a href="0008-standard-deviation.html">Lesson 0008</a>, where <code>STDEV.S</code> was the sample version. In business, samples show up constantly: customer surveys, user tests, a "random 5% of orders" audit, a pilot in three stores.</p>
+
+<p>Even complete data can be a sample of something bigger. This year's orders are a sample of how customers <em>tend</em> to behave, and next year's will differ a little.</p>
+
+<h2>Two different ways to be wrong</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th></th><th>Sampling error (wobble)</th><th>Bias (lean)</th></tr>
+  <tr><td><strong>What it looks like</strong></td><td>Each sample lands a bit off, randomly high or low</td><td>Samples land off in the <em>same</em> direction</td></tr>
+  <tr><td><strong>Cause</strong></td><td>Luck of the draw</td><td>How the sample was chosen</td></tr>
+  <tr><td><strong>Bigger sample?</strong></td><td>Helps</td><td>Doesn't help at all</td></tr>
+  <tr><td><strong>Fix</strong></td><td>More data</td><td>Change who you sample</td></tr>
+</table>
+</div>
+
+<p>Think of darts. Wobble is a spread-out cluster around the bullseye. Bias is a tight cluster in the wrong place.</p>
+
+<h3>How much does size help?</h3>
+
+<p>The wobble shrinks with the <strong>square root</strong> of the sample size. To halve it, you need <strong>four times</strong> as many people. Going from 100 to 400 halves the wobble; going from 100 to 200 only trims it by about 30%.</p>
+
+<p>That's why surveys of around 1,000 people are common: past that, each extra person buys very little extra precision.</p>
+
+<h2>Try it</h2>
+
+<p>A shop has 5,000 customers. Each "sample" surveys some of them at random and works out their average order value. Each dot is one sample's answer; the green line is the truth.</p>
+
+<div id="sm"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>With size <strong>10</strong>, press <strong>Draw 20 samples</strong>. How far from the green line do the dots land? Note the "typically miss by" number.</li>
+  <li>Switch to <strong>200</strong> and draw 20 again. Then <strong>1000</strong>. Is it four times bigger roughly half the miss?</li>
+  <li>Stay at 1000 and tick <strong>Biased survey</strong>. Draw 20. The dots are tight, so it <em>looks</em> precise. Where are they centred?</li>
+  <li>Switch the biased survey to size 10. Is it worse in a different way?</li>
+</ol>
+
+<h2>Four biases to name in a meeting</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bias</th><th>What happens</th><th>Business example</th></tr>
+  <tr><td><strong>Selection</strong></td><td>Some groups can't be picked</td><td>Surveying app users only, so customers who shop in store are never asked.</td></tr>
+  <tr><td><strong>Non-response</strong></td><td>Only some kinds of people answer</td><td>Very happy and very angry customers fill in surveys; the middle stays quiet.</td></tr>
+  <tr><td><strong>Survivorship</strong></td><td>You only see who's still around</td><td>Asking current customers why people leave. The ones who left aren't there to ask.</td></tr>
+  <tr><td><strong>Convenience</strong></td><td>You ask whoever is easiest</td><td>Testing a new design on colleagues, who know the product far better than customers do.</td></tr>
+</table>
+</div>
+
+<p>The question to ask of any number: <strong>who could have ended up in this data, and who couldn't?</strong></p>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> to take a fair random sample, add a column <code>=RAND()</code>, sort by it, and take the first N rows. Every row has the same chance of ending up near the top.</p>
+
+<p><strong>In Power BI:</strong> Power Query's column quality, distribution, and profile tools are based on the <strong>first 1,000 rows</strong> by default (<a href="https://learn.microsoft.com/power-query/data-profiling-tools">Microsoft Learn: Data profiling tools</a>). That's a sample, and not a random one: the first rows might all be the oldest orders. Click the status bar text at the bottom to switch to "Column profiling based on entire data set" before trusting min, max, or error counts.</p>
+
+<p><strong>In interviews:</strong> "Our survey of 5,000 customers says 92% are satisfied. Thoughts?" A strong answer: "5,000 is plenty for precision, so wobble isn't the worry. Bias is. Who was asked, and who replied? If it went to active app users, we've skipped lapsed customers, and they're the ones most likely to be unhappy."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF), Chapter 1, section 1.3 "Sampling principles and strategies": read the parts on populations and samples, anecdotal evidence, and bias (about 5 pages).</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering why the square root shows up, or how big a sample you'd need for a survey at work? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0012-probability-basics.html">← 0012 What are the chances?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0014-confidence-intervals.html">Next: 0014 Give or take →</a>
+</div>
+
+</main>
+
+<script src="../assets/sampler.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+Sampler.mount(document.getElementById("sm"), { sizes: [10, 50, 200, 1000], size: 10, showCI: false, allowBias: true });
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0013-sampling",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Words",
+      q: "<p>You survey <strong>400</strong> of your <strong>20,000</strong> customers. In statistics terms, the 400 are the…</p>",
+      options: ["population", "sample", "outliers", "confounders"],
+      answer: 1,
+      explain: "The 400 you measured are the sample. The 20,000 you want to learn about are the population."
+    },
+    {
+      topic: "Sample size",
+      q: "<p>What mostly happens when you take <strong>bigger</strong> random samples?</p>",
+      options: ["The answers lean higher", "Bias disappears completely", "The true average changes", "Answers wobble less around truth"],
+      answer: 3,
+      explain: "Bigger random samples bounce less around the true value. They don't move the truth, and they can't remove bias."
+    },
+    {
+      topic: "Square root",
+      q: "<p>A survey of <strong>100</strong> people wobbles too much. About how many do you need to <strong>halve</strong> the wobble?</p>",
+      options: ["400", "200", "150", "10,000"],
+      answer: 0,
+      explain: "The wobble shrinks with the square root of the size. Half the wobble needs 2² = 4 times the people: 100 → 400."
+    },
+    {
+      topic: "Bias",
+      q: "<p>A website poll gets <strong>50,000</strong> votes from visitors who chose to click it. How reliable is it for all customers?</p>",
+      options: ["Very; 50,000 is a huge sample", "Perfect, because it is online", "Size can't fix self-selection", "It depends only on the mean"],
+      answer: 2,
+      explain: "Self-selected voters differ from typical customers. A huge sample makes the wrong answer look precise, but it's still aimed at the wrong target."
+    },
+    {
+      topic: "Survivorship",
+      q: "<p>To learn why customers cancel, a team surveys <strong>current</strong> customers. What's the main problem?</p>",
+      options: ["The sample is too small", "Those who left aren't asked", "Surveys can't measure churn", "Current customers lie more"],
+      answer: 1,
+      explain: "Survivorship bias: the people with the answer, those who cancelled, aren't in the sample at all."
+    },
+    {
+      topic: "Power Query",
+      q: "<p>Power Query's column profile shows the smallest order is <strong>£5</strong>, but a report later finds a £0.50 order. Most likely reason?</p>",
+      options: ["The report has a calculation bug", "£0.50 orders are always errors", "Power Query rounds to whole £", "Profiling only read 1,000 rows"],
+      answer: 3,
+      explain: "By default, profiling is based on the first 1,000 rows, which is a sample. Switch to the entire data set before trusting min and max."
+    },
+    {
+      topic: "Random sampling",
+      q: "<p>Which of these gives a <strong>random</strong> sample of 200 customers from your customer list?</p>",
+      options: ["Sort by =RAND(), take the top 200", "The 200 most recent sign-ups", "200 customers who emailed support", "The first 200 rows of the table"],
+      answer: 0,
+      explain: "Only the RAND() sort gives every customer the same chance. The others pick a particular kind of customer: new, unhappy, or oldest."
+    },
+    {
+      topic: "Review: probability",
+      q: "<p><strong>60%</strong> of visitors view a product and <strong>50%</strong> of those add it to the basket. What share of all visitors add to the basket?</p>",
+      options: ["110%", "10%", "30%", "55%"],
+      answer: 2,
+      explain: "The AND rule: multiply. 0.6 × 0.5 = 0.3 = 30% of all visitors."
+    }
+  ]
+});
+</script>
+</body>
+</html>

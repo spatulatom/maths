@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>AND, OR, NOT</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/filters.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0017 · Logic</p>
+<h1>AND, OR, NOT</h1>
+<p class="subtitle">Every filter, slicer, and COUNTIFS is a small logic sentence. Get the sentence right and the numbers follow.</p>
+
+<div class="meta">
+  <span>⏱ 20–25 minutes, works on a phone</span>
+  <span>✎ No calculation, all logic</span>
+  <span>🎯 Win: predict how Power BI combines slicers, and avoid the NOT-and-blanks trap</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Condition</dt><dd>A yes/no test on a row: "Amount &gt; 100" is true or false for each row.</dd>
+    <dt>AND</dt><dd>Keep the row only if <em>all</em> conditions are true. Narrows.</dd>
+    <dt>OR</dt><dd>Keep the row if <em>at least one</em> condition is true. Widens.</dd>
+    <dt>NOT</dt><dd>Flip a condition: true becomes false, false becomes true.</dd>
+    <dt>Boolean</dt><dd>A true/false value. Named after George Boole, who wrote down these rules.</dd>
+  </dl>
+</div>
+
+<h2>AND narrows, OR widens</h2>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Row is North?</th><th>Amount &gt; 100?</th><th>North AND &gt; 100</th><th>North OR &gt; 100</th></tr>
+  <tr><td>✔</td><td>✔</td><td><strong>keep</strong></td><td><strong>keep</strong></td></tr>
+  <tr><td>✔</td><td>✘</td><td>drop</td><td><strong>keep</strong></td></tr>
+  <tr><td>✘</td><td>✔</td><td>drop</td><td><strong>keep</strong></td></tr>
+  <tr><td>✘</td><td>✘</td><td>drop</td><td>drop</td></tr>
+</table>
+</div>
+
+<p>Adding a condition with AND can only keep the same rows or fewer. Adding one with OR can only keep the same or more. If a filtered number looks too big or too small, check which word joins the conditions.</p>
+
+<h3>The classic slip</h3>
+
+<p>A manager asks for "sales in North and South". In logic, that's <strong>Region = North OR Region = South</strong>. Written as "Region = North AND Region = South", it returns <strong>nothing</strong>: no single row can be in two regions.</p>
+
+<h2>Brackets change the meaning</h2>
+
+<ul>
+  <li><strong>(North OR South) AND Amount &gt; 100</strong>: big orders from either region.</li>
+  <li><strong>North OR (South AND Amount &gt; 100)</strong>: <em>all</em> North orders, plus only the big South ones.</li>
+</ul>
+
+<p>Same words, different rows. When in doubt, add brackets, just like with order of operations in stage 1.</p>
+
+<h2>NOT, and the "neither" rule</h2>
+
+<p><strong>NOT (North OR South)</strong> means "neither North nor South", which equals <strong>NOT North AND NOT South</strong>. The NOT flips the OR into an AND. (This is called De Morgan's law, and it explains many "why is my filter wrong?" moments.)</p>
+
+<div class="callout">
+  <span class="label">Watch out: blanks</span>
+  <p>"Returned = Yes" is false for a row where Returned is blank. So <strong>NOT (Returned = Yes)</strong> keeps the blank rows too, along with the genuine "No" rows. If you meant "confirmed not returned", filter on <strong>Returned = No</strong> instead.</p>
+</div>
+
+<h2>Try it</h2>
+
+<p>Ten sales rows. Tick conditions, flip them with NOT, and choose AND or OR. Green rows are kept.</p>
+
+<div id="fl"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>It starts with <strong>Region = North AND Amount &gt; 100</strong>. Switch to <strong>OR</strong>. How many more rows appear?</li>
+  <li>Untick everything. Tick <strong>Region in (North, South)</strong> and <strong>Amount &gt; 100</strong> with AND. That's "(North OR South) AND big".</li>
+  <li>Untick everything. Tick <strong>Returned = Yes</strong> and press its <strong>NOT</strong>. Which row sneaks in that isn't a "No"?</li>
+  <li>Tick <strong>Region = North</strong> and <strong>Product = Tea</strong>. Compare the totals with AND and with OR.</li>
+</ol>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> <code>=AND(B2="North", C2&gt;100)</code>, <code>=OR(…)</code> and <code>=NOT(…)</code> return TRUE or FALSE. <code>COUNTIFS</code> and <code>SUMIFS</code> combine their conditions with AND. In the <code>FILTER</code> function, <code>*</code> between conditions means AND and <code>+</code> means OR.</p>
+
+<p><strong>In Power BI</strong>, the rule worth memorising:</p>
+
+<ul>
+  <li><strong>Several values in one slicer or filter</strong> (North and South ticked): combined with <strong>OR</strong>.</li>
+  <li><strong>Filters on different fields</strong> (Region slicer + Product slicer): combined with <strong>AND</strong>.</li>
+</ul>
+
+<p class="small">DAX preview, don't learn it yet: <code>CALCULATE([Sales], Sales[Region] = "North", Sales[Amount] &gt; 100)</code>. In plain words: sales where the region is North AND the amount is over 100. Filters listed with commas in CALCULATE combine with AND; for OR inside a filter, DAX uses <code>||</code>.</p>
+
+<p><strong>In interviews:</strong> "A dashboard shows £0 when the user picks North and South in two different slicers on the same Region column. Why?" A strong answer: "Two slicers on the same field combine with AND, and no row is both North and South. Use one slicer with both values ticked, which combines them with OR."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://learn.microsoft.com/power-bi/consumer/end-user-report-filter">Microsoft Learn: Take a tour of the report Filters pane</a>. Read how filters on a visual, a page, and the whole report stack together, which is AND across levels.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering how slicers interact across different visuals, or what "edit interactions" does? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0016-sets-joins.html">← 0016 Which rows survive?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0018-cardinality-relationships.html">Next: 0018 One to many →</a>
+</div>
+
+</main>
+
+<script src="../assets/filters.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+Filters.mount(document.getElementById("fl"), {
+  cols: ["Region", "Product", "Amount", "Returned"],
+  rows: [
+    ["North", "Tea", 120, "No"],
+    ["North", "Coffee", 80, "Yes"],
+    ["South", "Tea", 150, "No"],
+    ["South", "Coffee", 60, "No"],
+    ["East", "Tea", 200, "Yes"],
+    ["East", "Coffee", 90, "No"],
+    ["North", "Tea", 40, ""],
+    ["West", "Coffee", 130, "No"],
+    ["South", "Tea", 95, "Yes"],
+    ["West", "Tea", 110, "No"]
+  ],
+  sumCol: 2,
+  combine: "AND",
+  conditions: [
+    { label: "Region = North", test: (r) => r[0] === "North", on: true },
+    { label: "Region in (North, South)", test: (r) => r[0] === "North" || r[0] === "South" },
+    { label: "Amount > 100", test: (r) => r[2] > 100, on: true },
+    { label: "Returned = Yes", test: (r) => r[3] === "Yes" },
+    { label: "Product = Tea", test: (r) => r[1] === "Tea" }
+  ]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0017-logic",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "AND vs OR",
+      q: "<p>Compare <strong>North AND Amount &gt; 100</strong> with <strong>North OR Amount &gt; 100</strong>. Which keeps at least as many rows?</p>",
+      options: ["The AND version", "The OR version", "They always match", "It depends on blanks only"],
+      answer: 1,
+      explain: "OR keeps a row if any condition is true, so it keeps everything AND keeps, and possibly more."
+    },
+    {
+      topic: "Classic slip",
+      q: "<p>A filter reads <strong>Region = \"North\" AND Region = \"South\"</strong>. What does it return?</p>",
+      options: ["All North and South rows", "Only South rows", "Only North rows", "No rows at all"],
+      answer: 3,
+      explain: "No single row has two regions at once. 'North and South' in everyday speech means OR in logic."
+    },
+    {
+      topic: "Power BI slicers",
+      q: "<p>In one Region slicer, a user ticks <strong>North</strong> and <strong>South</strong>. How does Power BI combine them?</p>",
+      options: ["OR: rows in either region", "AND: rows in both regions", "NOT: rows in neither", "Only the last one ticked"],
+      answer: 0,
+      explain: "Multiple values in one slicer or filter combine with OR."
+    },
+    {
+      topic: "Power BI slicers",
+      q: "<p>A page has a Region slicer set to <strong>North</strong> and a Product slicer set to <strong>Tea</strong>. Which rows count?</p>",
+      options: ["North rows or Tea rows", "Everything except North Tea", "Rows that are North and Tea", "Only the first slicer applies"],
+      answer: 2,
+      explain: "Filters on different fields combine with AND: only North rows that are also Tea."
+    },
+    {
+      topic: "NOT",
+      q: "<p>Which means the same as <strong>NOT (Region = North OR Region = South)</strong>?</p>",
+      options: ["Not North OR not South", "North AND South", "North OR South", "Not North AND not South"],
+      answer: 3,
+      explain: "'Neither North nor South': NOT flips the OR into an AND (De Morgan's law). 'Not North OR not South' is true for every row."
+    },
+    {
+      topic: "Brackets",
+      q: "<p>What does <strong>(North OR South) AND Amount &gt; 100</strong> keep?</p>",
+      options: ["Big orders from North or South", "All North rows, big South rows", "All rows over 100 anywhere", "North and South, any amount"],
+      answer: 0,
+      explain: "The bracket is worked out first: in North or South. Then AND requires the amount to be over 100 as well."
+    },
+    {
+      topic: "Blanks",
+      q: "<p>The Returned column holds <strong>Yes</strong>, <strong>No</strong>, or <strong>blank</strong>. Which rows does <strong>NOT (Returned = Yes)</strong> keep?</p>",
+      options: ["Only the No rows", "Only the blank rows", "The No rows and the blank rows", "No rows; NOT ignores blanks"],
+      answer: 2,
+      explain: "'Returned = Yes' is false for blanks, so NOT makes it true. Blanks slip in. Filter on 'Returned = No' if you mean confirmed No."
+    },
+    {
+      topic: "Review: joins",
+      q: "<p>Which Power Query join keeps <strong>only</strong> rows whose key appears in <strong>both</strong> tables?</p>",
+      options: ["Left outer", "Inner", "Full outer", "Left anti"],
+      answer: 1,
+      explain: "Inner keeps matches only: the intersection of the Venn diagram."
+    }
+  ]
+});
+</script>
+</body>
+</html>

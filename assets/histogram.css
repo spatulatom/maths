@@ -1,0 +1,34 @@
+/* Styles for assets/histogram.js. Relies on tokens from style.css. */
+
+.histogram {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0;
+}
+.hist-label { display: block; font-family: var(--sans); font-size: 0.78rem; color: var(--muted); }
+.hist-input, .hist-small {
+  display: block; margin-top: 0.3rem;
+  font-family: var(--mono); font-size: 0.95rem; color: var(--text);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.6rem;
+}
+.hist-input { width: 100%; }
+.hist-small { width: 6.5rem; }
+.hist-input:focus, .hist-small:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.hist-controls { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; margin-top: 0.7rem; }
+
+.hist-svg { width: 100%; height: auto; display: block; margin: 0.6rem 0 0.2rem; }
+.hist-bar { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.2; }
+.hist-count { fill: var(--muted); font-family: var(--sans); font-size: 11px; }
+.hist-axis { stroke: var(--rule); stroke-width: 2; }
+.hist-grid { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 4; }
+.hist-tick { fill: var(--muted); font-family: var(--sans); font-size: 12px; }
+.hist-median { stroke: var(--accent); stroke-width: 2.5; }
+.hist-mean { stroke: var(--text); stroke-width: 2; stroke-dasharray: 5 4; opacity: 0.8; }
+.hist-pct { stroke: var(--good); stroke-width: 2; stroke-dasharray: 2 3; }
+.hist-median-label { fill: var(--accent); color: var(--accent); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+.hist-mean-label { fill: var(--text); color: var(--text); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+.hist-pct-label { fill: var(--good); color: var(--good); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+
+.hist-stats { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-size: 0.92rem; align-items: baseline; }
+.hist-stats > .small { flex-basis: 100%; }
+
+@media print { .hist-input, .hist-small { border: 0; padding: 0; } }

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Which Rows Survive</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/joins.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0016 · Logic</p>
+<h1>Which rows survive?</h1>
+<p class="subtitle">Joining two tables is set logic in disguise. Pick the join kind and you've picked which rows live, which die, and where the nulls appear.</p>
+
+<div class="meta">
+  <span>⏱ 25–30 minutes, best on a wider screen</span>
+  <span>✎ No calculation, all logic</span>
+  <span>🎯 Win: choose the right Power Query join for a task, and predict the row count</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Set</dt><dd>A collection of distinct things: the set of customer IDs, the set of products sold in March.</dd>
+    <dt>Intersection</dt><dd>Items in <em>both</em> sets. The overlap in a Venn diagram.</dd>
+    <dt>Union</dt><dd>Items in <em>either</em> set (or both).</dd>
+    <dt>Key</dt><dd>The column used to match rows between tables, such as CustomerID.</dd>
+    <dt>Join (merge)</dt><dd>Combining two tables side by side by matching their keys. Power Query calls it Merge.</dd>
+    <dt>null</dt><dd>"No value here." Appears when a row had nothing to match.</dd>
+  </dl>
+</div>
+
+<h2>Sets first</h2>
+
+<p>Take customers who ordered in January (set A) and in February (set B). Three questions come up all the time:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Question</th><th>Set idea</th><th>Venn region</th></tr>
+  <tr><td>Who ordered in <strong>both</strong> months? (repeat customers)</td><td>Intersection, A AND B</td><td>The overlap</td></tr>
+  <tr><td>Who ordered in <strong>either</strong> month? (active customers)</td><td>Union, A OR B</td><td>Both circles</td></tr>
+  <tr><td>Who ordered in January <strong>but not</strong> February? (lapsed)</td><td>Difference, A NOT B</td><td>Left circle minus the overlap</td></tr>
+</table>
+</div>
+
+<p>Counting the union is the overlap rule from <a href="0012-probability-basics.html">Lesson 0012</a>: |A| + |B| − |both|. Without subtracting, repeat customers get counted twice.</p>
+
+<h2>Joins are sets of rows</h2>
+
+<p>A join matches rows from two tables on a key. Power Query's Merge offers six <strong>join kinds</strong>, and each one keeps a different part of the Venn diagram (<a href="https://learn.microsoft.com/power-query/merge-queries-overview">Microsoft Learn: Merge queries overview</a>). The <strong>left</strong> table is the one you start the merge from, shown at the top of the Merge dialog.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Join kind</th><th>Keeps</th><th>Typical task</th></tr>
+  <tr><td><strong>Left outer</strong> (default)</td><td>All left rows + matches</td><td>Add customer names to every order</td></tr>
+  <tr><td><strong>Right outer</strong></td><td>All right rows + matches</td><td>Same idea, other way round</td></tr>
+  <tr><td><strong>Full outer</strong></td><td>Everything from both</td><td>Reconcile two systems</td></tr>
+  <tr><td><strong>Inner</strong></td><td>Only matches</td><td>Orders with a known customer</td></tr>
+  <tr><td><strong>Left anti</strong></td><td>Left rows with <em>no</em> match</td><td>Find orders with an unknown customer ID (data quality)</td></tr>
+  <tr><td><strong>Right anti</strong></td><td>Right rows with no match</td><td>Find customers who never ordered</td></tr>
+</table>
+</div>
+
+<h2>Try it</h2>
+
+<p>Orders is the left table and Customers the right. Grey italic rows in the sources have no partner in the other table.</p>
+
+<div id="jn"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Start at <strong>Left outer</strong>. How many rows? Which order gets a null name, and why?</li>
+  <li>Switch to <strong>Inner</strong>. Which row disappeared? What happened to total Amount?</li>
+  <li>Try <strong>Left anti</strong> and <strong>Right anti</strong>. Which one would you send to the data team as a bug, and which to marketing?</li>
+  <li><strong>Full outer</strong>: count the rows. Does it equal Inner + Left anti + Right anti?</li>
+</ol>
+
+<h2>The row-count check</h2>
+
+<p>After any join, check the row count. With a <strong>left outer</strong> join where each key appears <strong>only once</strong> on the right, the result has exactly as many rows as the left table. If it has more, the right table has duplicate keys and some rows were copied. That's the subject of <a href="0018-cardinality-relationships.html">Lesson 0018</a>.</p>
+
+<h2>Merge vs Append</h2>
+
+<p>Power Query has two ways to combine tables, and the exam likes to test which is which:</p>
+
+<ul>
+  <li><strong>Merge</strong> joins side by side, matching keys. Columns are added.</li>
+  <li><strong>Append</strong> stacks one table under another, such as January's sales under February's. Rows are added, and the columns should match.</li>
+</ul>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> <code>=XLOOKUP(B2, Customers[CustID], Customers[Name], "not found")</code> works like a left outer join for one column. Every order keeps its row, and unmatched ones show "not found".</p>
+
+<p><strong>In Power BI:</strong> Home → Merge queries in Power Query, then pick the join kind. After merging, you <em>expand</em> the new column to choose which right-table columns to bring in. PL-300 lists "merge and append queries" under preparing data.</p>
+
+<p><strong>In interviews:</strong> "How would you find customers who signed up but never ordered?" A strong answer: "A left anti join from Customers to Orders on CustomerID, which is the same as a right anti if Orders is on the left. Or in SQL, a LEFT JOIN where the order ID IS NULL."</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://learn.microsoft.com/power-query/merge-queries-overview">Microsoft Learn: Merge queries overview</a>. Read the join kinds table, then click into one or two of the linked join-kind pages (each has a small before/after example, like the one above).</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering how this maps to SQL's JOIN, or what "fuzzy matching" in the Merge dialog does? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0015-ab-tests-p-values.html">← 0015 Did it really work?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0017-and-or-not-filters.html">Next: 0017 AND, OR, NOT →</a>
+</div>
+
+</main>
+
+<script src="../assets/joins.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+Joins.mount(document.getElementById("jn"), {
+  sumCol: "Amount",
+  presets: [{
+    name: "Orders and customers",
+    left: {
+      name: "Orders", key: "CustID", cols: ["OrderID", "CustID", "Amount"],
+      rows: [[101, "C1", 40], [102, "C2", 25], [103, "C1", 60], [104, "C4", 30], [105, "C9", 55]]
+    },
+    right: {
+      name: "Customers", key: "CustID", cols: ["CustID", "Name"],
+      rows: [["C1", "Ana"], ["C2", "Ben"], ["C3", "Chloé"], ["C4", "Dev"], ["C5", "Eli"]]
+    }
+  }]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0016-joins",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Sets",
+      q: "<p>You want customers who ordered in <strong>both</strong> January and February. Which set operation is that?</p>",
+      options: ["Intersection", "Difference", "Union", "Complement"],
+      answer: 0,
+      explain: "'Both' is the intersection: the overlap of the two circles. Union would be 'either month'."
+    },
+    {
+      topic: "Row count",
+      q: "<p>Orders has <strong>500</strong> rows. You left-outer-join Customers, where each CustomerID appears <strong>once</strong>. How many rows result?</p>",
+      options: ["500 × customers", "Fewer than 500", "500", "Can't be known"],
+      answer: 2,
+      explain: "Left outer keeps every left row. With unique keys on the right, each order matches at most one customer, so exactly 500 rows."
+    },
+    {
+      topic: "Anti joins",
+      q: "<p>You want orders whose CustomerID <strong>doesn't exist</strong> in the Customers table. Orders is on the left. Which join?</p>",
+      options: ["Inner", "Full outer", "Right anti", "Left anti"],
+      answer: 3,
+      explain: "Left anti keeps left rows with no match on the right. Those are orders pointing at unknown customers, which is a data quality problem to report."
+    },
+    {
+      topic: "Inner vs left",
+      q: "<p>Switching a merge from <strong>left outer</strong> to <strong>inner</strong> made total sales drop. Why?</p>",
+      options: ["Inner joins round the amounts", "Unmatched orders were dropped", "Inner joins remove duplicates", "Inner keeps right rows only"],
+      answer: 1,
+      explain: "Inner keeps only rows with a match on both sides. Orders with unknown customers vanished, along with their amounts."
+    },
+    {
+      topic: "Merge vs append",
+      q: "<p>You have January and February sales tables with the <strong>same columns</strong>. You want one table with all rows. Which operation?</p>",
+      options: ["Merge, inner join", "Append", "Merge, full outer", "Left anti join"],
+      answer: 1,
+      explain: "Stacking tables with the same columns is Append. Merge matches rows side by side on a key."
+    },
+    {
+      topic: "Anti joins",
+      q: "<p>With Orders on the left and Customers on the right, what does a <strong>right anti</strong> join return?</p>",
+      options: ["Every row from both tables", "Orders without a customer", "Customers with many orders", "Customers who never ordered"],
+      answer: 3,
+      explain: "Right anti keeps right-table rows (customers) with no match on the left (no orders). A handy list for a win-back campaign."
+    },
+    {
+      topic: "Nulls",
+      q: "<p>After a left outer join, some rows show <strong>null</strong> in the Customer Name column. What does that mean?</p>",
+      options: ["The customer's name is blank", "Power Query had an error", "No matching key on the right", "The order amount is zero"],
+      answer: 2,
+      explain: "null means the left row's key found no partner in the right table, so there was nothing to fill in."
+    },
+    {
+      topic: "Review: p-values",
+      q: "<p>An A/B test reports <strong>p = 0.40</strong>. What's the honest summary?</p>",
+      options: ["No difference shown yet", "B is 40% better", "A and B are identical", "B is 60% likely better"],
+      answer: 0,
+      explain: "Luck easily explains a gap like this. We haven't shown a difference, but haven't proven there's none either."
+    }
+  ]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* Styles for assets/scatter.js. Relies on tokens from style.css. */
+
+.scatter {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0;
+}
+.sc-presets { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.sc-presets button {
+  font-family: var(--sans); font-size: 0.82rem; color: var(--text);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 999px;
+  padding: 0.35rem 0.8rem; cursor: pointer;
+}
+.sc-presets button:hover { border-color: var(--accent); }
+.sc-presets button.is-active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.sc-presets button.sc-tool { border-style: dashed; color: var(--muted); }
+.sc-presets button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sc-hint { margin: 0.5rem 0 0; }
+
+.sc-svg { width: 100%; height: auto; display: block; margin: 0.4rem 0 0.2rem; cursor: crosshair; touch-action: manipulation; }
+.sc-plot { fill: var(--bg); stroke: var(--rule); }
+.sc-grid { stroke: var(--rule); stroke-width: 1; }
+.sc-tick { fill: var(--muted); font-family: var(--sans); font-size: 12px; }
+.sc-axis-label { fill: var(--muted); font-family: var(--sans); font-size: 13px; font-weight: 600; }
+.sc-dot { fill: var(--accent); fill-opacity: 0.75; stroke: var(--bg); stroke-width: 1; }
+.sc-trend { stroke: var(--text); stroke-width: 2.5; stroke-dasharray: 7 5; opacity: 0.8; }
+
+.sc-stats { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-size: 0.92rem; align-items: baseline; }
+.sc-r { color: var(--accent); font-size: 1.05rem; }
+
+.sc-guide { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.sc-pred { fill: var(--bg); stroke: var(--accent); stroke-width: 3; }
+.sc-pred.is-warn { stroke: #c2410c; }
+
+.sc-predict { margin-top: 0.8rem; padding-top: 0.7rem; border-top: 1px solid var(--rule); font-size: 0.92rem; }
+.sc-predict input {
+  font: inherit; width: 8rem; margin-left: 0.3rem; padding: 0.3rem 0.5rem;
+  color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px;
+}
+.sc-predict input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sc-predict-msg { margin: 0.5rem 0 0; }
+.sc-predict-msg.is-warn { color: #c2410c; font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sc-pred.is-warn { stroke: #fb923c; }
+  :root:not([data-theme="light"]) .sc-predict-msg.is-warn { color: #fb923c; }
+}
+:root[data-theme="dark"] .sc-pred.is-warn { stroke: #fb923c; }
+:root[data-theme="dark"] .sc-predict-msg.is-warn { color: #fb923c; }
+
+@media print { .sc-presets, .sc-hint { display: none; } }

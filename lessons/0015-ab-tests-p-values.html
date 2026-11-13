@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Did It Really Work</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/abtest.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0015 · Stage 7: Uncertainty</p>
+<h1>Did it really work?</h1>
+<p class="subtitle">A/B tests are how businesses actually prove cause. The p-value answers one narrow question: could plain luck explain this gap?</p>
+
+<div class="meta">
+  <span>⏱ 25–30 minutes, works on a phone</span>
+  <span>✎ No calculation, all reading and reasoning</span>
+  <span>🎯 Win: read a p-value correctly and spot the three classic A/B test mistakes</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>A/B test</dt><dd>Randomly show half your visitors version A and half version B, then compare results.</dd>
+    <dt>Null hypothesis</dt><dd>The boring starting assumption: "there's no real difference between A and B".</dd>
+    <dt>p-value</dt><dd>If there really were no difference, the chance of seeing a gap at least this big by luck alone.</dd>
+    <dt>Statistically significant</dt><dd>p is below an agreed cut-off, usually 0.05. Luck alone is an unlikely explanation.</dd>
+    <dt>False positive</dt><dd>A "significant" result when there's really no difference. A false alarm.</dd>
+  </dl>
+</div>
+
+<h2>Why A/B tests prove cause</h2>
+
+<p>In <a href="0010-correlation-causation.html">Lesson 0010</a>, correlation couldn't prove cause because of confounders. An A/B test fixes that with a <strong>random split</strong>. A coin flip decides who sees B, so both groups have the same mix of big and small spenders, phone and laptop users, everything.</p>
+
+<p>If the groups then behave differently, the only systematic difference left is the version they saw. That's what makes it a <em>controlled experiment</em>.</p>
+
+<h2>The catch: luck</h2>
+
+<p>Even two <em>identical</em> pages won't get exactly the same conversion rate. Random visitors bounce around, as the samples did in <a href="0013-sampling-bias.html">Lesson 0013</a>. So when B beats A by 0.6 points, the question is: <strong>real, or just the bounce?</strong></p>
+
+<h2>The p-value, in one sentence</h2>
+
+<div class="callout">
+  <p style="margin:0"><strong>"If A and B were truly the same, how often would luck alone produce a gap at least this big?"</strong></p>
+</div>
+
+<ul>
+  <li><strong>Small p</strong> (e.g. 0.01): luck would rarely do this. We call the result statistically significant.</li>
+  <li><strong>Big p</strong> (e.g. 0.40): luck easily does this. We haven't shown a difference. That's not the same as showing there's none.</li>
+  <li>The usual cut-off is <strong>0.05</strong>: a 1-in-20 chance of a gap that big from luck.</li>
+</ul>
+
+<h3>What the p-value is NOT</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Common misreading</th><th>Reality</th></tr>
+  <tr><td>"p = 0.03 means a 97% chance B is better"</td><td>No. It's the chance of the data <em>assuming no difference</em>, not the chance of the hypothesis.</td></tr>
+  <tr><td>"Significant means big"</td><td>No. With millions of visitors, a tiny 0.05-point gap can be significant and still not worth anything.</td></tr>
+  <tr><td>"Not significant means no effect"</td><td>No. The test may simply be too small to tell. Check the interval for the gap.</td></tr>
+</table>
+</div>
+
+<h2>Try it</h2>
+
+<p>You set the <em>true</em> conversion rates, which in real life you never know. Each run simulates a test and reports what an analyst would see.</p>
+
+<div id="ab"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Pick <strong>No real difference</strong>, 2,000 visitors. Press <strong>Run it 20 times</strong> several times. About what share of runs come out "significant"? These are all false positives.</li>
+  <li>Pick <strong>Small real lift</strong> (5% → 6%), 2,000 visitors. Run 20 times. How often does the test <em>miss</em> a lift that's really there?</li>
+  <li>Same lift, switch to <strong>10,000</strong> visitors. How often does it catch it now?</li>
+  <li>Pick <strong>Big lift</strong> (5% → 8%) with only <strong>200</strong> visitors. Even big effects can hide in tiny tests.</li>
+</ol>
+
+<h2>Three classic mistakes</h2>
+
+<ol class="steps">
+  <li><strong>Peeking.</strong> Checking every day and stopping the first time p dips below 0.05. Results bounce, so if you check often enough, you'll catch a lucky dip. Decide the sample size up front.</li>
+  <li><strong>Testing 20 things.</strong> Compare 20 metrics with no real difference and, on average, one will be "significant" by luck (1 in 20). Pick the main metric before the test.</li>
+  <li><strong>Too small.</strong> Small tests miss real effects. "No significant difference" from 200 visitors tells you almost nothing.</li>
+</ol>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> for comparing two <em>averages</em> (such as order values), <code>=T.TEST(A2:A500, B2:B500, 2, 3)</code> returns a p-value (<a href="https://support.microsoft.com/office/t-test-function-d4e08ec3-c545-485f-962e-276f7cbed055">Microsoft Support: T.TEST</a>). The 2 means "two-tailed" (a difference in either direction) and the 3 means the groups can have different spreads. For conversion rates, analysts usually use an online A/B test calculator or the testing tool's own report.</p>
+
+<p><strong>In Power BI:</strong> tests are run in other tools, but the results often land in dashboards. You'll read "uplift", "p-value", or "confidence" columns, and need to say what they mean.</p>
+
+<p><strong>In interviews:</strong> "Our A/B test showed B up 0.2 points, p = 0.01, on 3 million visitors. Should we ship it?" A strong answer: "It's very likely a real effect, but it's small. I'd check what 0.2 points is worth in revenue against the cost of building and maintaining B. Also, was the sample size fixed in advance, and was conversion the main metric we planned to test?"</p>
+
+<h2>Practice</h2>
+
+<p>The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF), Chapter 5, section 5.3 "Hypothesis testing for a proportion": read up to and including "Decision errors" (about 8 pages). For a visual take, StatQuest's "p-values, clearly explained" on <a href="https://www.youtube.com/@statquest">YouTube</a>.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Wondering how big a test needs to be, or why 0.05 and not 0.01? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0014-confidence-intervals.html">← 0014 Give or take</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0016-sets-joins.html">Next: 0016 Which rows survive? →</a>
+</div>
+
+</main>
+
+<script src="../assets/abtest.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+ABTest.mount(document.getElementById("ab"), {
+  rateA: 5, rateB: 5, visitors: 2000, sizes: [200, 2000, 10000, 50000],
+  presets: [
+    { name: "No real difference (5% vs 5%)", rateA: 5, rateB: 5 },
+    { name: "Small real lift (5% vs 6%)", rateA: 5, rateB: 6 },
+    { name: "Big lift (5% vs 8%)", rateA: 5, rateB: 8 }
+  ]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0015-ab-tests",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Why A/B tests",
+      q: "<p>Why can an A/B test show <strong>cause</strong> when a correlation can't?</p>",
+      options: ["It uses more data than correlation", "Random split balances confounders", "It always gives a p-value of 0", "It measures two metrics at once"],
+      answer: 1,
+      explain: "A coin flip decides who sees B, so the groups match on everything else. The version is the only systematic difference left."
+    },
+    {
+      topic: "p-value",
+      q: "<p>Which sentence best describes a p-value of <strong>0.02</strong>?</p>",
+      options: ["A 2% chance that B is better", "A 98% chance that B is better", "B is 2% better than A", "If no real gap, luck gives this 2% of the time"],
+      answer: 3,
+      explain: "The p-value assumes there's no real difference, then asks how often luck would produce a gap this big. It isn't the chance the hypothesis is true."
+    },
+    {
+      topic: "Big p",
+      q: "<p>A test gives <strong>p = 0.30</strong>. What's the right conclusion?</p>",
+      options: ["Luck could explain it; not shown", "A and B are proven identical", "B is 30% better than A", "The test has a calculation error"],
+      answer: 0,
+      explain: "Luck produces gaps like this often, so we haven't shown a difference. That doesn't prove there's none; the test may be too small."
+    },
+    {
+      topic: "Significant vs important",
+      q: "<p>With <strong>2 million</strong> visitors, B beats A by <strong>0.05 points</strong>, p = 0.001. What's the best reading?</p>",
+      options: ["Huge win, ship immediately", "It must be a false positive", "Likely real, but may be too small to matter", "p is too small to be trusted"],
+      answer: 2,
+      explain: "Huge samples make tiny gaps significant. Significant means 'probably real', not 'big'. Check what the gain is worth."
+    },
+    {
+      topic: "Too small",
+      q: "<p>A test with <strong>100 visitors</strong> per version finds no significant difference. What should you conclude?</p>",
+      options: ["The versions are the same", "B is worse than A", "A p-value can't be computed", "The test was too small to tell"],
+      answer: 3,
+      explain: "Small tests miss real effects often, as the simulator showed. 'Not significant' here mostly means 'not enough data'."
+    },
+    {
+      topic: "Many metrics",
+      q: "<p>An analyst compares A and B on <strong>20 metrics</strong>. One shows p = 0.04. What's the concern?</p>",
+      options: ["One in 20 is expected by luck", "p = 0.04 is too high to report", "20 metrics is too few", "The other 19 must be wrong"],
+      answer: 0,
+      explain: "With a 0.05 cut-off and no real differences, about 1 in 20 comparisons comes out 'significant' by chance. Decide the main metric up front."
+    },
+    {
+      topic: "Peeking",
+      q: "<p>A team checks the test <strong>every day</strong> and stops as soon as p drops below 0.05. What's the problem?</p>",
+      options: ["Daily checks slow the website", "p-values only work on Mondays", "It catches lucky dips: more false wins", "Nothing; stopping early saves money"],
+      answer: 2,
+      explain: "p bounces around during a test. Checking often and stopping at the first dip makes false positives much more likely. Fix the sample size in advance."
+    },
+    {
+      topic: "Review: intervals",
+      q: "<p>A sample of <strong>400</strong> orders has SD <strong>£40</strong>. What's the rough 95% margin of error for the average?</p>",
+      options: ["± £2", "± £4", "± £40", "± £80"],
+      answer: 1,
+      explain: "SE = 40 ÷ √400 = 40 ÷ 20 = £2. Margin ≈ 2 × SE = £4."
+    }
+  ]
+});
+</script>
+</body>
+</html>

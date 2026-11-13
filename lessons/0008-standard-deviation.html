@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>How Far From Average</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/quiz.css">
+<link rel="stylesheet" href="../assets/deviation.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lesson 0008 · Stage 5: Spread &amp; shape</p>
+<h1>How far from average?</h1>
+<p class="subtitle">Standard deviation: the spread number that goes with the mean, what it means in plain words, and which Excel function to use.</p>
+
+<div class="meta">
+  <span>⏱ 20–25 minutes, works on a phone</span>
+  <span>✎ Pen and paper for one question, the rest is reasoning</span>
+  <span>🎯 Win: explain standard deviation in one sentence, and know when to use it instead of the IQR</span>
+</div>
+
+<div class="callout newwords">
+  <span class="label">New words</span>
+  <dl>
+    <dt>Deviation</dt><dd>How far one value is from the mean (the everyday average): value − mean. It can be negative.</dd>
+    <dt>Standard deviation (SD)</dt><dd>Roughly, the typical distance of a value from the mean. Small SD: values bunch together. Big SD: they're scattered.</dd>
+    <dt>Variance</dt><dd>The SD before taking the square root. You'll see the word, but you'll rarely report it.</dd>
+    <dt>Population / sample</dt><dd>Population: every value you care about (all 12 stores). Sample: a subset standing in for a bigger group (200 surveyed customers out of 10,000).</dd>
+    <dt>Bell-shaped</dt><dd>Data that piles up in the middle and thins out evenly on both sides. Also called a normal distribution.</dd>
+  </dl>
+</div>
+
+<h2>A partner for the mean</h2>
+
+<p>In <a href="0007-quartiles-iqr-outliers.html">Lesson 0007</a>, the IQR measured spread around the <strong>median</strong>. Standard deviation measures spread around the <strong>mean</strong>. Remember the two couriers, both averaging 5 days:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Courier</th><th>Days</th><th>Mean</th><th>SD</th></tr>
+  <tr><td>A</td><td>4, 5, 5, 5, 6</td><td>5</td><td>0.63</td></tr>
+  <tr><td>B</td><td>1, 2, 5, 8, 9</td><td>5</td><td>3.16</td></tr>
+</table>
+</div>
+
+<p>In plain words: courier A's deliveries are usually <strong>well under a day</strong> away from the average, while courier B's are usually <strong>about 3 days</strong> away. That one sentence is how you explain standard deviation to a manager.</p>
+
+<h2>How it's calculated</h2>
+
+<p>You won't do this by hand at work, since Excel does it. But seeing the steps once makes the number make sense. Take <code>2, 4, 4, 4, 5, 5, 7, 9</code> (<a href="https://www.openintro.org/book/os/">OpenIntro Statistics, §2.1</a>):</p>
+
+<ol class="steps">
+  <li><strong>Mean:</strong> 40 ÷ 8 = <strong>5</strong>.</li>
+  <li><strong>Deviations</strong> (value − mean): −3, −1, −1, −1, 0, 0, 2, 4.</li>
+  <li><strong>Square each one:</strong> 9, 1, 1, 1, 0, 0, 4, 16. They add up to <strong>32</strong>.</li>
+  <li><strong>Average the squares:</strong> 32 ÷ 8 = <strong>4</strong>. This is the variance.</li>
+  <li><strong>Square root:</strong> √4 = <strong>2</strong>. That's the standard deviation.</li>
+</ol>
+
+<div class="callout">
+  <span class="label">Why square, then square-root?</span>
+  <p>Add up the deviations in step 2 and you get <strong>0</strong>. You always will, because the values above the mean exactly balance the ones below. Squaring makes every distance positive so nothing cancels out. The square root at the end brings the answer back to the original units (days, not "days squared").</p>
+</div>
+
+<h2>Two versions in Excel</h2>
+
+<p>Step 4 has a twist. If your data is a <strong>sample</strong>, you divide by <strong>n − 1</strong> instead of n (32 ÷ 7 instead of 32 ÷ 8). This corrects for the fact that a sample tends to underestimate the spread of the whole group. Excel has one function for each (<a href="https://support.microsoft.com/office/stdev-s-function-7d69cf97-0c1f-4acf-be27-f3e83904cc23">Microsoft Support: STDEV.S</a>):</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Your data is…</th><th>Use</th><th>Divides by</th><th>Example above</th></tr>
+  <tr><td>every value you care about</td><td><code>=STDEV.P(range)</code></td><td>n</td><td>2</td></tr>
+  <tr><td>a sample of a bigger group</td><td><code>=STDEV.S(range)</code></td><td>n − 1</td><td>2.14</td></tr>
+</table>
+</div>
+
+<p>With hundreds of rows, the two answers are almost the same. What matters is that you can say which one you used and why.</p>
+
+<h2>The 68–95–99.7 rule</h2>
+
+<p>For <strong>bell-shaped</strong> data, the SD tells you where most values are (<a href="https://math.libretexts.org/Courses/Lumen_Learning/Mathematics_for_the_Liberal_Arts_(Lumen)/11:_Statistics/11.09:_The_Empirical_Rule">Lumen Learning: The Empirical Rule</a>):</p>
+
+<ul>
+  <li>About <strong>68%</strong> of values are within <strong>1 SD</strong> of the mean.</li>
+  <li>About <strong>95%</strong> are within <strong>2 SD</strong>.</li>
+  <li>About <strong>99.7%</strong> are within <strong>3 SD</strong>.</li>
+</ul>
+
+<p>Example: if call-centre wait times are bell-shaped with mean 10 minutes and SD 2, then about 95% of callers wait between <strong>6 and 14 minutes</strong> (10 ± 2 × 2). Only use this rule when the data really is roughly bell-shaped. With skewed data like salaries or order values, the percentages are wrong.</p>
+
+<h2>Try it</h2>
+
+<p>Each row is one value. The bar runs from the mean (dashed line) out to the value: <span style="color: var(--good)">green</span> is above the mean, <span style="color: var(--bad)">red</span> is below. The shaded band is mean ± 1 SD. The table underneath shows every step.</p>
+
+<div id="dev"></div>
+
+<h3>Experiments</h3>
+<ol class="steps">
+  <li>Change the 9 to 30. How much does the SD jump? Last lesson, the IQR ignored an outlier like this. The SD can't, because squaring makes big distances count extra.</li>
+  <li>Make every value the same, for example <code>5, 5, 5, 5</code>. What's the SD? Why?</li>
+  <li>Add 10 to every value (<code>12, 14, 14, 14, 15, 15, 17, 19</code>). The mean moves. Does the SD?</li>
+  <li>Double every value (<code>4, 8, 8, 8, 10, 10, 14, 18</code>). What happens to the SD?</li>
+</ol>
+
+<h2>SD or IQR?</h2>
+
+<p>They're both measures of spread, but each one goes with its own kind of centre:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Data looks like</th><th>Centre</th><th>Spread</th></tr>
+  <tr><td>Roughly symmetric, no wild values (test scores, heights, package weights)</td><td>Mean</td><td>Standard deviation</td></tr>
+  <tr><td>Skewed or has outliers (salaries, house prices, order values)</td><td>Median</td><td>IQR</td></tr>
+</table>
+</div>
+
+<p>Same reasoning as <a href="0002-finding-the-middle-median.html">Lesson 0002</a>: the mean and SD both get pulled around by extreme values, while the median and IQR don't.</p>
+
+<h2>Where you'll meet this</h2>
+
+<p><strong>In Excel:</strong> <code>=STDEV.S(B2:B201)</code> or <code>=STDEV.P(B2:B13)</code>. The old <code>STDEV</code> function still works, but Microsoft recommends the newer two.</p>
+
+<p><strong>In Power BI:</strong> when you profile a numeric column in Power Query, the column statistics include the average and the standard deviation (<a href="https://learn.microsoft.com/en-us/training/modules/clean-data-power-bi/6-profile-data">Microsoft Learn: Profile data in Power BI</a>). By default it looks at only the first 1,000 rows. That's the "Evaluate data, including data statistics" skill on the PL-300. <em>DAX preview, nothing to memorise:</em> <code>STDEV.S(Orders[Days])</code> works the same way as in Excel.</p>
+
+<p><strong>In interviews:</strong> "Explain standard deviation to someone non-technical." A strong answer: "It's roughly how far a typical value is from the average. Small means consistent, big means all over the place."</p>
+
+<h2>Practice</h2>
+
+<p>Question 3 needs pen and paper, and the numbers are small. The last question revisits an earlier lesson.</p>
+
+<div id="quiz"></div>
+
+<div class="callout">
+  <span class="label">Primary source</span>
+  <p><a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (free PDF). Read the "Variance and standard deviation" part of Chapter 2, which is just before the box plots section you read last time (about 3 pages). If you'd rather watch, search for <a href="https://www.youtube.com/@statquest">StatQuest</a>'s video on standard deviation.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Ask me anything</span>
+  <p>Curious why it's n − 1 exactly, what a z-score is, or how the SD can spot outliers too? Ask me in the chat. When you're done, paste your quiz results.</p>
+</div>
+
+<div class="footer">
+  <a href="0007-quartiles-iqr-outliers.html">← 0007 How far is too far?</a>
+  <a href="../reference/roadmap.html">Roadmap</a>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="0009-shape-histograms-percentiles.html">Next: 0009 What shape is it? →</a>
+</div>
+
+</main>
+
+<script src="../assets/deviation.js"></script>
+<script src="../assets/quiz.js"></script>
+<script>
+Deviation.mount(document.getElementById("dev"), {
+  values: [2, 4, 4, 4, 5, 5, 7, 9]
+});
+
+Quiz.mount(document.getElementById("quiz"), {
+  id: "0008-standard-deviation",
+  allowUnsure: true,
+  questions: [
+    {
+      topic: "Meaning",
+      q: "<p>Set A: <code>48, 50, 52</code>. Set B: <code>10, 50, 90</code>. Both have a mean of 50. Which has the larger standard deviation?</p>",
+      options: ["Set A has the larger SD", "Set B has the larger SD", "Both SDs are exactly equal", "Not enough data to say"],
+      answer: 1,
+      explain: "Set B's values sit 40 away from the mean, while set A's sit only 2 away. A bigger typical distance from the mean means a bigger SD."
+    },
+    {
+      topic: "Meaning",
+      q: "<p>What is the standard deviation of <code>7, 7, 7, 7</code>?</p>",
+      options: ["7", "1", "28", "0"],
+      answer: 3,
+      explain: "Every value equals the mean, so every deviation is 0. No spread at all means SD = 0."
+    },
+    {
+      topic: "Calculation",
+      q: "<p>Find the population SD (divide by n) of <code>1, 1, 5, 5</code>.</p>",
+      options: ["2", "4", "3", "1"],
+      answer: 0,
+      explain: "Mean = 3. Deviations: −2, −2, 2, 2. Squares: 4, 4, 4, 4, which sum to 16. 16 ÷ 4 = 4 (the variance). √4 = 2. If you picked 4, you forgot the square root."
+    },
+    {
+      topic: "68–95–99.7",
+      q: "<p>Bell-shaped data has mean <strong>50</strong> and SD <strong>5</strong>. About 95% of values lie between…</p>",
+      options: ["45 and 55", "35 and 65", "40 and 60", "48 and 52"],
+      answer: 2,
+      explain: "95% is within 2 SD: 50 ± 2 × 5 = 40 to 60. 45–55 is 1 SD (about 68%), and 35–65 is 3 SD (about 99.7%)."
+    },
+    {
+      topic: "SD vs IQR",
+      q: "<p>You add one huge outlier to a dataset. Which number changes the most?</p>",
+      options: ["Q1 moves the most", "The median moves most", "The IQR moves most", "The SD moves most"],
+      answer: 3,
+      explain: "The SD uses every value's distance from the mean, and squaring makes big distances count extra. The median, Q1 and IQR barely move, which is why they're the safer choice for messy data."
+    },
+    {
+      topic: "Excel",
+      q: "<p>You surveyed <strong>200</strong> of your <strong>10,000</strong> customers about delivery satisfaction (scores in B2:B201). Which formula fits?</p>",
+      options: ["=STDEV.P(B2:B201)", "=STDEV.S(B2:B201)", "=AVERAGE(B2:B201)", "=QUARTILE.INC(B2:B201,3)"],
+      answer: 1,
+      explain: "200 customers is a sample standing in for all 10,000, so use STDEV.S (which divides by n − 1). STDEV.P is for when you have every value you care about."
+    },
+    {
+      topic: "Why square",
+      q: "<p>Why are the deviations squared before averaging them?</p>",
+      options: ["To make the final number bigger", "To make it quicker to calculate", "So negatives and positives don't cancel", "So the units stay the same"],
+      answer: 2,
+      explain: "Deviations above and below the mean always add up to 0. Squaring makes them all positive. (The units actually get squared too, which is why you take the square root at the end.)"
+    },
+    {
+      topic: "Review: MoM",
+      q: "<p>Sales were <strong>80</strong> in March and <strong>100</strong> in April. What's the month-over-month change?</p>",
+      options: ["+25%", "+20%", "+80%", "+0.25%"],
+      answer: 0,
+      explain: "(new − old) ÷ old = (100 − 80) ÷ 80 = 20 ÷ 80 = 0.25 = +25%. +20% divides by the new value instead of the old one."
+    }
+  ]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+/* Styles for assets/abtest.js. Relies on tokens from style.css. */
+
+.abtest {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.1rem; margin: 1.4rem 0; font-family: var(--sans); font-size: 0.9rem;
+}
+.ab-setup { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; align-items: center; }
+.ab-presets, .ab-sizes, .ab-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.ab-presets { flex-basis: 100%; }
+.ab-actions { margin-top: 0.7rem; }
+.ab-label { color: var(--muted); margin-right: 0.3rem; }
+.ab-num input {
+  width: 4.2rem; font: inherit; padding: 0.2rem 0.3rem; text-align: right;
+  color: var(--text); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px;
+}
+.abtest button {
+  font: inherit; font-size: 0.85rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 0.35rem 0.8rem; cursor: pointer;
+}
+.abtest button:hover { border-color: var(--accent); }
+.abtest button.is-active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.abtest button.ab-tool { border-style: dashed; color: var(--muted); }
+.abtest button:focus-visible, .ab-num input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.ab-out { margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid var(--rule); }
+.ab-out p { margin: 0 0 0.45rem; }
+.ab-truth { color: var(--muted); font-style: italic; }
+.ab-table { margin: 0.2rem 0 0.6rem; font-size: 0.88rem; }
+.ab-sig { color: var(--good); font-weight: 600; }
+.ab-ns { color: var(--muted); font-weight: 600; }
+
+.ab-grid { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 0.3rem; }
+.ab-grid span { width: 12px; height: 12px; border-radius: 2px; background: var(--rule); }
+.ab-grid span.is-sig { background: var(--good); }
