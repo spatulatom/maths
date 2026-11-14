@@ -137,6 +137,16 @@ ol.steps { padding-left: 1.3rem; }
 }
 .footer a { margin-right: 1rem; }
 
+/* Top navigation: previous / roadmap / next */
+.topnav {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem 1rem;
+  margin: -1.5rem 0 2rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule);
+  font-family: var(--sans); font-size: 0.8rem; color: var(--muted);
+}
+.topnav .tn-mid { color: var(--muted); }
+.topnav .tn-next { margin-left: auto; text-align: right; }
+@media print { .topnav { display: none; } }
+
 .small { font-size: 0.85rem; color: var(--muted); }
 
 @media (max-width: 520px) {
