@@ -72,6 +72,21 @@
   <p>Add up the deviations in step 2 and you get <strong>0</strong>. You always will, because the values above the mean exactly balance the ones below. Squaring makes every distance positive so nothing cancels out. The square root at the end brings the answer back to the original units (days, not "days squared").</p>
 </div>
 
+<div class="callout">
+  <span class="label">Why not just the average distance?</span>
+  <p>The plain distances from the mean are 3, 1, 1, 1, 0, 0, 2, 4. Their average is 12 ÷ 8 = <strong>1.5</strong>, but the SD is <strong>2</strong>.</p>
+  <p>The order of the steps explains it. Step 4 averages the distances while they're still squared, so far values count extra: a distance of 4 counts as 16, while a distance of 1 stays 1. The square root in step 5 brings the units back to normal, but it can't take that extra weight back out.</p>
+  <p>Two sets with the same average distance can have different SDs:</p>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Data</th><th>Distances from 5</th><th>Average distance</th><th>SD</th></tr>
+    <tr><td>3, 3, 7, 7</td><td>2, 2, 2, 2</td><td>2</td><td>2</td></tr>
+    <tr><td>1, 5, 5, 9</td><td>4, 0, 0, 4</td><td>2</td><td>2.83</td></tr>
+  </table>
+  </div>
+  <p>The SD equals the average distance only when every value is the same distance from the mean. Otherwise it's bigger, which is why this lesson calls it the <em>typical</em> distance, not the average one.</p>
+</div>
+
 <h2>Two versions in Excel</h2>
 
 <p>Step 4 has a twist. If your data is a <strong>sample</strong>, you divide by <strong>n − 1</strong> instead of n (32 ÷ 7 instead of 32 ÷ 8). This corrects for the fact that a sample tends to underestimate the spread of the whole group. Excel has one function for each (<a href="https://support.microsoft.com/office/stdev-s-function-7d69cf97-0c1f-4acf-be27-f3e83904cc23">Microsoft Support: STDEV.S</a>):</p>
