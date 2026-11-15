@@ -75,6 +75,8 @@
   <p>"Returned = Yes" is false for a row where Returned is blank. So <strong>NOT (Returned = Yes)</strong> keeps the blank rows too, along with the genuine "No" rows. If you meant "confirmed not returned", filter on <strong>Returned = No</strong> instead.</p>
 </div>
 
+<p class="small"><strong>SQL does the opposite.</strong> That rule holds in Excel, Power Query and DAX. In SQL, comparing a NULL with anything gives "unknown", and <code>WHERE NOT (Returned = 'Yes')</code> <em>drops</em> the NULL rows. To keep them you add <code>OR Returned IS NULL</code>. Either way, decide on purpose what happens to blanks.</p>
+
 <h2>Try it</h2>
 
 <p>Ten sales rows. Tick conditions, flip them with NOT, and choose AND or OR. Green rows are kept.</p>

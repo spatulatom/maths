@@ -97,7 +97,7 @@
 <table>
   <tr><th>Explanation</th><th>What's really going on</th><th>Example</th></tr>
   <tr><td><strong>Confounder</strong></td><td>A third factor drives both</td><td>Ice cream sales and sunburns rise together. Neither causes the other; sunny weather drives both.</td></tr>
-  <tr><td><strong>Reverse cause</strong></td><td>Y causes X, not the other way round</td><td>Fires with more firefighters cause more damage? No: bigger fires get more firefighters sent.</td></tr>
+  <tr><td><strong>Reverse cause</strong></td><td>Y causes X, not the other way round</td><td>Shops that run more discounts have lower sales. Do discounts hurt sales? More likely the arrow points the other way: weak sales make managers discount.</td></tr>
   <tr><td><strong>Coincidence</strong></td><td>Two unrelated series happen to match</td><td>Tyler Vigen's <a href="https://tylervigen.com/spurious-correlations">Spurious Correlations</a> collects hundreds of these, such as cheese consumption tracking deaths from bedsheet tangling.</td></tr>
 </table>
 </div>
@@ -113,7 +113,7 @@
 
 <p><strong>In Excel:</strong> <code>=CORREL(A2:A13, B2:B13)</code> returns r for two columns of the same length (<a href="https://support.microsoft.com/office/correl-function-995dcef7-0c0a-4bed-a3fb-239d7b68ca92">Microsoft Support: CORREL</a>). For a scatter plot, use Insert → Scatter.</p>
 
-<p><strong>In Power BI:</strong> the scatter chart visual plots one dot per category, using two measures (<a href="https://learn.microsoft.com/power-bi/visuals/power-bi-visualization-scatter">Microsoft Learn: Scatter charts</a>). There's no one-click r, but you can add a trend line, which is the topic of the next lesson.</p>
+<p><strong>In Power BI:</strong> the scatter chart visual plots one dot per category, using two measures (<a href="https://learn.microsoft.com/power-bi/visuals/power-bi-visualization-scatter">Microsoft Learn: Scatter charts</a>). For r itself, Power BI's quick measures include a ready-made "Correlation coefficient" (<a href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-quick-measures">Microsoft Learn: Quick measures</a>). You can also add a trend line, which is the topic of the next lesson.</p>
 
 <p><strong>In interviews:</strong> "Ad spend and sales correlate at 0.8. Should we double the ad budget?" A strong answer: "Not from this alone. Bigger stores might simply spend more and sell more. I'd check for confounders like store size, and ideally run a test: raise ads in some stores, not others, and compare."</p>
 
@@ -193,10 +193,10 @@ Quiz.mount(document.getElementById("quiz"), {
     },
     {
       topic: "Causation",
-      q: "<p>Data shows fires with more firefighters present end up with more damage. What's the best reading?</p>",
-      options: ["Firefighters cause the extra damage", "Send fewer firefighters to fires", "Bigger fires get more firefighters", "The correlation must be zero"],
+      q: "<p>Across 40 shops, the ones running more discounts have <em>lower</em> sales. What's the best reading?</p>",
+      options: ["Discounts are pushing sales down", "Stop all discounts straight away", "Weak sales lead to more discounts", "The correlation must be zero"],
       answer: 2,
-      explain: "Reverse cause: the size of the fire decides how many firefighters are sent and how much damage happens. Sending fewer would make things worse."
+      explain: "Reverse cause: the arrow runs from sales to discounts. Managers cut prices <em>because</em> sales are weak, so stopping discounts wouldn't lift sales."
     },
     {
       topic: "Excel",
