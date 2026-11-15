@@ -28,6 +28,7 @@ Quiz dates come from the learning records.
 | 11 Nov 2026 | Standard deviation (0008) |
 | 12 Nov 2026 | Histograms, skew and percentiles (0009) |
 | 13 Nov 2026 | Correlation and trend lines (0010–0011); lessons 0012–0019 written |
+| 15 Nov 2026 | Probability (0012) |
 
 *The repository history was consolidated into a single commit on 13 Nov 2026 to remove personal information. The work itself happened on the dates above.*
 
