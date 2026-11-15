@@ -78,6 +78,18 @@
 
 <p>So the middle half of all deliveries took between 3 and 7 days. Notice that the 21 didn't affect the IQR at all. Change it to 210 and the IQR is still 4. That's why the IQR is the spread measure to use for messy, real-world data.</p>
 
+<p>Picture the values as dots on a number line. The IQR is the <strong>width</strong> of the stretch from Q1 (3) to Q3 (7): 4 days.</p>
+
+<pre style="font-family: var(--mono); background: var(--code-bg); padding: 0.75rem 1rem; border-radius: 6px; overflow-x: auto; line-height: 1.25;">
+   •  •  •
+•  •  •  •  •  •  •     •
+2  3  4  5  6  7  8  …  21
+   |===========|
+   Q1          Q3
+</pre>
+
+<p>The numbers along the bottom are just a ruler, and the dots are the data. The 21 sits far off to the right, outside the stretch, so it can't change the width.</p>
+
 <div class="callout">
   <span class="label">Even count?</span>
   <p>With an even number of values, there's no single middle value to leave out. Just cut the list exactly in half. With 8 values, the lower half is the first 4 and the upper half is the last 4.</p>
