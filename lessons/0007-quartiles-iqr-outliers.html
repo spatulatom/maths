@@ -34,7 +34,7 @@
     <dt>Spread</dt><dd>How far apart the values are. Also called variability or dispersion.</dd>
     <dt>Range</dt><dd>Largest value minus smallest value.</dd>
     <dt>Quartiles</dt><dd>Three cut points that split sorted data into four equal-sized groups. <strong>Q1</strong> is a quarter of the way up, <strong>Q2</strong> is the median, and <strong>Q3</strong> is three quarters of the way up.</dd>
-    <dt>IQR</dt><dd>Interquartile range: Q3 − Q1. The width of the middle half of the data.</dd>
+    <dt>IQR</dt><dd>Interquartile range: Q3 − Q1. The width of the stretch that holds the middle 50% of the values.</dd>
     <dt>Fences</dt><dd>The two cut-off lines for outliers. Anything outside them gets flagged.</dd>
     <dt>Box plot</dt><dd>A chart that draws the quartiles as a box, with lines (called "whiskers") reaching out to the rest of the data. Also called a box-and-whisker chart.</dd>
   </dl>
@@ -93,7 +93,7 @@ Describing data
 
 <p>So the middle half of all deliveries took between 3 and 7 days. Notice that the 21 didn't affect the IQR at all. Change it to 210 and the IQR is still 4. That's why the IQR is the spread measure to use for messy, real-world data.</p>
 
-<p>Picture the values as dots on a number line. The IQR is the <strong>width</strong> of the stretch from Q1 (3) to Q3 (7): 4 days.</p>
+<p>Picture the values as dots on a number line. The IQR is the <strong>width</strong> of the stretch from Q1 (3) to Q3 (7): 4 days. "Middle half" counts the values, and the width is the distance they cover.</p>
 
 <pre style="font-family: var(--mono); background: var(--code-bg); padding: 0.75rem 1rem; border-radius: 6px; overflow-x: auto; line-height: 1.25;">
    •  •  •
