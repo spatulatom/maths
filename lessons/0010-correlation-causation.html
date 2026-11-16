@@ -20,10 +20,10 @@
 
 <p class="kicker">Lesson 0010 · Stage 6: Relationships</p>
 <h1>Moving together</h1>
-<p class="subtitle">Scatter plots, the correlation number r, and the three other explanations to rule out before anyone says "X causes Y".</p>
+<p class="subtitle">Until now you described one column at a time. Now put two columns side by side and ask: when one goes up, does the other? A scatter plot shows it, the number r measures it, and "causes" is the trap to avoid.</p>
 
 <div class="meta">
-  <span>⏱ 20–25 minutes, works on a phone</span>
+  <span>⏱ 25–30 minutes, works on a phone</span>
   <span>✎ No calculation, all reasoning</span>
   <span>🎯 Win: read r, spot when it lies, and challenge a "causes" claim in an interview</span>
 </div>
@@ -31,17 +31,146 @@
 <div class="callout newwords">
   <span class="label">New words</span>
   <dl>
-    <dt>Scatter plot</dt><dd>A chart with one dot per item (a store, a month, a customer), placed by two numbers: one across, one up.</dd>
-    <dt>Correlation</dt><dd>How closely two numbers move together in a straight-line pattern.</dd>
+    <dt>Paired data</dt><dd>Two numbers that belong to the same item, like one delivery's distance and its time. In a table, they're two cells in the same row.</dd>
+    <dt>Scatter plot</dt><dd>A chart with one dot per item (per row), placed by its two numbers: one across, one up.</dd>
+    <dt>Correlation</dt><dd>How closely two columns move together, row by row, in a straight-line pattern.</dd>
     <dt>r</dt><dd>The correlation coefficient: one number from −1 to +1 that measures correlation. Say "r equals 0.8".</dd>
     <dt>Causation</dt><dd>One thing actually <em>making</em> the other happen. Much harder to show than correlation.</dd>
     <dt>Confounder</dt><dd>A hidden third factor that drives both numbers and makes them look connected. Also called a lurking variable.</dd>
   </dl>
 </div>
 
-<h2>One dot per thing</h2>
+<h2>From one column to two</h2>
 
-<p>Every chart so far showed <strong>one</strong> number per item. A scatter plot shows <strong>two</strong>. For example, each dot is a store, placed across by its advertising spend and up by its sales. If the dots drift up and to the right, stores that spend more also tend to sell more.</p>
+<p>Here's a small table of eight deliveries. Each row is one delivery, with two numbers:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Delivery</th><th>Distance (km)</th><th>Time (min)</th></tr>
+  <tr><td>A</td><td>3</td><td>14</td></tr>
+  <tr><td>B</td><td>5</td><td>18</td></tr>
+  <tr><td>C</td><td>8</td><td>30</td></tr>
+  <tr><td>D</td><td>12</td><td>35</td></tr>
+  <tr><td>E</td><td>15</td><td>38</td></tr>
+  <tr><td>F</td><td>18</td><td>50</td></tr>
+  <tr><td>G</td><td>20</td><td>52</td></tr>
+  <tr><td>H</td><td>25</td><td>61</td></tr>
+</table>
+</div>
+
+<p>Everything in Lessons 0002–0009 looked <strong>down one column</strong>. "What's the median time?" "How spread out are the distances?" "Is time skewed?" Each question uses one column and ignores the other.</p>
+
+<p>Correlation asks a question you can only answer by looking <strong>across two columns, row by row</strong>: "Do longer distances go with longer times?"</p>
+
+<div class="callout">
+  <span class="label">A new branch on the map</span>
+<pre style="font-family: var(--mono); background: var(--code-bg); padding: 0.75rem 1rem; border-radius: 6px; overflow-x: auto; line-height: 1.25;">
+Describing data
+├── One column at a time (0002–0009)
+│     centre, spread, shape
+└── Two columns together (0010–0011)
+      Relationship: do they move together?
+        correlation r (this lesson)
+        trend line (0011)
+</pre>
+  <p>The first branch is the <a href="0007-quartiles-iqr-outliers.html">centre, spread, shape map</a>, and it still applies: each column has its own centre, spread and shape. Statisticians call one-column analysis <em>univariate</em> and two-column analysis <em>bivariate</em>.</p>
+</div>
+
+<div class="callout">
+  <span class="label">Pairs, not just columns</span>
+  <p>In maths, correlation is about <strong>pairs of numbers</strong>, and the pairs can come from anywhere. In a spreadsheet, a pair is simply two cells in the same row, which is why this course talks about columns.</p>
+  <p>You need <strong>many</strong> pairs. One pair is one dot, and one dot can't show a pattern.</p>
+</div>
+
+<h2>One row, one dot: the scatter plot</h2>
+
+<p>To see whether two columns move together, draw every row as a dot. Place it across by one column (distance) and up by the other (time):</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 340" width="100%" role="img" aria-label="Scatter plot of the eight deliveries, distance across and time up. The dots rise from bottom left to top right. Row D, 12 km and 35 minutes, is highlighted with guide lines to both axes." style="display: block; max-width: 600px; height: auto;">
+  <line x1="70" y1="290" x2="575" y2="290" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="70" y1="290" x2="70" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <g style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">
+    <g text-anchor="middle">
+      <text x="70" y="312">0</text><text x="236.7" y="312">10</text><text x="403.3" y="312">20</text><text x="570" y="312">30</text>
+    </g>
+    <g text-anchor="end">
+      <text x="60" y="296">0</text><text x="60" y="221.7">20</text><text x="60" y="147.4">40</text><text x="60" y="73.1">60</text>
+    </g>
+    <text x="575" y="336" text-anchor="end">distance (km) →</text>
+    <text x="70" y="16">↑ time (min)</text>
+  </g>
+  <g style="stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 5;">
+    <line x1="270" y1="160" x2="270" y2="290"/>
+    <line x1="270" y1="160" x2="70" y2="160"/>
+  </g>
+  <g style="fill: var(--muted);">
+    <circle cx="120" cy="238" r="7"/><circle cx="153.3" cy="223.1" r="7"/><circle cx="203.3" cy="178.6" r="7"/>
+    <circle cx="320" cy="148.9" r="7"/><circle cx="370" cy="104.3" r="7"/><circle cx="403.3" cy="96.9" r="7"/><circle cx="486.7" cy="63.4" r="7"/>
+  </g>
+  <circle cx="270" cy="160" r="9" style="fill: var(--accent);"/>
+  <g style="font-family: var(--sans); font-size: 17px; fill: var(--text);">
+    <text x="108" y="262">A</text><text x="148" y="250">B</text><text x="198" y="205">C</text><text x="252" y="150">D</text>
+    <text x="326" y="138">E</text><text x="356" y="94">F</text><text x="410" y="88">G</text><text x="494" y="55">H</text>
+  </g>
+  <text x="285" y="200" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--accent);">Row D: 12 km, 35 min</text>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Each row of the table becomes one dot. Row D sits 12 across and 35 up.</figcaption>
+</figure>
+
+<p>The dots drift up and to the right: longer distances go with longer times. That drift is what correlation measures.</p>
+
+<h2>The pairing is the data</h2>
+
+<p>This is what makes correlation different from everything before it. Keep the distances, but <strong>shuffle the time column</strong>, so each time lands on a different row:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Delivery</th><th>Distance (km)</th><th>Time, real (min)</th><th>Time, shuffled (min)</th></tr>
+  <tr><td>A</td><td>3</td><td>14</td><td>35</td></tr>
+  <tr><td>B</td><td>5</td><td>18</td><td>52</td></tr>
+  <tr><td>C</td><td>8</td><td>30</td><td>14</td></tr>
+  <tr><td>D</td><td>12</td><td>35</td><td>50</td></tr>
+  <tr><td>E</td><td>15</td><td>38</td><td>30</td></tr>
+  <tr><td>F</td><td>18</td><td>50</td><td>61</td></tr>
+  <tr><td>G</td><td>20</td><td>52</td><td>18</td></tr>
+  <tr><td>H</td><td>25</td><td>61</td><td>38</td></tr>
+</table>
+</div>
+
+<p>Both time columns hold <strong>exactly the same eight numbers</strong>. So they have the same mean (37.25 min), the same median (36.5 min), the same SD and the same histogram. Every measure from Lessons 0002–0009 gives the same answer for both.</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 265" width="100%" role="img" aria-label="Two scatter plots side by side. Left, real pairs: the dots rise in a near-straight line, r = 0.99. Right, shuffled pairs: the same times scattered with no pattern, r about 0." style="display: block; max-width: 600px; height: auto;">
+  <g transform="translate(25,0) scale(1.3)">
+    <line x1="20" y1="150" x2="180" y2="150" style="stroke: var(--muted); stroke-width: 1.2;"/>
+    <line x1="20" y1="150" x2="20" y2="15" style="stroke: var(--muted); stroke-width: 1.2;"/>
+    <g style="fill: var(--accent);">
+      <circle cx="36" cy="124" r="5"/><circle cx="46.7" cy="116.6" r="5"/><circle cx="62.7" cy="94.3" r="5"/><circle cx="84" cy="85" r="5"/>
+      <circle cx="100" cy="79.4" r="5"/><circle cx="116" cy="57.1" r="5"/><circle cx="126.7" cy="53.4" r="5"/><circle cx="153.3" cy="36.7" r="5"/>
+    </g>
+  </g>
+  <g transform="translate(325,0) scale(1.3)">
+    <line x1="20" y1="150" x2="180" y2="150" style="stroke: var(--muted); stroke-width: 1.2;"/>
+    <line x1="20" y1="150" x2="20" y2="15" style="stroke: var(--muted); stroke-width: 1.2;"/>
+    <g style="fill: var(--muted);">
+      <circle cx="36" cy="85" r="5"/><circle cx="46.7" cy="53.4" r="5"/><circle cx="62.7" cy="124" r="5"/><circle cx="84" cy="57.1" r="5"/>
+      <circle cx="100" cy="94.3" r="5"/><circle cx="116" cy="36.7" r="5"/><circle cx="126.7" cy="116.6" r="5"/><circle cx="153.3" cy="79.4" r="5"/>
+    </g>
+  </g>
+  <g style="font-family: var(--sans);" text-anchor="middle">
+    <text x="155" y="228" style="font-size: 21px; font-weight: 600; fill: var(--text);">Real pairs</text>
+    <text x="155" y="254" style="font-size: 18px; fill: var(--muted);">r = 0.99</text>
+    <text x="455" y="228" style="font-size: 21px; font-weight: 600; fill: var(--text);">Shuffled pairs</text>
+    <text x="455" y="254" style="font-size: 18px; fill: var(--muted);">r ≈ 0</text>
+  </g>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Same distances, same eight times. Only which time sits next to which distance has changed.</figcaption>
+</figure>
+
+<p>But the relationship is gone: r drops from 0.99 to about 0. Correlation measures <strong>which value sits next to which</strong>, so you can never work it out from either column on its own.</p>
+
+<p>That's also why sorting just one column in Excel is a disaster. Every row silently gets the wrong partner, and any correlation you calculate afterwards is meaningless.</p>
 
 <h2>r: direction and strength in one number</h2>
 
@@ -51,6 +180,35 @@
   <li>The <strong>sign</strong> gives the direction. Positive means they rise together. Negative means one rises as the other falls.</li>
   <li>The <strong>size</strong> gives the strength. +1 or −1 means the dots sit perfectly on a straight line. 0 means no straight-line pattern at all.</li>
 </ul>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 230" width="100%" role="img" aria-label="Three scatter plots. Left: dots rising, r = +0.95, strong positive. Middle: dots scattered, r about 0, no pattern. Right: dots falling, r = −0.95, strong negative." style="display: block; max-width: 600px; height: auto;">
+  <g style="fill: var(--accent);">
+    <circle cx="32" cy="124" r="6"/><circle cx="49" cy="131" r="6"/><circle cx="66" cy="105" r="6"/><circle cx="83" cy="111" r="6"/><circle cx="100" cy="79" r="6"/>
+    <circle cx="117" cy="85" r="6"/><circle cx="134" cy="53" r="6"/><circle cx="151" cy="66" r="6"/><circle cx="168" cy="40" r="6"/>
+  </g>
+  <g transform="translate(200,0)" style="fill: var(--muted);">
+    <circle cx="32" cy="85" r="6"/><circle cx="49" cy="46" r="6"/><circle cx="66" cy="124" r="6"/><circle cx="83" cy="72" r="6"/><circle cx="100" cy="105" r="6"/>
+    <circle cx="117" cy="40" r="6"/><circle cx="134" cy="118" r="6"/><circle cx="151" cy="66" r="6"/><circle cx="168" cy="98" r="6"/>
+  </g>
+  <g transform="translate(400,0)" style="fill: var(--accent);">
+    <circle cx="32" cy="46" r="6"/><circle cx="49" cy="40" r="6"/><circle cx="66" cy="66" r="6"/><circle cx="83" cy="59" r="6"/><circle cx="100" cy="92" r="6"/>
+    <circle cx="117" cy="85" r="6"/><circle cx="134" cy="118" r="6"/><circle cx="151" cy="105" r="6"/><circle cx="168" cy="131" r="6"/>
+  </g>
+  <g style="stroke: var(--muted); stroke-width: 1.5;">
+    <line x1="15" y1="150" x2="185" y2="150"/><line x1="215" y1="150" x2="385" y2="150"/><line x1="415" y1="150" x2="585" y2="150"/>
+  </g>
+  <g style="font-family: var(--sans);" text-anchor="middle">
+    <text x="100" y="182" style="font-size: 22px; font-weight: 600; fill: var(--text);">r = +0.95</text>
+    <text x="100" y="208" style="font-size: 19px; fill: var(--muted);">rise together</text>
+    <text x="300" y="182" style="font-size: 22px; font-weight: 600; fill: var(--text);">r ≈ 0</text>
+    <text x="300" y="208" style="font-size: 19px; fill: var(--muted);">no straight line</text>
+    <text x="500" y="182" style="font-size: 22px; font-weight: 600; fill: var(--text);">r = −0.95</text>
+    <text x="500" y="208" style="font-size: 19px; fill: var(--muted);">one up, one down</text>
+  </g>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">The sign tells you which way the dots slope. The size tells you how tightly they hug a straight line.</figcaption>
+</figure>
 
 <div class="table-wrap">
 <table>
@@ -111,7 +269,7 @@
 
 <h2>Where you'll meet this</h2>
 
-<p><strong>In Excel:</strong> <code>=CORREL(A2:A13, B2:B13)</code> returns r for two columns of the same length (<a href="https://support.microsoft.com/office/correl-function-995dcef7-0c0a-4bed-a3fb-239d7b68ca92">Microsoft Support: CORREL</a>). For a scatter plot, use Insert → Scatter.</p>
+<p><strong>In Excel:</strong> <code>=CORREL(A2:A13, B2:B13)</code> returns r for two columns of the same length, matched row by row (<a href="https://support.microsoft.com/office/correl-function-995dcef7-0c0a-4bed-a3fb-239d7b68ca92">Microsoft Support: CORREL</a>). For a scatter plot, use Insert → Scatter.</p>
 
 <p><strong>In Power BI:</strong> the scatter chart visual plots one dot per category, using two measures (<a href="https://learn.microsoft.com/power-bi/visuals/power-bi-visualization-scatter">Microsoft Learn: Scatter charts</a>). For r itself, Power BI's quick measures include a ready-made "Correlation coefficient" (<a href="https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-quick-measures">Microsoft Learn: Quick measures</a>). You can also add a trend line, which is the topic of the next lesson.</p>
 

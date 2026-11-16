@@ -127,15 +127,16 @@
   <dd>How values are spread across their range: where they pile up and where they thin out. Its "shape".</dd>
 
   <dt>Histogram and bins</dt>
-  <dd>A bar chart of a distribution. Each bar counts the values in one equal-width range (a bin). Excel: Insert → Statistic Chart → Histogram. Power BI: create bins on a column, then use a column chart.</dd>
-  <dd class="avoid">Avoid: trusting one bin width blindly. Too wide or too narrow can hide the shape.</dd>
+  <dd>A chart of a distribution. Each bar is one equal-width range of values (a bin), and its height counts how many values fall in it. "5–10" means 5 up to, not including, 10. Excel: Insert → Statistic Chart → Histogram. Power BI: right-click the field → New group → Bin, then use a column chart.</dd>
+  <dd class="avoid">Avoid: reading it like a bar chart, where one bar is one item and its height is that item's value. Avoid trusting one bin width blindly too: too wide or too narrow can hide the shape.</dd>
 
   <dt>Skewed (right / left)</dt>
   <dd>Lopsided. Right-skewed: long tail of big values, mean above the median (incomes, order values, delivery times). Left-skewed: long tail to the left, mean below the median.</dd>
   <dd class="avoid">Avoid: reporting the mean alone for skewed data; use median + IQR. Also avoid "lopsided" in reports (fine for intuition).</dd>
 
   <dt>Percentile (P90, P95…)</dt>
-  <dd>The value with that percentage of the data at or below it. P25 = Q1, P50 = median, P75 = Q3. Excel: <code>=PERCENTILE.INC(range, 0.9)</code>, with a fraction from 0 to 1.</dd>
+  <dd>The value with that percentage of the data at or below it. P25 = Q1, P50 = median, P75 = Q3. Excel: <code>=PERCENTILE.INC(range, 0.9)</code>, with a fraction from 0 to 1. By hand: sort, position = 1 + p × (n − 1), and go part of the way between two values if the position isn't whole.</dd>
+  <dd class="avoid">Avoid: reading a percentile as a typical or exact value. "P90 = 4 days" means 90% took 4 days or less, not that they took exactly 4.</dd>
 
   <dt>Scatter plot</dt>
   <dd>A chart with one dot per item (a store, a month), placed by two numbers: one across, one up. Excel: Insert → Scatter. Power BI: the scatter chart visual.</dd>
