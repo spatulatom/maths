@@ -50,7 +50,7 @@
     <dt>Slope</dt><dd>How much the line climbs (or falls) for each 1 step to the right. The "per unit" number, like "2.1 minutes per km".</dd>
     <dt>Gap (residual)</dt><dd>How far one dot sits above or below the line.</dd>
     <dt>Extrapolation</dt><dd>Using the line to predict outside the range of your data. Risky.</dd>
-    <dt>r² (r-squared)</dt><dd>r multiplied by itself. Roughly, the share of the ups and downs in Y that the line accounts for.</dd>
+    <dt>r² (r-squared)</dt><dd>How much of the guessing error the line removes, compared with always guessing the mean. 0 means no better than the mean, and 1 means perfect. For a straight trend line it equals r × r.</dd>
   </dl>
 </div>
 
@@ -462,11 +462,33 @@
 
 <h2>r²: how far to trust the line</h2>
 
-<p>r² is r × r, so it's always between 0 and 1. For the deliveries, r = 0.99, so r² = 0.98.</p>
+<p>r² answers one question: <strong>how much better does the line guess than just using the average?</strong></p>
 
-<p>A common reading: about <strong>98% of the differences in delivery time line up with distance</strong>. The other 2% is everything else: traffic, stairs, a chatty customer.</p>
+<p>Imagine someone asks how long a delivery will take. You can guess in two ways:</p>
 
-<p>Compare the eight deliveries with the messier week from the gaps picture. The line comes out almost the same, but the dots don't stay close to it:</p>
+<div class="table-wrap">
+<table>
+  <tr><th></th><th>Without the line</th><th>With the line</th></tr>
+  <tr><td><strong>What you say</strong></td><td>Always the mean: 37 min</td><td>9 + 2.1 × km</td></tr>
+  <tr><td><strong>Typical miss</strong></td><td>about 15 min</td><td>about 2 min</td></tr>
+</table>
+</div>
+
+<p class="small">"Typical miss" works like the SD from <a href="0008-standard-deviation.html">Lesson 0008</a>: the square root of the average squared miss.</p>
+
+<p>Knowing the distance shrinks your mistakes a lot. r² measures by how much, in three steps:</p>
+
+<ol class="steps">
+  <li>Square each miss when you always guess the mean (37.25), and add them up: <strong>1,913.5</strong>.</li>
+  <li>Do the same for the line's misses, which are the gaps: <strong>38.0</strong>.</li>
+  <li>r² is the share of the error the line got rid of: 1 − 38.0 ÷ 1,913.5 = 1 − 0.02 = <strong>0.98</strong>.</li>
+</ol>
+
+<p>So the line removes about <strong>98% of the guessing error</strong>. The 2% left is everything distance can't explain: traffic, stairs, a chatty customer. You'll often hear this read as "98% of the differences in delivery time line up with distance".</p>
+
+<p>The shortcut: for a straight trend line, this always comes out the same as r × r. For the deliveries r = 0.99, and 0.99 × 0.99 ≈ 0.98. That's why r² is always between 0 and 1.</p>
+
+<p>Now compare the eight deliveries with the messier week from the gaps picture. The line comes out almost the same, but the dots don't stay close to it:</p>
 
 <figure style="margin: 1.25rem 0;">
 <svg viewBox="0 0 600 285" width="100%" role="img" aria-label="Two scatter plots with almost the same dashed trend line. Left, the eight deliveries hug the line: r squared 0.98. Right, a messier week with dots far from the line: r squared 0.48." style="display: block; max-width: 600px; height: auto;">
@@ -486,9 +508,30 @@
 <figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Both weeks give about the same line (9 + 2.1 × km). Only r² tells you the second one is a poor guide.</figcaption>
 </figure>
 
-<p>In the messy week, a 10 km prediction still says about 30 minutes, but real trips could easily take 15 or 50. A low r² doesn't make the line wrong. It makes it <strong>loose</strong>: a rough average, not a reliable rule.</p>
+<div class="table-wrap">
+<table>
+  <tr><th></th><th>Real week</th><th>Messy week</th></tr>
+  <tr><td><strong>Typical miss, guessing the mean</strong></td><td>15 min</td><td>22 min</td></tr>
+  <tr><td><strong>Typical miss, using the line</strong></td><td>2 min</td><td>16 min</td></tr>
+  <tr><td><strong>r²</strong></td><td>0.98</td><td>0.48</td></tr>
+</table>
+</div>
 
-<p>Excel and Power BI show r² next to trend lines, usually written <strong>R²</strong>. Higher means the dots hug the line more closely. It says nothing about cause: the slope is a pattern, not a promise, and all of Lesson 0010's warnings still apply.</p>
+<p>In the messy week the line only removes about half the error. A 10 km prediction still says about 30 minutes, but real trips could easily take 15 or 45. A low r² doesn't make the line wrong. It makes it <strong>loose</strong>: a rough average, not a reliable rule.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>r²</th><th>What it means for your predictions</th></tr>
+  <tr><td>1</td><td>The line is perfect: no misses at all.</td></tr>
+  <tr><td>0.98</td><td>The line removes almost all the error. Predictions are tight.</td></tr>
+  <tr><td>0.5</td><td>The line removes about half. Predictions are rough.</td></tr>
+  <tr><td>0</td><td>The line is no better than guessing the average.</td></tr>
+</table>
+</div>
+
+<p>So the two parts work together. <strong>Slope and intercept</strong> give you the prediction ("10 km → about 30 min"). <strong>r²</strong> tells you how much to trust it: within a couple of minutes, or give or take 15.</p>
+
+<p>Excel and Power BI show r² next to trend lines, usually written <strong>R²</strong>. It doesn't tell you whether you're extrapolating, or whether distance <em>causes</em> the time. Those checks stay separate, and all of Lesson 0010's warnings still apply.</p>
 
 <h2>Try it</h2>
 
