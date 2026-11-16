@@ -29,15 +29,18 @@
 </div>
 
 <div class="callout">
-  <span class="label">What you'll calculate</span>
-  <p>The goal of this lesson is one number: a <strong>prediction</strong>. That's the line's estimate of Y for an X value you choose. For example, "a 12 km delivery should take about 34 minutes."</p>
+  <span class="label">The big picture: one answer, plus supporting bits</span>
+  <p>This lesson calculates <strong>one thing: a prediction</strong>, the line's estimate of Y for an X you choose. For example, "a 12 km delivery should take about 34 minutes". Everything else either produces that number or tells you how far to trust it:</p>
   <div class="table-wrap">
   <table>
-    <tr><th>Thing</th><th>Who works it out</th><th>Name</th></tr>
-    <tr><td>Slope and intercept</td><td>Excel or Power BI, from the dots</td><td>The line's two settings</td></tr>
-    <tr><td>The estimated Y</td><td><strong>You</strong>: intercept + slope × X</td><td><strong>Prediction</strong>, also called the <strong>predicted value</strong> or <strong>fitted value</strong>, written <strong>ŷ</strong> ("y-hat")</td></tr>
+    <tr><th>Role</th><th>What it is</th><th>Deliveries</th></tr>
+    <tr><td><strong>The answer</strong></td><td><strong>Prediction</strong> (ŷ) = intercept + slope × X. <strong>You</strong> work it out.</td><td>12 km → about 34 min</td></tr>
+    <tr><td>The settings that make it</td><td><strong>Intercept</strong> and <strong>slope</strong>. Excel or Power BI finds them from the dots.</td><td>9 min, and 2.1 min per km</td></tr>
+    <tr><td>Check 1: how good is the line?</td><td><strong>r²</strong>, from 0 to 1. Excel or Power BI shows it.</td><td>0.98: tight</td></tr>
+    <tr><td>Check 2: am I inside the data?</td><td>The <strong>extrapolation</strong> check. You look at the range.</td><td>data covers 3–25 km</td></tr>
   </table>
   </div>
+  <p>Keep the prediction and r² apart in your head. The prediction changes with every X you put in. r² is one score for the whole line, like a forecaster's track record printed next to tomorrow's forecast.</p>
   <p style="margin-bottom: 0;">A prediction isn't always about the future. It's just "what the line expects Y to be at this X". When X is a date and you predict ahead, the prediction is called a <strong>forecast</strong>, which is the word Excel and Power BI use.</p>
 </div>
 
@@ -532,6 +535,21 @@
 <p>So the two parts work together. <strong>Slope and intercept</strong> give you the prediction ("10 km → about 30 min"). <strong>r²</strong> tells you how much to trust it: within a couple of minutes, or give or take 15.</p>
 
 <p>Excel and Power BI show r² next to trend lines, usually written <strong>R²</strong>. It doesn't tell you whether you're extrapolating, or whether distance <em>causes</em> the time. Those checks stay separate, and all of Lesson 0010's warnings still apply.</p>
+
+<h2>Putting it together: three questions</h2>
+
+<p>Whenever you meet a trend line, ask these three questions in order. They match the big picture at the top of the lesson:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Question</th><th>Tool</th><th>A 15 km delivery</th></tr>
+  <tr><td>1. What does the line say?</td><td>Prediction: intercept + slope × X</td><td>9 + 2.1 × 15 = 40.5, so about 40 min</td></tr>
+  <tr><td>2. How good is the line?</td><td>r²</td><td>0.98: expect to be within a couple of minutes</td></tr>
+  <tr><td>3. Am I inside the data?</td><td>Extrapolation check</td><td>15 km is inside 3–25 km, so not a guess</td></tr>
+</table>
+</div>
+
+<p>All three are fine here, so "about 40 minutes" is a prediction you can stand behind. For 60 km, question 3 fails. For the messy week, question 2 says the answer is rough. If you can run these three questions on any trend line, you've got this lesson.</p>
 
 <h2>Try it</h2>
 
