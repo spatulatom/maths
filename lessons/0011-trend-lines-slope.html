@@ -58,7 +58,14 @@
 </table>
 </div>
 
-<p>But r doesn't answer the practical question: <strong>how many extra minutes does each extra kilometre cost?</strong> A trend line does. It's the one straight line that sits closest to all eight dots at once:</p>
+<p>But r doesn't answer the practical question: <strong>how many extra minutes does each extra kilometre cost?</strong> A trend line does. It's the one straight line that sits closest to all eight dots at once, and Excel writes it as a short equation:</p>
+
+<div class="callout">
+  <p style="font-size: 1.15rem; margin: 0 0 0.5rem;"><strong>Time ≈ 9 + 2.1 × km</strong></p>
+  <p style="margin: 0;">Read it as: <strong>a delivery takes about 9 minutes, plus 2.1 minutes for every km.</strong> It's a recipe: put a distance in, get an estimated time out.</p>
+</div>
+
+<p>You don't work out the 9 or the 2.1 yourself. Excel or Power BI finds them from the dots (how is explained further down). Your job is to <strong>read</strong> them and <strong>use</strong> them. Here's the line drawn through the deliveries:</p>
 
 <figure style="margin: 1.25rem 0;">
 <svg viewBox="0 0 600 340" width="100%" role="img" aria-label="Scatter plot of the eight deliveries with a straight trend line running through the middle of the dots, labelled Time ≈ 9 + 2.1 × km." style="display: block; max-width: 600px; height: auto;">
@@ -83,13 +90,74 @@
 
 <p>The line is a <strong>summary</strong> of the dots, the way the mean summarises one column. It turns eight separate deliveries into one rule you can use.</p>
 
-<h2>Reading the line: a start and a step</h2>
+<h2>Reading the equation, piece by piece</h2>
 
-<p>Every straight line is made of two numbers: where it <strong>starts</strong>, and how steeply it <strong>climbs</strong>. For the deliveries, the line is:</p>
+<p>Take <strong>Time ≈ 9 + 2.1 × km</strong> one symbol at a time:</p>
 
-<div class="callout">
-  <p style="font-size: 1.15rem; margin: 0;"><strong>Time ≈ 9 + 2.1 × km</strong></p>
+<div class="table-wrap">
+<table>
+  <tr><th>Piece</th><th>Means</th></tr>
+  <tr><td><strong>Time</strong></td><td>What comes out: the line's estimate of the delivery time, in minutes.</td></tr>
+  <tr><td><strong>≈</strong></td><td>"About". The line gives an estimate, not the exact time of any one trip.</td></tr>
+  <tr><td><strong>9</strong></td><td>The fixed part: minutes every delivery costs, however short.</td></tr>
+  <tr><td><strong>+</strong></td><td>Add the distance part on top of the fixed part.</td></tr>
+  <tr><td><strong>2.1</strong></td><td>The per-km part: extra minutes for each kilometre.</td></tr>
+  <tr><td><strong>× km</strong></td><td>Times the distance you put in.</td></tr>
+</table>
 </div>
+
+<p>Think of it as a two-step machine. The distance goes in, gets multiplied by 2.1, then gets 9 added:</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 150" width="100%" role="img" aria-label="A two-step recipe. 12 km goes in, is multiplied by 2.1 to give 25.2, then 9 is added to give about 34 minutes." style="display: block; max-width: 600px; height: auto;">
+  <rect x="5" y="30" width="110" height="56" rx="10" style="fill: var(--card); stroke: var(--muted); stroke-width: 1.5;"/>
+  <text x="60" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 22px; font-weight: 600; fill: var(--text);">12 km</text>
+  <text x="60" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--muted);">distance in</text>
+  <line x1="118" y1="58" x2="148" y2="58" style="stroke: var(--muted); stroke-width: 2;"/>
+  <polygon points="156,58 146,52 146,64" style="fill: var(--muted);"/>
+  <rect x="160" y="30" width="115" height="56" rx="10" style="fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2;"/>
+  <text x="217.5" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 22px; font-weight: 600; fill: var(--accent);">× 2.1</text>
+  <text x="217.5" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--accent);">the step (slope)</text>
+  <line x1="278" y1="58" x2="338" y2="58" style="stroke: var(--muted); stroke-width: 2;"/>
+  <polygon points="346,58 336,52 336,64" style="fill: var(--muted);"/>
+  <text x="310" y="46" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--text);">25.2</text>
+  <rect x="350" y="30" width="110" height="56" rx="10" style="fill: var(--good-soft); stroke: var(--good); stroke-width: 2;"/>
+  <text x="405" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 22px; font-weight: 600; fill: var(--good);">+ 9</text>
+  <text x="405" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--good);">the start (intercept)</text>
+  <line x1="463" y1="58" x2="483" y2="58" style="stroke: var(--muted); stroke-width: 2;"/>
+  <polygon points="491,58 481,52 481,64" style="fill: var(--muted);"/>
+  <rect x="493" y="30" width="102" height="56" rx="10" style="fill: var(--card); stroke: var(--text); stroke-width: 2;"/>
+  <text x="544" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 20px; font-weight: 600; fill: var(--text);">≈ 34 min</text>
+  <text x="544" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--muted);">time out</text>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Delivery D was 12 km. The recipe gives about 34 minutes. D actually took 35, so the line misses by about a minute.</figcaption>
+</figure>
+
+<p><strong>Multiply first, then add.</strong> Doing it the other way, (9 + 2.1) × 12, gives 133 minutes, which is nonsense for a 12 km trip.</p>
+
+<h3>Check it against every delivery</h3>
+
+<p>Run all eight distances through the recipe and compare with what really happened:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Delivery</th><th>km</th><th>Line says (9 + 2.1 × km)</th><th>Actually took</th><th>Miss</th></tr>
+  <tr><td>A</td><td>3</td><td>9 + 6.3 = 15.3</td><td>14</td><td>1.3 below</td></tr>
+  <tr><td>B</td><td>5</td><td>9 + 10.5 = 19.5</td><td>18</td><td>1.5 below</td></tr>
+  <tr><td>C</td><td>8</td><td>9 + 16.8 = 25.8</td><td>30</td><td>4.2 above</td></tr>
+  <tr><td>D</td><td>12</td><td>9 + 25.2 = 34.2</td><td>35</td><td>0.8 above</td></tr>
+  <tr><td>E</td><td>15</td><td>9 + 31.5 = 40.5</td><td>38</td><td>2.5 below</td></tr>
+  <tr><td>F</td><td>18</td><td>9 + 37.8 = 46.8</td><td>50</td><td>3.2 above</td></tr>
+  <tr><td>G</td><td>20</td><td>9 + 42 = 51</td><td>52</td><td>1 above</td></tr>
+  <tr><td>H</td><td>25</td><td>9 + 52.5 = 61.5</td><td>61</td><td>0.5 below</td></tr>
+</table>
+</div>
+
+<p>No delivery lands exactly on the line, but none is far off. Some real trips are a bit slower than the line and some a bit faster. That's the ≈ in action. These misses are the <strong>gaps</strong> you'll meet below.</p>
+
+<h3>A start and a step</h3>
+
+<p>Every straight line is made of two numbers: where it <strong>starts</strong>, and how steeply it <strong>climbs</strong>. The chart below marks both on the delivery line (the faded dots are the same eight deliveries):</p>
 
 <figure style="margin: 1.25rem 0;">
 <svg viewBox="0 0 600 340" width="100%" role="img" aria-label="The delivery trend line with its two parts marked. At 0 km the line starts at 9 minutes. A step from 10 km to 20 km climbs about 21 minutes, which is 2.1 minutes per km." style="display: block; max-width: 600px; height: auto;">
@@ -126,17 +194,36 @@
 </table>
 </div>
 
+<p><strong>Slope from the line: rise ÷ run.</strong> Pick any two points on the line and divide how far it climbs by how far it moves across. On the chart, from 10 km to 20 km the line climbs 21 minutes:</p>
+
+<div class="callout">
+  <p style="margin: 0;"><strong>slope = rise ÷ run = 21 min ÷ 10 km = 2.1 min per km</strong></p>
+</div>
+
+<p>Rise ÷ run reads the slope off a line that's already drawn. To get the line from the dots in the first place, tools use a different formula, shown further down under "How the line is chosen".</p>
+
 <p>Every straight trend line follows the same pattern. Y is the column on the up-axis (what you want to predict), and X is the column across:</p>
 
 <div class="callout">
   <p style="font-size: 1.15rem; margin: 0;"><strong>Y ≈ intercept + slope × X</strong></p>
 </div>
 
+<p>Once you know the shape, you can read any trend line the same way:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Trend line</th><th>The start</th><th>The step</th></tr>
+  <tr><td>Ice creams sold ≈ 20 + 8 × °C</td><td>About 20 sold at 0 °C</td><td>About 8 more for each degree warmer</td></tr>
+  <tr><td>Salary (£) ≈ 24,000 + 1,500 × years</td><td>About £24,000 with no experience</td><td>About £1,500 more per year of experience</td></tr>
+  <tr><td>Units sold ≈ 500 − 4 × Price (£)</td><td>About 500 at a price of £0</td><td>About 4 <em>fewer</em> for each £1 added</td></tr>
+</table>
+</div>
+
 <p>A slope can be <strong>negative</strong>, and then the line goes down. If a shop finds Units sold ≈ 500 − 4 × Price, each £1 added to the price goes with about 4 fewer units. A £10 rise goes with about 40 fewer.</p>
 
 <h2>Making a prediction</h2>
 
-<p>To use the rule, put a distance in and do the sum. <strong>Multiply first, then add:</strong></p>
+<p>You've already checked the recipe against real deliveries. Its real use is for distances <strong>nobody delivered</strong>. Same steps, multiply first, then add:</p>
 
 <div class="table-wrap">
 <table>
@@ -188,7 +275,7 @@
 
 <p>Why this line and not a slightly steeper one? Look at the <strong>gaps</strong>: how far each dot sits above or below the line. Statisticians call them residuals.</p>
 
-<p>For our eight deliveries the gaps are tiny (4 minutes at most), so here is a messier week of eight deliveries, where they're easy to see:</p>
+<p>For our eight deliveries the gaps are tiny (about 4 minutes at most, as the check table showed), so here is a messier week of eight deliveries, where they're easy to see:</p>
 
 <figure style="margin: 1.25rem 0;">
 <svg viewBox="0 0 600 340" width="100%" role="img" aria-label="A messier week of eight deliveries with its trend line. A coloured stick joins each dot to the line, showing its gap. The first delivery, 3 km in 40 minutes, sits about 24 minutes above the line." style="display: block; max-width: 600px; height: auto;">
@@ -222,7 +309,52 @@
   <li>Pick the line with the smallest total.</li>
 </ol>
 
-<p>Squaring should feel familiar: standard deviation in <a href="0008-standard-deviation.html">Lesson 0008</a> did the same thing. You'll never do this by hand. Excel and Power BI find the line for you.</p>
+<p>Squaring should feel familiar: standard deviation in <a href="0008-standard-deviation.html">Lesson 0008</a> did the same thing. In practice Excel and Power BI find the line for you.</p>
+
+<h3>Under the hood: the slope formula</h3>
+
+<p>The "smallest squared gaps" rule boils down to one formula. Write x̄ for the mean distance and ȳ for the mean time:</p>
+
+<div class="callout">
+  <p style="font-size: 1.1rem; margin: 0 0 0.5rem;"><strong>slope = Σ (x − x̄)(y − ȳ) ÷ Σ (x − x̄)²</strong></p>
+  <p style="margin: 0 0 0.5rem;"><strong>intercept = ȳ − slope × x̄</strong></p>
+  <p style="margin: 0;">Σ means "add them all up".</p>
+</div>
+
+<p>In words:</p>
+
+<ul>
+  <li><strong>Top:</strong> for each delivery, how far its distance is from the mean distance, times how far its time is from the mean time. Add them up. This measures how distance and time move together (it's also inside r from <a href="0010-correlation-causation.html">Lesson 0010</a>).</li>
+  <li><strong>Bottom:</strong> how far each distance is from the mean distance, squared, added up. This measures how spread out the distances are.</li>
+  <li><strong>Top ÷ bottom:</strong> how much time moves per unit of distance.</li>
+</ul>
+
+<p><strong>Worked example with the eight deliveries.</strong> Mean distance x̄ = 106 ÷ 8 = 13.25 km. Mean time ȳ = 298 ÷ 8 = 37.25 min.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Delivery</th><th>x (km)</th><th>y (min)</th><th>x − 13.25</th><th>y − 37.25</th><th>(x − x̄)(y − ȳ)</th><th>(x − x̄)²</th></tr>
+  <tr><td>A</td><td>3</td><td>14</td><td>−10.25</td><td>−23.25</td><td>238.31</td><td>105.06</td></tr>
+  <tr><td>B</td><td>5</td><td>18</td><td>−8.25</td><td>−19.25</td><td>158.81</td><td>68.06</td></tr>
+  <tr><td>C</td><td>8</td><td>30</td><td>−5.25</td><td>−7.25</td><td>38.06</td><td>27.56</td></tr>
+  <tr><td>D</td><td>12</td><td>35</td><td>−1.25</td><td>−2.25</td><td>2.81</td><td>1.56</td></tr>
+  <tr><td>E</td><td>15</td><td>38</td><td>1.75</td><td>0.75</td><td>1.31</td><td>3.06</td></tr>
+  <tr><td>F</td><td>18</td><td>50</td><td>4.75</td><td>12.75</td><td>60.56</td><td>22.56</td></tr>
+  <tr><td>G</td><td>20</td><td>52</td><td>6.75</td><td>14.75</td><td>99.56</td><td>45.56</td></tr>
+  <tr><td>H</td><td>25</td><td>61</td><td>11.75</td><td>23.75</td><td>279.06</td><td>138.06</td></tr>
+  <tr><td><strong>Total</strong></td><td></td><td></td><td></td><td></td><td><strong>878.5</strong></td><td><strong>411.5</strong></td></tr>
+</table>
+</div>
+
+<ol class="steps">
+  <li>Slope = 878.5 ÷ 411.5 = <strong>2.13</strong> minutes per km.</li>
+  <li>Intercept = 37.25 − 2.13 × 13.25 = 37.25 − 28.29 = <strong>8.96</strong> minutes.</li>
+  <li>Rounded, that's the line you've been using: Time ≈ 9 + 2.1 × km. Excel's <code>SLOPE</code> and <code>INTERCEPT</code> give exactly 2.13 and 8.96.</li>
+</ol>
+
+<p>Notice the signs. Short deliveries are below the mean on <em>both</em> distance and time, so minus × minus gives plus. Long ones are above on both, plus × plus. Every row adds up positive, so the slope is positive. If long trips were <em>quicker</em>, the products would be negative and so would the slope.</p>
+
+<p>You won't need to do this by hand at work. Seeing it once shows the slope isn't magic: it's built from the same "distance from the mean" idea as SD and r.</p>
 
 <h2>One odd delivery can tilt the line</h2>
 
