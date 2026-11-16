@@ -77,8 +77,11 @@ Describing data
 </div>
 
 <div class="callout">
-  <span class="label">Pairs, not just columns</span>
-  <p>In maths, correlation is about <strong>pairs of numbers</strong>, and the pairs can come from anywhere. In a spreadsheet, a pair is simply two cells in the same row, which is why this course talks about columns.</p>
+  <span class="label">How statistics writes it: one list of pairs, not two sets</span>
+  <p><strong>One column</strong> is a list of n numbers: x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>. The small number is the row, so x<sub>4</sub> is the 4th delivery's distance. (It's a list, not a "set": in maths a set ignores repeats, and data like 3, 3, 4, 4 needs every one.)</p>
+  <p><strong>Two columns</strong> are not two separate lists. They're <strong>one list of pairs</strong>: (x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), …, (x<sub>n</sub>, y<sub>n</sub>). Each pair shares the same small number, which means the same row. Each pair is also a point on a graph, (across, up), and that's exactly the scatter plot below.</p>
+  <p>The formula for r works through the pairs, always combining x<sub>i</sub> with the y<sub>i</sub> from the same row. Two separate sets would lose who goes with whom, which is exactly the shuffle problem further down.</p>
+  <p>Statistics textbooks organise data as a table too. <a href="https://www.openintro.org/book/os/">OpenIntro Statistics</a> (§1.2) calls it a <em>data matrix</em>: one row per case, one column per variable. So thinking in columns isn't just a spreadsheet habit. It's how statistics itself lays out data.</p>
   <p>You need <strong>many</strong> pairs. One pair is one dot, and one dot can't show a pattern.</p>
 </div>
 
@@ -262,6 +265,26 @@ Describing data
 
 <p>In the ads example, a likely confounder is <strong>store size</strong>. Big stores have bigger ad budgets <em>and</em> more customers. The usual way to actually test causation is a <strong>controlled experiment</strong>, such as an A/B test. You'll meet those in stage 7.</p>
 
+<h3>Which column is the cause?</h3>
+
+<p>r can't tell you. It's <strong>symmetric</strong>: swap the two columns and you get exactly the same number, so <code>=CORREL(A, B)</code> equals <code>=CORREL(B, A)</code>. It only measures that they move together, not which way an arrow points, or whether there's an arrow at all.</p>
+
+<p>The scatter plot doesn't decide it either. By habit you put the suspected cause on the x-axis (across), but that's your choice, not something the data proves.</p>
+
+<p>So you judge the direction from outside the numbers. Here are four clues, using the deliveries from the start of the lesson:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Clue</th><th>Ask</th><th>Deliveries</th></tr>
+  <tr><td><strong>Timing</strong></td><td>Which happens first? A cause comes before its effect.</td><td>The route is fixed before the drive starts.</td></tr>
+  <tr><td><strong>What can change what</strong></td><td>Could Y possibly change X?</td><td>A slow delivery can't make the road longer.</td></tr>
+  <tr><td><strong>Mechanism</strong></td><td>Is there a believable "how"?</td><td>More kilometres means more time behind the wheel.</td></tr>
+  <tr><td><strong>Experiment</strong></td><td>Change X on purpose. Does Y follow?</td><td>Give some drivers shorter routes and compare their times.</td></tr>
+</table>
+</div>
+
+<p>The first three make a direction <strong>likely</strong>. Only an experiment <strong>shows</strong> it. And check the confounder row above first: if a third factor drives both, neither column is the cause.</p>
+
 <div class="callout">
   <span class="label">Words to use at work</span>
   <p>Say "is associated with" or "moves with", not "drives" or "causes", unless there was an experiment. "Stores with higher ad spend tend to have higher sales (r = 0.8)" is accurate. "Ads drive sales" is a claim you can't back up from this data.</p>
@@ -355,6 +378,13 @@ Quiz.mount(document.getElementById("quiz"), {
       options: ["Discounts are pushing sales down", "Stop all discounts straight away", "Weak sales lead to more discounts", "The correlation must be zero"],
       answer: 2,
       explain: "Reverse cause: the arrow runs from sales to discounts. Managers cut prices <em>because</em> sales are weak, so stopping discounts wouldn't lift sales."
+    },
+    {
+      topic: "Which way?",
+      q: "<p>Over 200 days, a shop's umbrella sales and daily rainfall correlate at <strong>r = 0.8</strong>. Which column is most likely the cause, and why?</p>",
+      options: ["Rainfall, because umbrella sales can't change the weather", "Umbrella sales, because that column is on the x-axis", "Whichever column has the bigger numbers", "Rainfall, because r is positive"],
+      answer: 0,
+      explain: "Rain is the cause, but r doesn't tell you that: it's the same whichever column comes first, and positive only means they rise together. The clue is \"what can change what\": selling umbrellas can't make it rain. Timing agrees too, because the rain comes first."
     },
     {
       topic: "Excel",
