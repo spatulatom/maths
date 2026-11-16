@@ -28,9 +28,23 @@
   <span>🎯 Win: read a trend line, make a safe prediction, and explain r²</span>
 </div>
 
+<div class="callout">
+  <span class="label">What you'll calculate</span>
+  <p>The goal of this lesson is one number: a <strong>prediction</strong>. That's the line's estimate of Y for an X value you choose. For example, "a 12 km delivery should take about 34 minutes."</p>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Thing</th><th>Who works it out</th><th>Name</th></tr>
+    <tr><td>Slope and intercept</td><td>Excel or Power BI, from the dots</td><td>The line's two settings</td></tr>
+    <tr><td>The estimated Y</td><td><strong>You</strong>: intercept + slope × X</td><td><strong>Prediction</strong>, also called the <strong>predicted value</strong> or <strong>fitted value</strong>, written <strong>ŷ</strong> ("y-hat")</td></tr>
+  </table>
+  </div>
+  <p style="margin-bottom: 0;">A prediction isn't always about the future. It's just "what the line expects Y to be at this X". When X is a date and you predict ahead, the prediction is called a <strong>forecast</strong>, which is the word Excel and Power BI use.</p>
+</div>
+
 <div class="callout newwords">
   <span class="label">New words</span>
   <dl>
+    <dt>Prediction (ŷ, "y-hat")</dt><dd>The line's estimate of Y for a given X: intercept + slope × X. Also called the predicted or fitted value. A prediction about future dates is a forecast.</dd>
     <dt>Trend line</dt><dd>The straight line that best fits the dots on a scatter plot. Also called the line of best fit, a regression line, or a linear trend.</dd>
     <dt>Intercept</dt><dd>Where the line starts: its value when the across-number is 0. Like "9 minutes at 0 km".</dd>
     <dt>Slope</dt><dd>How much the line climbs (or falls) for each 1 step to the right. The "per unit" number, like "2.1 minutes per km".</dd>
@@ -39,6 +53,61 @@
     <dt>r² (r-squared)</dt><dd>r multiplied by itself. Roughly, the share of the ups and downs in Y that the line accounts for.</dd>
   </dl>
 </div>
+
+<h2>The theory: a line is a rule</h2>
+
+<p>A scatter plot shows pairs of numbers: one column across (X), one column up (Y). Lesson 0010's r told you <em>whether</em> they move together. A <strong>trend line</strong> tells you <em>by how much</em>. It's the single straight line that sits closest to all the dots at once.</p>
+
+<p>Every straight trend line has the same shape:</p>
+
+<div class="callout">
+  <p style="font-size: 1.2rem; margin: 0;"><strong>Y ≈ intercept + slope × X</strong></p>
+</div>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Part</th><th>Definition</th></tr>
+  <tr><td><strong>Y</strong></td><td>The column on the up-axis: what you want to predict (the outcome).</td></tr>
+  <tr><td><strong>X</strong></td><td>The column across: what you already know (the input).</td></tr>
+  <tr><td><strong>≈</strong></td><td>"About". Real dots sit above or below the line, so the line gives an estimate, not an exact value.</td></tr>
+  <tr><td><strong>Intercept</strong> (the start)</td><td>The line's Y value when X = 0. It's where the line crosses the up-axis.</td></tr>
+  <tr><td><strong>Slope</strong> (the step)</td><td>How much Y changes for each 1-unit step in X. Its unit is "Y units per X unit".</td></tr>
+</table>
+</div>
+
+<p>The slope's sign tells you which way the line goes:</p>
+
+<ul>
+  <li><strong>Positive slope:</strong> the line climbs. More X goes with more Y.</li>
+  <li><strong>Negative slope:</strong> the line falls. More X goes with less Y.</li>
+  <li><strong>Zero slope:</strong> the line is flat. X tells you nothing about Y.</li>
+</ul>
+
+<p><strong>Using the rule:</strong> put an X value in, then <strong>multiply first, add second</strong>. Slope × X gives the "per unit" part, and adding the intercept gives the <strong>prediction</strong> (ŷ): the line's estimate of Y at that X. That's the number you'll calculate throughout this lesson:</p>
+
+<div class="callout">
+  <p style="margin: 0;"><strong>ŷ = intercept + slope × X</strong>. The hat on the y means "estimated by the line", not the real measured Y.</p>
+</div>
+
+<h3>Two formulas for the slope</h3>
+
+<p>There are two different jobs, so there are two formulas.</p>
+
+<p><strong>1. Reading the slope off a line that's already drawn: rise ÷ run.</strong> Pick any two points on the line. Divide how far it climbs (rise, in Y units) by how far it moves across (run, in X units):</p>
+
+<div class="callout">
+  <p style="margin: 0;"><strong>slope = rise ÷ run = (change in Y) ÷ (change in X)</strong></p>
+</div>
+
+<p><strong>2. Finding the line from the dots: least squares.</strong> Tools pick the line whose <strong>gaps</strong> (how far each dot sits above or below the line) give the smallest total once squared. Write x̄ for the mean of X and ȳ for the mean of Y. That rule works out to:</p>
+
+<div class="callout">
+  <p style="margin: 0 0 0.5rem;"><strong>slope = Σ (x − x̄)(y − ȳ) ÷ Σ (x − x̄)²</strong></p>
+  <p style="margin: 0 0 0.5rem;"><strong>intercept = ȳ − slope × x̄</strong></p>
+  <p style="margin: 0;">Σ means "add them all up".</p>
+</div>
+
+<p>Excel and Power BI do formula 2 for you. Your job is to <strong>read</strong> the slope and intercept they give you and <strong>use</strong> them. The rest of the lesson applies all of this to real data, then shows when to stop trusting the line.</p>
 
 <h2>From dots to a line</h2>
 
@@ -58,14 +127,14 @@
 </table>
 </div>
 
-<p>But r doesn't answer the practical question: <strong>how many extra minutes does each extra kilometre cost?</strong> A trend line does. It's the one straight line that sits closest to all eight dots at once, and Excel writes it as a short equation:</p>
+<p>But r doesn't answer the practical question: <strong>how many extra minutes does each extra kilometre cost?</strong> A trend line does. Here Y is time and X is distance, and Excel gives this line:</p>
 
 <div class="callout">
   <p style="font-size: 1.15rem; margin: 0 0 0.5rem;"><strong>Time ≈ 9 + 2.1 × km</strong></p>
   <p style="margin: 0;">Read it as: <strong>a delivery takes about 9 minutes, plus 2.1 minutes for every km.</strong> It's a recipe: put a distance in, get an estimated time out.</p>
 </div>
 
-<p>You don't work out the 9 or the 2.1 yourself. Excel or Power BI finds them from the dots (how is explained further down). Your job is to <strong>read</strong> them and <strong>use</strong> them. Here's the line drawn through the deliveries:</p>
+<p>So the intercept is 9 and the slope is 2.1. Here's the line drawn through the deliveries:</p>
 
 <figure style="margin: 1.25rem 0;">
 <svg viewBox="0 0 600 340" width="100%" role="img" aria-label="Scatter plot of the eight deliveries with a straight trend line running through the middle of the dots, labelled Time ≈ 9 + 2.1 × km." style="display: block; max-width: 600px; height: auto;">
@@ -194,21 +263,13 @@
 </table>
 </div>
 
-<p><strong>Slope from the line: rise ÷ run.</strong> Pick any two points on the line and divide how far it climbs by how far it moves across. On the chart, from 10 km to 20 km the line climbs 21 minutes:</p>
+<p><strong>Rise ÷ run on this line</strong> (formula 1 from the theory): from 10 km to 20 km the line climbs 21 minutes.</p>
 
 <div class="callout">
-  <p style="margin: 0;"><strong>slope = rise ÷ run = 21 min ÷ 10 km = 2.1 min per km</strong></p>
+  <p style="margin: 0;"><strong>slope = 21 min ÷ 10 km = 2.1 min per km</strong></p>
 </div>
 
-<p>Rise ÷ run reads the slope off a line that's already drawn. To get the line from the dots in the first place, tools use a different formula, shown further down under "How the line is chosen".</p>
-
-<p>Every straight trend line follows the same pattern. Y is the column on the up-axis (what you want to predict), and X is the column across:</p>
-
-<div class="callout">
-  <p style="font-size: 1.15rem; margin: 0;"><strong>Y ≈ intercept + slope × X</strong></p>
-</div>
-
-<p>Once you know the shape, you can read any trend line the same way:</p>
+<p>The same shape, Y ≈ intercept + slope × X, reads any trend line:</p>
 
 <div class="table-wrap">
 <table>
@@ -313,7 +374,7 @@
 
 <h3>Under the hood: the slope formula</h3>
 
-<p>The "smallest squared gaps" rule boils down to one formula. Write x̄ for the mean distance and ȳ for the mean time:</p>
+<p>This is formula 2 from the theory section, now worked through on the deliveries. Here x̄ is the mean distance and ȳ is the mean time:</p>
 
 <div class="callout">
   <p style="font-size: 1.1rem; margin: 0 0 0.5rem;"><strong>slope = Σ (x − x̄)(y − ȳ) ÷ Σ (x − x̄)²</strong></p>
