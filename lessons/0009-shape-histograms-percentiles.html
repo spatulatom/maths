@@ -422,6 +422,20 @@ Quiz.mount(document.getElementById("quiz"), {
       explain: "12, 14 and 18 fall between 10 and 20, so the bar is 3 high. 3 and 7 go in 0–10, and 25 goes in 20–30."
     },
     {
+      topic: "Histogram vs bar chart",
+      q: "<p>In a histogram of delivery times, the <strong>5–10 days</strong> bar is <strong>4</strong> high. What does that mean?</p>",
+      options: ["One delivery took four days", "The average delivery took four days", "Four deliveries took five to ten days", "Four percent of deliveries were late"],
+      answer: 2,
+      explain: "A histogram bar is a range, and its height is a count: 4 deliveries landed in the 5–10 day bin. \"One delivery took four days\" is how you'd read a bar chart, where each bar is one item and its height is that item's value."
+    },
+    {
+      topic: "Bin edges",
+      q: "<p>Values: <code>4, 5, 9, 10, 12</code>. Bins are 0–5, 5–10 and 10–15, using this lesson's rule for edge values. How tall is the 10–15 bar?</p>",
+      options: ["2", "1", "3", "0"],
+      answer: 0,
+      explain: "\"5–10\" means 5 up to, not including, 10. So 10 goes in 10–15 with 12, and the bar is 2 high. (5 likewise goes in 5–10, not 0–5.) Each value goes in exactly one bin, so 10 can't count twice."
+    },
+    {
       topic: "Skew",
       q: "<p>A histogram has a hump on the left and a long tail stretching to the right. How do the mean and median compare?</p>",
       options: ["Mean lower than median", "Mean equal to median", "Mean higher than median", "Cannot compare the two"],
@@ -448,6 +462,13 @@ Quiz.mount(document.getElementById("quiz"), {
       options: ["P25", "P50", "P75", "P100"],
       answer: 1,
       explain: "The median has half the values at or below it, so it's P50. P25 is Q1, P75 is Q3, and P100 is the maximum."
+    },
+    {
+      topic: "Percentiles by hand",
+      q: "<p>Eleven sorted values: <code>1, 2, 2, 3, 4, 4, 5, 6, 7, 9, 15</code>. Using position = 1 + p × (n − 1), what's P90?</p>",
+      options: ["7", "12", "15", "9"],
+      answer: 3,
+      explain: "Position = 1 + 0.9 × 10 = 10, a whole number, so take the 10th value: 9. Forgetting the \"1 +\" gives position 9 (value 7). 12 is halfway between 9 and 15, which you'd only use if the position were 10.5. 15 is the maximum, P100."
     },
     {
       topic: "Excel",
