@@ -188,11 +188,28 @@
   <dd>One event doesn't change the chance of the other. For independent events, "A and B" = chance of A × chance of B.</dd>
   <dd class="avoid">Avoid: adding chances for "A or B" when both can happen together. Subtract the overlap: A + B − both.</dd>
 
+  <dt>Conditional probability, P(B | A)</dt>
+  <dd>The chance of B among only the cases where A happened. Read "B given A". P(B | A) = P(A and B) ÷ P(A). Example: 12% buy a phone and a case, 40% buy a phone, so P(case | phone) = 30%. For dependent events, "A and B" = P(A) × P(B | A). A funnel's "% of previous step" rates are conditional probabilities.</dd>
+
+  <dt>Mutually exclusive</dt>
+  <dd>Can't both happen, like paying by card and by PayPal on one order. For "A or B", just add.</dd>
+  <dd class="avoid">Avoid: calling mutually exclusive events independent. If one happened, you know the other didn't, so they're dependent.</dd>
+
   <dt>Funnel</dt>
   <dd>A chain of steps customers go through (visit → view → basket → pay), losing some at each step. The overall rate is the step rates multiplied together.</dd>
 
   <dt>Expected value</dt>
   <dd>Chance × value: what something is worth on average, per try. Example: 2% conversion × £50 order = £1 per visitor.</dd>
+
+  <dt>Random sample</dt>
+  <dd>A sample where every member of the population had the same chance of being picked. Excel: add <code>=RAND()</code>, sort by it, take the top N rows.</dd>
+
+  <dt>Sampling error (wobble)</dt>
+  <dd>The natural, random gap between one sample's answer and the truth. It shrinks with the square root of the sample size: 4× the people halves it.</dd>
+
+  <dt>Bias</dt>
+  <dd>A systematic lean: samples keep missing in the same direction because of <em>who</em> was sampled. Four common kinds: selection, non-response, survivorship, convenience.</dd>
+  <dd class="avoid">Avoid: trusting a huge sample because it's huge. 50,000 self-selected votes are still biased; size only fixes wobble.</dd>
 </dl>
 
 <p class="small"><a href="roadmap.html">← Roadmap</a></p>

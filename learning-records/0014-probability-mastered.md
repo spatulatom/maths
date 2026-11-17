@@ -14,3 +14,5 @@ Lesson 0012 quiz scored 8/8. The questions covered:
 **Evidence**: user reported "lesson 12: 8/8", 2026-11-15. Score only.
 
 **Implications**: Stage 7 (uncertainty) is a quarter done. Probability, complement, independent events, funnel and expected value are now in the glossary. This is the first lesson from the batch written ahead of evidence (0012–0019), and it needed no revision. Next is 0013: samples vs populations, sample size, and bias.
+
+**Retake 2026-11-17: 11/11** on the revised quiz. The lesson had gained a rules map, conditional probability, the chain rule and "mutually exclusive". The three new questions were conditional probability (12% ÷ 40% = 30%), dependent AND (0.2 × 0.3 = 6%, not 0.2 × 0.1) and mutually exclusive ≠ independent. In concept coaching the same day, the learner sorted the rules into their own tree (AND → independent / dependent with P(B | A); OR; NOT) and put funnels in the dependent branch as a chain of conditional rates. Earlier in that coaching they added two independent 5% chances instead of multiplying them. The quiz evidence shows this is fixed. Conditional probability and mutually exclusive are now in the glossary.
