@@ -20,92 +20,563 @@
 
 <p class="kicker">Lesson 0011 · Stage 6: Relationships</p>
 <h1>Drawing the line</h1>
-<p class="subtitle">Trend lines turn a cloud of dots into a rule of thumb: "each extra £1 of this goes with about £3 of that". Here's how to read one, and when to stop trusting it.</p>
+<p class="subtitle">In Lesson 0010, r told you that distance and time move together. Now draw a line through the dots and read it as a rule: about 9 minutes to start, plus about 2 minutes for every kilometre. Then learn when to stop trusting it.</p>
 
 <div class="meta">
-  <span>⏱ 20–30 minutes, works on a phone</span>
+  <span>⏱ 25–30 minutes, works on a phone</span>
   <span>✎ Light arithmetic: one multiply, one add</span>
-  <span>🎯 Win: read a trend line equation, make a safe prediction, and explain r²</span>
+  <span>🎯 Win: read a trend line, make a safe prediction, and explain r²</span>
+</div>
+
+<div class="callout">
+  <span class="label">The big picture: one answer, plus supporting bits</span>
+  <p>This lesson calculates <strong>one thing: a prediction</strong>, the line's estimate of Y for an X you choose. For example, "a 12 km delivery should take about 34 minutes". Everything else either produces that number or tells you how far to trust it:</p>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Role</th><th>What it is</th><th>Deliveries</th></tr>
+    <tr><td><strong>The answer</strong></td><td><strong>Prediction</strong> (ŷ) = intercept + slope × X. <strong>You</strong> work it out.</td><td>12 km → about 34 min</td></tr>
+    <tr><td>The settings that make it</td><td><strong>Intercept</strong> and <strong>slope</strong>. Excel or Power BI finds them from the dots.</td><td>9 min, and 2.1 min per km</td></tr>
+    <tr><td>Check 1: how good is the line?</td><td><strong>r²</strong>, from 0 to 1. Excel or Power BI shows it.</td><td>0.98: tight</td></tr>
+    <tr><td>Check 2: am I inside the data?</td><td>The <strong>extrapolation</strong> check. You look at the range.</td><td>data covers 3–25 km</td></tr>
+  </table>
+  </div>
+  <p>Keep the prediction and r² apart in your head. The prediction changes with every X you put in. r² is one score for the whole line, like a forecaster's track record printed next to tomorrow's forecast.</p>
+  <p style="margin-bottom: 0;">A prediction isn't always about the future. It's just "what the line expects Y to be at this X". When X is a date and you predict ahead, the prediction is called a <strong>forecast</strong>, which is the word Excel and Power BI use.</p>
 </div>
 
 <div class="callout newwords">
   <span class="label">New words</span>
   <dl>
+    <dt>Prediction (ŷ, "y-hat")</dt><dd>The line's estimate of Y for a given X: intercept + slope × X. Also called the predicted or fitted value. A prediction about future dates is a forecast.</dd>
     <dt>Trend line</dt><dd>The straight line that best fits the dots on a scatter plot. Also called the line of best fit, a regression line, or a linear trend.</dd>
-    <dt>Slope</dt><dd>How much the line goes up (or down) for each 1 step to the right. The "per unit" number.</dd>
-    <dt>Intercept</dt><dd>Where the line crosses the up-axis: the value the line gives when the across-number is 0.</dd>
+    <dt>Intercept</dt><dd>Where the line starts: its value when the across-number is 0. Like "9 minutes at 0 km".</dd>
+    <dt>Slope</dt><dd>How much the line climbs (or falls) for each 1 step to the right. The "per unit" number, like "2.1 minutes per km".</dd>
+    <dt>Gap (residual)</dt><dd>How far one dot sits above or below the line.</dd>
     <dt>Extrapolation</dt><dd>Using the line to predict outside the range of your data. Risky.</dd>
-    <dt>r² (r-squared)</dt><dd>r multiplied by itself. Roughly, the share of the ups and downs in Y that the line accounts for.</dd>
+    <dt>r² (r-squared)</dt><dd>How much of the guessing error the line removes, compared with always guessing the mean. 0 means no better than the mean, and 1 means perfect. For a straight trend line it equals r × r.</dd>
   </dl>
 </div>
 
-<h2>From r to a line</h2>
+<h2>The theory: a line is a rule</h2>
 
-<p>In <a href="0010-correlation-causation.html">Lesson 0010</a>, r told you <em>whether</em> two numbers move together. A trend line tells you <strong>by how much</strong>. It's the one straight line that sits closest to all the dots at once.</p>
+<p>A scatter plot shows pairs of numbers: one column across (X), one column up (Y). Lesson 0010's r told you <em>whether</em> they move together. A <strong>trend line</strong> tells you <em>by how much</em>. It's the single straight line that sits closest to all the dots at once.</p>
 
-<p>Tools pick the line by "least squares": they measure how far each dot sits above or below the line, square those gaps, and choose the line that makes the total as small as possible (<a href="https://www.openintro.org/book/os/">OpenIntro Statistics, Ch. 8</a>). Squaring should feel familiar: standard deviation in <a href="0008-standard-deviation.html">Lesson 0008</a> did the same thing.</p>
-
-<h2>Reading the equation</h2>
-
-<p>Every straight trend line can be written as:</p>
+<p>Every straight trend line has the same shape:</p>
 
 <div class="callout">
-  <p style="font-size:1.15rem;margin:0"><strong>Y ≈ intercept + slope × X</strong></p>
+  <p style="font-size: 1.2rem; margin: 0;"><strong>Y ≈ intercept + slope × X</strong></p>
 </div>
-
-<p>Take a shop's 12 months of data, with both numbers in £ thousands. The line comes out as <strong>Sales ≈ 30 + 3 × Ad spend</strong>.</p>
 
 <div class="table-wrap">
 <table>
-  <tr><th>Part</th><th>Value</th><th>Plain words</th></tr>
-  <tr><td><strong>Slope</strong></td><td>3</td><td>Each extra £1k of ad spend goes with about £3k more sales, on average.</td></tr>
-  <tr><td><strong>Intercept</strong></td><td>30</td><td>Where the line would be at £0 ad spend: about £30k of sales.</td></tr>
-  <tr><td><strong>Prediction</strong></td><td>30 + 3 × 20 = 90</td><td>In a month with £20k of ads, the line expects about £90k of sales.</td></tr>
+  <tr><th>Part</th><th>Definition</th></tr>
+  <tr><td><strong>Y</strong></td><td>The column on the up-axis: what you want to predict (the outcome).</td></tr>
+  <tr><td><strong>X</strong></td><td>The column across: what you already know (the input).</td></tr>
+  <tr><td><strong>≈</strong></td><td>"About". Real dots sit above or below the line, so the line gives an estimate, not an exact value.</td></tr>
+  <tr><td><strong>Intercept</strong> (the start)</td><td>The line's Y value when X = 0. It's where the line crosses the up-axis.</td></tr>
+  <tr><td><strong>Slope</strong> (the step)</td><td>How much Y changes for each 1-unit step in X. Its unit is "Y units per X unit".</td></tr>
 </table>
 </div>
 
-<p>A <strong>negative slope</strong> means the line goes down. If Units ≈ 500 − 4 × Price, every £1 added to the price goes with about 4 fewer units sold. A £10 rise goes with about 40 fewer.</p>
+<p>The slope's sign tells you which way the line goes:</p>
 
-<h2>Three cautions</h2>
+<ul>
+  <li><strong>Positive slope:</strong> the line climbs. More X goes with more Y.</li>
+  <li><strong>Negative slope:</strong> the line falls. More X goes with less Y.</li>
+  <li><strong>Zero slope:</strong> the line is flat. X tells you nothing about Y.</li>
+</ul>
+
+<p><strong>Using the rule:</strong> put an X value in, then <strong>multiply first, add second</strong>. Slope × X gives the "per unit" part, and adding the intercept gives the <strong>prediction</strong> (ŷ): the line's estimate of Y at that X. That's the number you'll calculate throughout this lesson:</p>
+
+<div class="callout">
+  <p style="margin: 0;"><strong>ŷ = intercept + slope × X</strong>. The hat on the y means "estimated by the line", not the real measured Y.</p>
+</div>
+
+<h3>Two formulas for the slope</h3>
+
+<p>There are two different jobs, so there are two formulas.</p>
+
+<p><strong>1. Reading the slope off a line that's already drawn: rise ÷ run.</strong> Pick any two points on the line. Divide how far it climbs (rise, in Y units) by how far it moves across (run, in X units):</p>
+
+<div class="callout">
+  <p style="margin: 0;"><strong>slope = rise ÷ run = (change in Y) ÷ (change in X)</strong></p>
+</div>
+
+<p><strong>2. Finding the line from the dots: least squares.</strong> Tools pick the line whose <strong>gaps</strong> (how far each dot sits above or below the line) give the smallest total once squared. Write x̄ for the mean of X and ȳ for the mean of Y. That rule works out to:</p>
+
+<div class="callout">
+  <p style="margin: 0 0 0.5rem;"><strong>slope = Σ (x − x̄)(y − ȳ) ÷ Σ (x − x̄)²</strong></p>
+  <p style="margin: 0 0 0.5rem;"><strong>intercept = ȳ − slope × x̄</strong></p>
+  <p style="margin: 0;">Σ means "add them all up".</p>
+</div>
+
+<p>Excel and Power BI do formula 2 for you. Your job is to <strong>read</strong> the slope and intercept they give you and <strong>use</strong> them. The rest of the lesson applies all of this to real data, then shows when to stop trusting the line.</p>
+
+<h2>From dots to a line</h2>
+
+<p>Here are the eight deliveries from <a href="0010-correlation-causation.html">Lesson 0010</a> again. Their r is 0.99, so distance and time move together almost perfectly.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Delivery</th><th>Distance (km)</th><th>Time (min)</th></tr>
+  <tr><td>A</td><td>3</td><td>14</td></tr>
+  <tr><td>B</td><td>5</td><td>18</td></tr>
+  <tr><td>C</td><td>8</td><td>30</td></tr>
+  <tr><td>D</td><td>12</td><td>35</td></tr>
+  <tr><td>E</td><td>15</td><td>38</td></tr>
+  <tr><td>F</td><td>18</td><td>50</td></tr>
+  <tr><td>G</td><td>20</td><td>52</td></tr>
+  <tr><td>H</td><td>25</td><td>61</td></tr>
+</table>
+</div>
+
+<p>But r doesn't answer the practical question: <strong>how many extra minutes does each extra kilometre cost?</strong> A trend line does. Here Y is time and X is distance, and Excel gives this line:</p>
+
+<div class="callout">
+  <p style="font-size: 1.15rem; margin: 0 0 0.5rem;"><strong>Time ≈ 9 + 2.1 × km</strong></p>
+  <p style="margin: 0;">Read it as: <strong>a delivery takes about 9 minutes, plus 2.1 minutes for every km.</strong> It's a recipe: put a distance in, get an estimated time out.</p>
+</div>
+
+<p>So the intercept is 9 and the slope is 2.1. Here's the line drawn through the deliveries:</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 340" width="100%" role="img" aria-label="Scatter plot of the eight deliveries with a straight trend line running through the middle of the dots, labelled Time ≈ 9 + 2.1 × km." style="display: block; max-width: 600px; height: auto;">
+  <line x1="70" y1="290" x2="575" y2="290" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="70" y1="290" x2="70" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <text x="70" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="236.7" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">10</text>
+  <text x="403.3" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">20</text>
+  <text x="570" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">30</text>
+  <text x="60" y="296" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="60" y="221.7" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">20</text>
+  <text x="60" y="147.4" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">40</text>
+  <text x="60" y="73.1" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">60</text>
+  <text x="575" y="336" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">distance (km) →</text>
+  <text x="70" y="16" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">↑ time (min)</text>
+  <line x1="70" y1="256.7" x2="536.7" y2="34.7" style="stroke: var(--accent); stroke-width: 3;"/>
+  <g><circle cx="120" cy="238" r="7" style="fill: var(--muted);"/><circle cx="153.3" cy="223.1" r="7" style="fill: var(--muted);"/><circle cx="203.3" cy="178.6" r="7" style="fill: var(--muted);"/><circle cx="270" cy="160" r="7" style="fill: var(--muted);"/><circle cx="320" cy="148.9" r="7" style="fill: var(--muted);"/><circle cx="370" cy="104.3" r="7" style="fill: var(--muted);"/><circle cx="403.3" cy="96.9" r="7" style="fill: var(--muted);"/><circle cx="486.7" cy="63.4" r="7" style="fill: var(--muted);"/></g>
+  <text x="90" y="60" style="font-family: var(--sans); font-size: 19px; font-weight: 600; fill: var(--accent);">Time ≈ 9 + 2.1 × km</text>
+  </svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">The trend line runs through the middle of the dots. Some sit a little above it, some a little below.</figcaption>
+</figure>
+
+<p>The line is a <strong>summary</strong> of the dots, the way the mean summarises one column. It turns eight separate deliveries into one rule you can use.</p>
+
+<h2>Reading the equation, piece by piece</h2>
+
+<p>Take <strong>Time ≈ 9 + 2.1 × km</strong> one symbol at a time:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Piece</th><th>Means</th></tr>
+  <tr><td><strong>Time</strong></td><td>What comes out: the line's estimate of the delivery time, in minutes.</td></tr>
+  <tr><td><strong>≈</strong></td><td>"About". The line gives an estimate, not the exact time of any one trip.</td></tr>
+  <tr><td><strong>9</strong></td><td>The fixed part: minutes every delivery costs, however short.</td></tr>
+  <tr><td><strong>+</strong></td><td>Add the distance part on top of the fixed part.</td></tr>
+  <tr><td><strong>2.1</strong></td><td>The per-km part: extra minutes for each kilometre.</td></tr>
+  <tr><td><strong>× km</strong></td><td>Times the distance you put in.</td></tr>
+</table>
+</div>
+
+<p>Think of it as a two-step machine. The distance goes in, gets multiplied by 2.1, then gets 9 added:</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 150" width="100%" role="img" aria-label="A two-step recipe. 12 km goes in, is multiplied by 2.1 to give 25.2, then 9 is added to give about 34 minutes." style="display: block; max-width: 600px; height: auto;">
+  <rect x="5" y="30" width="110" height="56" rx="10" style="fill: var(--card); stroke: var(--muted); stroke-width: 1.5;"/>
+  <text x="60" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 22px; font-weight: 600; fill: var(--text);">12 km</text>
+  <text x="60" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--muted);">distance in</text>
+  <line x1="118" y1="58" x2="148" y2="58" style="stroke: var(--muted); stroke-width: 2;"/>
+  <polygon points="156,58 146,52 146,64" style="fill: var(--muted);"/>
+  <rect x="160" y="30" width="115" height="56" rx="10" style="fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2;"/>
+  <text x="217.5" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 22px; font-weight: 600; fill: var(--accent);">× 2.1</text>
+  <text x="217.5" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--accent);">the step (slope)</text>
+  <line x1="278" y1="58" x2="338" y2="58" style="stroke: var(--muted); stroke-width: 2;"/>
+  <polygon points="346,58 336,52 336,64" style="fill: var(--muted);"/>
+  <text x="310" y="46" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--text);">25.2</text>
+  <rect x="350" y="30" width="110" height="56" rx="10" style="fill: var(--good-soft); stroke: var(--good); stroke-width: 2;"/>
+  <text x="405" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 22px; font-weight: 600; fill: var(--good);">+ 9</text>
+  <text x="405" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--good);">the start (intercept)</text>
+  <line x1="463" y1="58" x2="483" y2="58" style="stroke: var(--muted); stroke-width: 2;"/>
+  <polygon points="491,58 481,52 481,64" style="fill: var(--muted);"/>
+  <rect x="493" y="30" width="102" height="56" rx="10" style="fill: var(--card); stroke: var(--text); stroke-width: 2;"/>
+  <text x="544" y="66" text-anchor="middle" style="font-family: var(--sans); font-size: 20px; font-weight: 600; fill: var(--text);">≈ 34 min</text>
+  <text x="544" y="114" text-anchor="middle" style="font-family: var(--sans); font-size: 16px; fill: var(--muted);">time out</text>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Delivery D was 12 km. The recipe gives about 34 minutes. D actually took 35, so the line misses by about a minute.</figcaption>
+</figure>
+
+<p><strong>Multiply first, then add.</strong> Doing it the other way, (9 + 2.1) × 12, gives 133 minutes, which is nonsense for a 12 km trip.</p>
+
+<h3>Check it against every delivery</h3>
+
+<p>Run all eight distances through the recipe and compare with what really happened:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Delivery</th><th>km</th><th>Line says (9 + 2.1 × km)</th><th>Actually took</th><th>Miss</th></tr>
+  <tr><td>A</td><td>3</td><td>9 + 6.3 = 15.3</td><td>14</td><td>1.3 below</td></tr>
+  <tr><td>B</td><td>5</td><td>9 + 10.5 = 19.5</td><td>18</td><td>1.5 below</td></tr>
+  <tr><td>C</td><td>8</td><td>9 + 16.8 = 25.8</td><td>30</td><td>4.2 above</td></tr>
+  <tr><td>D</td><td>12</td><td>9 + 25.2 = 34.2</td><td>35</td><td>0.8 above</td></tr>
+  <tr><td>E</td><td>15</td><td>9 + 31.5 = 40.5</td><td>38</td><td>2.5 below</td></tr>
+  <tr><td>F</td><td>18</td><td>9 + 37.8 = 46.8</td><td>50</td><td>3.2 above</td></tr>
+  <tr><td>G</td><td>20</td><td>9 + 42 = 51</td><td>52</td><td>1 above</td></tr>
+  <tr><td>H</td><td>25</td><td>9 + 52.5 = 61.5</td><td>61</td><td>0.5 below</td></tr>
+</table>
+</div>
+
+<p>No delivery lands exactly on the line, but none is far off. Some real trips are a bit slower than the line and some a bit faster. That's the ≈ in action. These misses are the <strong>gaps</strong> you'll meet below.</p>
+
+<h3>A start and a step</h3>
+
+<p>Every straight line is made of two numbers: where it <strong>starts</strong>, and how steeply it <strong>climbs</strong>. The chart below marks both on the delivery line (the faded dots are the same eight deliveries):</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 340" width="100%" role="img" aria-label="The delivery trend line with its two parts marked. At 0 km the line starts at 9 minutes. A step from 10 km to 20 km climbs about 21 minutes, which is 2.1 minutes per km." style="display: block; max-width: 600px; height: auto;">
+  <line x1="70" y1="290" x2="575" y2="290" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="70" y1="290" x2="70" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <text x="70" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="236.7" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">10</text>
+  <text x="403.3" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">20</text>
+  <text x="570" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">30</text>
+  <text x="60" y="296" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="60" y="221.7" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">20</text>
+  <text x="60" y="147.4" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">40</text>
+  <text x="60" y="73.1" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">60</text>
+  <text x="575" y="336" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">distance (km) →</text>
+  <text x="70" y="16" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">↑ time (min)</text>
+  <g style="opacity: 0.35;"><circle cx="120" cy="238" r="7" style="fill: var(--muted);"/><circle cx="153.3" cy="223.1" r="7" style="fill: var(--muted);"/><circle cx="203.3" cy="178.6" r="7" style="fill: var(--muted);"/><circle cx="270" cy="160" r="7" style="fill: var(--muted);"/><circle cx="320" cy="148.9" r="7" style="fill: var(--muted);"/><circle cx="370" cy="104.3" r="7" style="fill: var(--muted);"/><circle cx="403.3" cy="96.9" r="7" style="fill: var(--muted);"/><circle cx="486.7" cy="63.4" r="7" style="fill: var(--muted);"/></g>
+  <line x1="70" y1="256.7" x2="536.7" y2="34.7" style="stroke: var(--accent); stroke-width: 3;"/>
+  <line x1="236.7" y1="177.4" x2="403.3" y2="177.4" style="stroke: var(--text); stroke-width: 2.5;"/>
+  <line x1="403.3" y1="177.4" x2="403.3" y2="98.1" style="stroke: var(--text); stroke-width: 2.5;"/>
+  <text x="320" y="199.4" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--text);">+10 km</text>
+  <text x="413.3" y="133.8" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--text);">+21 min</text>
+  <text x="413.3" y="156.8" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">= 2.1 per km</text>
+  <circle cx="70" cy="256.7" r="8" style="fill: var(--good);"/>
+  <text x="84" y="282" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--good);">start: 9 min at 0 km</text>
+  </svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">The line starts at 9 minutes at 0 km. Every 10 km to the right, it climbs about 21 minutes.</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Part</th><th>Value</th><th>In delivery terms</th></tr>
+  <tr><td><strong>Intercept</strong> (the start)</td><td>9</td><td>At 0 km the line says 9 minutes. Think of it as the time every delivery costs anyway: parking, finding the door, handing over.</td></tr>
+  <tr><td><strong>Slope</strong> (the step)</td><td>2.1</td><td>Each extra km goes with about 2.1 more minutes. So 10 extra km goes with about 21 more minutes.</td></tr>
+</table>
+</div>
+
+<p><strong>Rise ÷ run on this line</strong> (formula 1 from the theory): from 10 km to 20 km the line climbs 21 minutes.</p>
+
+<div class="callout">
+  <p style="margin: 0;"><strong>slope = 21 min ÷ 10 km = 2.1 min per km</strong></p>
+</div>
+
+<p>The same shape, Y ≈ intercept + slope × X, reads any trend line:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Trend line</th><th>The start</th><th>The step</th></tr>
+  <tr><td>Ice creams sold ≈ 20 + 8 × °C</td><td>About 20 sold at 0 °C</td><td>About 8 more for each degree warmer</td></tr>
+  <tr><td>Salary (£) ≈ 24,000 + 1,500 × years</td><td>About £24,000 with no experience</td><td>About £1,500 more per year of experience</td></tr>
+  <tr><td>Units sold ≈ 500 − 4 × Price (£)</td><td>About 500 at a price of £0</td><td>About 4 <em>fewer</em> for each £1 added</td></tr>
+</table>
+</div>
+
+<p>A slope can be <strong>negative</strong>, and then the line goes down. If a shop finds Units sold ≈ 500 − 4 × Price, each £1 added to the price goes with about 4 fewer units. A £10 rise goes with about 40 fewer.</p>
+
+<h2>Making a prediction</h2>
+
+<p>You've already checked the recipe against real deliveries. Its real use is for distances <strong>nobody delivered</strong>. Same steps, multiply first, then add:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Distance</th><th>Sum</th><th>Line says</th></tr>
+  <tr><td>10 km</td><td>9 + 2.1 × 10 = 9 + 21</td><td>about 30 min</td></tr>
+  <tr><td>15 km</td><td>9 + 2.1 × 15 = 9 + 31.5</td><td>about 40 min</td></tr>
+</table>
+</div>
+
+<p>There's no 10 km delivery in the data, but the line fills the gap. On the chart, that's going up from 10 km to the line, then across to the time.</p>
+
+<p>Now try 60 km. The sum still works: 9 + 2.1 × 60 = 135 minutes. But the data only covers 3 to 25 km. At 60 km the driver is probably on a motorway or taking a break, so the rule from short city trips may not hold.</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 340" width="100%" role="img" aria-label="The trend line extended to 60 km. A shaded band covers the data, 3 to 25 km. Inside it, a prediction at 10 km reads about 30 minutes. Far outside it, at 60 km, the dashed line gives 135 minutes, marked with a question mark." style="display: block; max-width: 600px; height: auto;">
+  <rect x="95" y="25" width="183.3" height="265" style="fill: var(--accent); opacity: 0.1;"/>
+  <line x1="70" y1="290" x2="575" y2="290" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="70" y1="290" x2="70" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <text x="70" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="236.7" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">20</text>
+  <text x="403.3" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">40</text>
+  <text x="570" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">60</text>
+  <text x="60" y="296" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="60" y="221.7" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">40</text>
+  <text x="60" y="147.4" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">80</text>
+  <text x="60" y="73.1" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">120</text>
+  <text x="575" y="336" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">distance (km) →</text>
+  <text x="70" y="16" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">↑ time (min)</text>
+  <text x="186.7" y="48" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--accent);">your data</text>
+  <text x="186.7" y="70" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">3–25 km</text>
+  <line x1="95" y1="261.5" x2="278.3" y2="174.2" style="stroke: var(--accent); stroke-width: 3;"/>
+  <line x1="70" y1="273.4" x2="95" y2="261.5" style="stroke: var(--accent); stroke-width: 2.5; stroke-dasharray: 7 6;"/>
+  <line x1="278.3" y1="174.2" x2="570" y2="35.5" style="stroke: var(--accent); stroke-width: 2.5; stroke-dasharray: 7 6;"/>
+  <g><circle cx="95" cy="264" r="5" style="fill: var(--muted);"/><circle cx="111.7" cy="256.6" r="5" style="fill: var(--muted);"/><circle cx="136.7" cy="234.3" r="5" style="fill: var(--muted);"/><circle cx="170" cy="225" r="5" style="fill: var(--muted);"/><circle cx="195" cy="219.4" r="5" style="fill: var(--muted);"/><circle cx="220" cy="197.1" r="5" style="fill: var(--muted);"/><circle cx="236.7" cy="193.4" r="5" style="fill: var(--muted);"/><circle cx="278.3" cy="176.7" r="5" style="fill: var(--muted);"/></g>
+  <line x1="153.3" y1="290" x2="153.3" y2="233.7" style="stroke: var(--good); stroke-width: 1.5; stroke-dasharray: 4 4;"/>
+  <line x1="70" y1="233.7" x2="153.3" y2="233.7" style="stroke: var(--good); stroke-width: 1.5; stroke-dasharray: 4 4;"/>
+  <circle cx="153.3" cy="233.7" r="7" style="fill: var(--good);"/>
+  <text x="295" y="262" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--good);">10 km → 30 min ✓</text>
+  <circle cx="570" cy="35.5" r="8" style="fill: none; stroke: var(--accent); stroke-width: 3;"/>
+  <text x="575" y="120" text-anchor="end" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--text);">60 km → 135 min?</text>
+  <text x="575" y="142" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">outside the data</text>
+  </svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Inside the shaded band the line is backed by real deliveries. Outside it (dashed), the line is just carrying on in a straight line.</figcaption>
+</figure>
+
+<p>Predicting outside your data is called <strong>extrapolation</strong>. Give the number if someone asks, but say it's a guess. The intercept has the same problem: nobody made a 0 km delivery, so treat "9 minutes" as where the line starts, not a measured fact.</p>
+
+<h2>How the line is chosen: the smallest gaps</h2>
+
+<p>Why this line and not a slightly steeper one? Look at the <strong>gaps</strong>: how far each dot sits above or below the line. Statisticians call them residuals.</p>
+
+<p>For our eight deliveries the gaps are tiny (about 4 minutes at most, as the check table showed), so here is a messier week of eight deliveries, where they're easy to see:</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 340" width="100%" role="img" aria-label="A messier week of eight deliveries with its trend line. A coloured stick joins each dot to the line, showing its gap. The first delivery, 3 km in 40 minutes, sits about 24 minutes above the line." style="display: block; max-width: 600px; height: auto;">
+  <line x1="70" y1="290" x2="575" y2="290" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="70" y1="290" x2="70" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <text x="70" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="236.7" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">10</text>
+  <text x="403.3" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">20</text>
+  <text x="570" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">30</text>
+  <text x="60" y="296" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="60" y="231" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">25</text>
+  <text x="60" y="166" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">50</text>
+  <text x="60" y="101" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">75</text>
+  <text x="60" y="36" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">100</text>
+  <text x="575" y="336" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">distance (km) →</text>
+  <text x="70" y="16" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">↑ time (min)</text>
+  <line x1="70" y1="264.8" x2="570" y2="101.9" style="stroke: var(--muted); stroke-width: 2.5;"/>
+  <g><line x1="120" y1="186" x2="120" y2="248.5" style="stroke: var(--accent); stroke-width: 4;"/><line x1="153.3" y1="274.4" x2="153.3" y2="237.6" style="stroke: var(--accent); stroke-width: 4;"/><line x1="203.3" y1="206.8" x2="203.3" y2="221.3" style="stroke: var(--accent); stroke-width: 4;"/><line x1="270" y1="248.4" x2="270" y2="199.6" style="stroke: var(--accent); stroke-width: 4;"/><line x1="320" y1="191.2" x2="320" y2="183.3" style="stroke: var(--accent); stroke-width: 4;"/><line x1="370" y1="157.4" x2="370" y2="167" style="stroke: var(--accent); stroke-width: 4;"/><line x1="403.3" y1="204.2" x2="403.3" y2="156.2" style="stroke: var(--accent); stroke-width: 4;"/><line x1="486.7" y1="74.2" x2="486.7" y2="129" style="stroke: var(--accent); stroke-width: 4;"/></g>
+  <g><circle cx="120" cy="186" r="6" style="fill: var(--text);"/><circle cx="153.3" cy="274.4" r="6" style="fill: var(--text);"/><circle cx="203.3" cy="206.8" r="6" style="fill: var(--text);"/><circle cx="270" cy="248.4" r="6" style="fill: var(--text);"/><circle cx="320" cy="191.2" r="6" style="fill: var(--text);"/><circle cx="370" cy="157.4" r="6" style="fill: var(--text);"/><circle cx="403.3" cy="204.2" r="6" style="fill: var(--text);"/><circle cx="486.7" cy="74.2" r="6" style="fill: var(--text);"/></g>
+  <text x="134" y="180" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--accent);">gap: 24 min above</text>
+  </svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Each coloured stick is one gap. The trend line is the line that keeps these gaps, all together, as small as possible.</figcaption>
+</figure>
+
+<p>The method tools use is called <strong>least squares</strong> (<a href="https://www.openintro.org/book/os/">OpenIntro Statistics, Ch. 8</a>):</p>
 
 <ol class="steps">
-  <li><strong>Don't predict far outside your data.</strong> The shop's ad spend ran from £8k to £40k. Asking the line about £200k is extrapolation: ads may stop working long before then. The same goes for the intercept. Nobody tested £0 of ads, so treat "30" as a line setting, not a fact.</li>
-  <li><strong>The slope is a pattern, not a promise.</strong> "Slope = 3" does not mean every extra £1k of ads <em>earns</em> £3k. All of Lesson 0010's warnings still apply: busy months could have both more ads and more sales.</li>
-  <li><strong>One odd point can tilt the whole line.</strong> Just as one point could fake r, one extreme month can drag the line. Look at the plot.</li>
+  <li>Measure each dot's gap to the line.</li>
+  <li>Square each gap. Gaps above and below then both count, and big misses count extra.</li>
+  <li>Add the squares up.</li>
+  <li>Pick the line with the smallest total.</li>
 </ol>
 
-<h2>r²: how well the line fits</h2>
+<p>Squaring should feel familiar: standard deviation in <a href="0008-standard-deviation.html">Lesson 0008</a> did the same thing. In practice Excel and Power BI find the line for you.</p>
 
-<p>r² is just r × r, so it's always between 0 and 1. If r = 0.9, then r² = 0.81. A common reading is that about 81% of the ups and downs in Y line up with the trend line, and the other 19% is everything else.</p>
+<h3>Under the hood: the slope formula</h3>
 
-<p>Excel and Power BI both show r² next to trend lines, usually written as <strong>R²</strong>. Higher means the dots hug the line more closely. It says nothing about cause.</p>
+<p>This is formula 2 from the theory section, now worked through on the deliveries. Here x̄ is the mean distance and ȳ is the mean time:</p>
+
+<div class="callout">
+  <p style="font-size: 1.1rem; margin: 0 0 0.5rem;"><strong>slope = Σ (x − x̄)(y − ȳ) ÷ Σ (x − x̄)²</strong></p>
+  <p style="margin: 0 0 0.5rem;"><strong>intercept = ȳ − slope × x̄</strong></p>
+  <p style="margin: 0;">Σ means "add them all up".</p>
+</div>
+
+<p>In words:</p>
+
+<ul>
+  <li><strong>Top:</strong> for each delivery, how far its distance is from the mean distance, times how far its time is from the mean time. Add them up. This measures how distance and time move together (it's also inside r from <a href="0010-correlation-causation.html">Lesson 0010</a>).</li>
+  <li><strong>Bottom:</strong> how far each distance is from the mean distance, squared, added up. This measures how spread out the distances are.</li>
+  <li><strong>Top ÷ bottom:</strong> how much time moves per unit of distance.</li>
+</ul>
+
+<p><strong>Worked example with the eight deliveries.</strong> Mean distance x̄ = 106 ÷ 8 = 13.25 km. Mean time ȳ = 298 ÷ 8 = 37.25 min.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Delivery</th><th>x (km)</th><th>y (min)</th><th>x − 13.25</th><th>y − 37.25</th><th>(x − x̄)(y − ȳ)</th><th>(x − x̄)²</th></tr>
+  <tr><td>A</td><td>3</td><td>14</td><td>−10.25</td><td>−23.25</td><td>238.31</td><td>105.06</td></tr>
+  <tr><td>B</td><td>5</td><td>18</td><td>−8.25</td><td>−19.25</td><td>158.81</td><td>68.06</td></tr>
+  <tr><td>C</td><td>8</td><td>30</td><td>−5.25</td><td>−7.25</td><td>38.06</td><td>27.56</td></tr>
+  <tr><td>D</td><td>12</td><td>35</td><td>−1.25</td><td>−2.25</td><td>2.81</td><td>1.56</td></tr>
+  <tr><td>E</td><td>15</td><td>38</td><td>1.75</td><td>0.75</td><td>1.31</td><td>3.06</td></tr>
+  <tr><td>F</td><td>18</td><td>50</td><td>4.75</td><td>12.75</td><td>60.56</td><td>22.56</td></tr>
+  <tr><td>G</td><td>20</td><td>52</td><td>6.75</td><td>14.75</td><td>99.56</td><td>45.56</td></tr>
+  <tr><td>H</td><td>25</td><td>61</td><td>11.75</td><td>23.75</td><td>279.06</td><td>138.06</td></tr>
+  <tr><td><strong>Total</strong></td><td></td><td></td><td></td><td></td><td><strong>878.5</strong></td><td><strong>411.5</strong></td></tr>
+</table>
+</div>
+
+<ol class="steps">
+  <li>Slope = 878.5 ÷ 411.5 = <strong>2.13</strong> minutes per km.</li>
+  <li>Intercept = 37.25 − 2.13 × 13.25 = 37.25 − 28.29 = <strong>8.96</strong> minutes.</li>
+  <li>Rounded, that's the line you've been using: Time ≈ 9 + 2.1 × km. Excel's <code>SLOPE</code> and <code>INTERCEPT</code> give exactly 2.13 and 8.96.</li>
+</ol>
+
+<p>Notice the signs. Short deliveries are below the mean on <em>both</em> distance and time, so minus × minus gives plus. Long ones are above on both, plus × plus. Every row adds up positive, so the slope is positive. If long trips were <em>quicker</em>, the products would be negative and so would the slope.</p>
+
+<p>You won't need to do this by hand at work. Seeing it once shows the slope isn't magic: it's built from the same "distance from the mean" idea as SD and r.</p>
+
+<h2>One odd delivery can tilt the line</h2>
+
+<p>Because big gaps count extra, one extreme point pulls hard. Suppose a ninth delivery, <strong>I</strong>, is 22 km but gets stuck in a traffic jam and takes 120 minutes:</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 340" width="100%" role="img" aria-label="The eight deliveries plus delivery I at 22 km and 120 minutes. The original trend line is dashed. The new line, pulled up by delivery I, is steeper." style="display: block; max-width: 600px; height: auto;">
+  <line x1="70" y1="290" x2="575" y2="290" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="70" y1="290" x2="70" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <text x="70" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="236.7" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">10</text>
+  <text x="403.3" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">20</text>
+  <text x="570" y="312" text-anchor="middle" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">30</text>
+  <text x="60" y="296" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">0</text>
+  <text x="60" y="216" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">40</text>
+  <text x="60" y="136" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">80</text>
+  <text x="60" y="56" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">120</text>
+  <text x="575" y="336" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">distance (km) →</text>
+  <text x="70" y="16" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">↑ time (min)</text>
+  <line x1="70" y1="272.1" x2="570" y2="144" style="stroke: var(--muted); stroke-width: 2.5; stroke-dasharray: 7 6;"/>
+  <line x1="70" y1="287.4" x2="570" y2="97" style="stroke: var(--accent); stroke-width: 3;"/>
+  <g><circle cx="120" cy="262" r="6" style="fill: var(--muted);"/><circle cx="153.3" cy="254" r="6" style="fill: var(--muted);"/><circle cx="203.3" cy="230" r="6" style="fill: var(--muted);"/><circle cx="270" cy="220" r="6" style="fill: var(--muted);"/><circle cx="320" cy="214" r="6" style="fill: var(--muted);"/><circle cx="370" cy="190" r="6" style="fill: var(--muted);"/><circle cx="403.3" cy="186" r="6" style="fill: var(--muted);"/><circle cx="486.7" cy="168" r="6" style="fill: var(--muted);"/></g>
+  <circle cx="436.7" cy="50" r="9" style="fill: var(--accent);"/>
+  <text x="422.7" y="46" text-anchor="end" style="font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--text);">I: 22 km, 120 min</text>
+  <text x="422.7" y="68" text-anchor="end" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">traffic jam</text>
+  <line x1="355" y1="236" x2="385" y2="236" style="stroke: var(--accent); stroke-width: 3;"/>
+  <text x="393" y="242" style="font-family: var(--sans); font-size: 17px; font-weight: 600; fill: var(--accent);">with I: 3.2 min per km</text>
+  <line x1="355" y1="262" x2="385" y2="262" style="stroke: var(--muted); stroke-width: 2.5; stroke-dasharray: 7 6;"/>
+  <text x="393" y="268" style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">without I: 2.1 min per km</text>
+  </svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">One jammed delivery drags the whole line towards itself.</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <tr><th></th><th>Without I</th><th>With I</th></tr>
+  <tr><td><strong>Slope</strong></td><td>2.1 min per km</td><td>3.2 min per km</td></tr>
+  <tr><td><strong>Intercept</strong></td><td>9 min</td><td>1.3 min</td></tr>
+  <tr><td><strong>r²</strong></td><td>0.98</td><td>0.60</td></tr>
+</table>
+</div>
+
+<p>One unusual trip changed the "rule" for all the others. That's why you look at the plot first and ask whether an odd point belongs in the data (a one-off jam) or tells you something real.</p>
+
+<h2>r²: how far to trust the line</h2>
+
+<p>r² answers one question: <strong>how much better does the line guess than just using the average?</strong></p>
+
+<p>Imagine someone asks how long a delivery will take. You can guess in two ways:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th></th><th>Without the line</th><th>With the line</th></tr>
+  <tr><td><strong>What you say</strong></td><td>Always the mean: 37 min</td><td>9 + 2.1 × km</td></tr>
+  <tr><td><strong>Typical miss</strong></td><td>about 15 min</td><td>about 2 min</td></tr>
+</table>
+</div>
+
+<p class="small">"Typical miss" works like the SD from <a href="0008-standard-deviation.html">Lesson 0008</a>: the square root of the average squared miss.</p>
+
+<p>Knowing the distance shrinks your mistakes a lot. r² measures by how much, in three steps:</p>
+
+<ol class="steps">
+  <li>Square each miss when you always guess the mean (37.25), and add them up: <strong>1,913.5</strong>.</li>
+  <li>Do the same for the line's misses, which are the gaps: <strong>38.0</strong>.</li>
+  <li>r² is the share of the error the line got rid of: 1 − 38.0 ÷ 1,913.5 = 1 − 0.02 = <strong>0.98</strong>.</li>
+</ol>
+
+<p>So the line removes about <strong>98% of the guessing error</strong>. The 2% left is everything distance can't explain: traffic, stairs, a chatty customer. You'll often hear this read as "98% of the differences in delivery time line up with distance".</p>
+
+<p>The shortcut: for a straight trend line, this always comes out the same as r × r. For the deliveries r = 0.99, and 0.99 × 0.99 ≈ 0.98. That's why r² is always between 0 and 1.</p>
+
+<p>Now compare the eight deliveries with the messier week from the gaps picture. The line comes out almost the same, but the dots don't stay close to it:</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 285" width="100%" role="img" aria-label="Two scatter plots with almost the same dashed trend line. Left, the eight deliveries hug the line: r squared 0.98. Right, a messier week with dots far from the line: r squared 0.48." style="display: block; max-width: 600px; height: auto;">
+  <line x1="40" y1="220" x2="275" y2="220" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="40" y1="220" x2="40" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="40" y1="203" x2="268" y2="81.3" style="stroke: var(--muted); stroke-width: 2.5; stroke-dasharray: 7 6;"/>
+  <g><circle cx="62.8" cy="193.4" r="6" style="fill: var(--accent);"/><circle cx="78" cy="185.8" r="6" style="fill: var(--accent);"/><circle cx="100.8" cy="163" r="6" style="fill: var(--accent);"/><circle cx="131.2" cy="153.5" r="6" style="fill: var(--accent);"/><circle cx="154" cy="147.8" r="6" style="fill: var(--accent);"/><circle cx="176.8" cy="125" r="6" style="fill: var(--accent);"/><circle cx="192" cy="121.2" r="6" style="fill: var(--accent);"/><circle cx="230" cy="104.1" r="6" style="fill: var(--accent);"/></g>
+  <text x="157" y="250" text-anchor="middle" style="font-family: var(--sans); font-size: 21px; font-weight: 600; fill: var(--text);">r² = 0.98</text>
+  <text x="157" y="274" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; fill: var(--muted);">dots hug the line</text>
+  <line x1="350" y1="220" x2="585" y2="220" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="350" y1="220" x2="350" y2="25" style="stroke: var(--muted); stroke-width: 1.5;"/>
+  <line x1="350" y1="201.6" x2="578" y2="82.5" style="stroke: var(--muted); stroke-width: 2.5; stroke-dasharray: 7 6;"/>
+  <g><circle cx="372.8" cy="144" r="6" style="fill: var(--accent);"/><circle cx="388" cy="208.6" r="6" style="fill: var(--accent);"/><circle cx="410.8" cy="159.2" r="6" style="fill: var(--accent);"/><circle cx="441.2" cy="189.6" r="6" style="fill: var(--accent);"/><circle cx="464" cy="147.8" r="6" style="fill: var(--accent);"/><circle cx="486.8" cy="123.1" r="6" style="fill: var(--accent);"/><circle cx="502" cy="157.3" r="6" style="fill: var(--accent);"/><circle cx="540" cy="62.3" r="6" style="fill: var(--accent);"/></g>
+  <text x="467" y="250" text-anchor="middle" style="font-family: var(--sans); font-size: 21px; font-weight: 600; fill: var(--text);">r² = 0.48</text>
+  <text x="467" y="274" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; fill: var(--muted);">same line, loose dots</text>
+  </svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Both weeks give about the same line (9 + 2.1 × km). Only r² tells you the second one is a poor guide.</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <tr><th></th><th>Real week</th><th>Messy week</th></tr>
+  <tr><td><strong>Typical miss, guessing the mean</strong></td><td>15 min</td><td>22 min</td></tr>
+  <tr><td><strong>Typical miss, using the line</strong></td><td>2 min</td><td>16 min</td></tr>
+  <tr><td><strong>r²</strong></td><td>0.98</td><td>0.48</td></tr>
+</table>
+</div>
+
+<p>In the messy week the line only removes about half the error. A 10 km prediction still says about 30 minutes, but real trips could easily take 15 or 45. A low r² doesn't make the line wrong. It makes it <strong>loose</strong>: a rough average, not a reliable rule.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>r²</th><th>What it means for your predictions</th></tr>
+  <tr><td>1</td><td>The line is perfect: no misses at all.</td></tr>
+  <tr><td>0.98</td><td>The line removes almost all the error. Predictions are tight.</td></tr>
+  <tr><td>0.5</td><td>The line removes about half. Predictions are rough.</td></tr>
+  <tr><td>0</td><td>The line is no better than guessing the average.</td></tr>
+</table>
+</div>
+
+<p>So the two parts work together. <strong>Slope and intercept</strong> give you the prediction ("10 km → about 30 min"). <strong>r²</strong> tells you how much to trust it: within a couple of minutes, or give or take 15.</p>
+
+<p>Excel and Power BI show r² next to trend lines, usually written <strong>R²</strong>. It doesn't tell you whether you're extrapolating, or whether distance <em>causes</em> the time. Those checks stay separate, and all of Lesson 0010's warnings still apply.</p>
+
+<h2>Putting it together: three questions</h2>
+
+<p>Whenever you meet a trend line, ask these three questions in order. They match the big picture at the top of the lesson:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Question</th><th>Tool</th><th>A 15 km delivery</th></tr>
+  <tr><td>1. What does the line say?</td><td>Prediction: intercept + slope × X</td><td>9 + 2.1 × 15 = 40.5, so about 40 min</td></tr>
+  <tr><td>2. How good is the line?</td><td>r²</td><td>0.98: expect to be within a couple of minutes</td></tr>
+  <tr><td>3. Am I inside the data?</td><td>Extrapolation check</td><td>15 km is inside 3–25 km, so not a guess</td></tr>
+</table>
+</div>
+
+<p>All three are fine here, so "about 40 minutes" is a prediction you can stand behind. For 60 km, question 3 fails. For the messy week, question 2 says the answer is rough. If you can run these three questions on any trend line, you've got this lesson.</p>
 
 <h2>Try it</h2>
 
-<p>The chart starts with the shop's 12 months. Read the equation and r² under the chart. Then type a number into the predict box.</p>
+<p>The chart starts with the eight deliveries. Read the equation and r² under the chart. Then type a distance into the predict box.</p>
 
 <div id="sc"></div>
 
 <h3>Experiments</h3>
 <ol class="steps">
-  <li>Predict sales at ad spend <strong>25</strong>. Check it by hand: 30.6 + 3 × 25.</li>
-  <li>Now predict at <strong>0</strong>, then at <strong>100</strong>. Why does the box warn you both times?</li>
-  <li>Open <strong>Plus one odd month</strong>. One month had £45k of ads but only £40k of sales. What happens to the slope and to r²?</li>
-  <li>Open <strong>A noisier year</strong>. The slope is still positive. How does r² tell you the line is much less reliable here?</li>
+  <li>Predict at <strong>10</strong> km. Check it by hand: 9 + 2.1 × 10. The chart uses unrounded numbers, so it says 30.3.</li>
+  <li>Now predict at <strong>0</strong>, then at <strong>40</strong>. Why does the box warn you both times?</li>
+  <li>Open <strong>Plus a traffic jam</strong>. Watch the slope and r² change.</li>
+  <li>Open <strong>A messier week</strong>. The line barely moves. What does r² tell you?</li>
   <li>Tap a few points of your own in the top-left corner and watch the line tilt.</li>
 </ol>
 
 <h2>Where you'll meet this</h2>
 
-<p><strong>In Excel:</strong> right-click the dots on a scatter chart → Add Trendline, then tick "Display equation" and "Display R-squared". Or use formulas:</p>
+<p><strong>In Excel:</strong> right-click the dots on a scatter chart → Add Trendline, then tick "Display equation" and "Display R-squared". Or use formulas. With the distances in A2:A9 and the times in B2:B9:</p>
 
 <div class="table-wrap">
 <table>
-  <tr><th>Formula</th><th>Gives</th></tr>
-  <tr><td><code>=SLOPE(B2:B13, A2:A13)</code></td><td>The slope</td></tr>
-  <tr><td><code>=INTERCEPT(B2:B13, A2:A13)</code></td><td>The intercept</td></tr>
-  <tr><td><code>=RSQ(B2:B13, A2:A13)</code></td><td>r²</td></tr>
-  <tr><td><code>=FORECAST.LINEAR(20, B2:B13, A2:A13)</code></td><td>The line's prediction at X = 20</td></tr>
+  <tr><th>Formula</th><th>Gives</th><th>Here</th></tr>
+  <tr><td><code>=SLOPE(B2:B9, A2:A9)</code></td><td>The slope</td><td>2.13</td></tr>
+  <tr><td><code>=INTERCEPT(B2:B9, A2:A9)</code></td><td>The intercept</td><td>8.96</td></tr>
+  <tr><td><code>=RSQ(B2:B9, A2:A9)</code></td><td>r²</td><td>0.98</td></tr>
+  <tr><td><code>=FORECAST.LINEAR(10, B2:B9, A2:A9)</code></td><td>Prediction at 10 km</td><td>30.3</td></tr>
 </table>
 </div>
 
@@ -143,17 +614,17 @@
 <script src="../assets/scatter.js"></script>
 <script src="../assets/quiz.js"></script>
 <script>
-const shop = [[8,58],[12,60],[15,83],[18,81],[20,95],[22,87],[25,112],[28,112],[30,114],[33,138],[36,134],[40,153]];
-const noisy = [[8,90],[12,60],[15,120],[18,70],[20,140],[22,80],[25,100],[28,150],[30,85],[33,130],[36,95],[40,125]];
+const deliveries = [[3,14],[5,18],[8,30],[12,35],[15,38],[18,50],[20,52],[25,61]];
+const messy = [[3,40],[5,6],[8,32],[12,16],[15,38],[18,51],[20,33],[25,83]];
 
 Scatter.mount(document.getElementById("sc"), {
-  xLabel: "Ad spend £k", yLabel: "Sales £k",
-  xMax: 50, yMax: 200,
+  xLabel: "Distance km", yLabel: "Time min",
+  xMax: 40, yMax: 160,
   showTrend: true, predict: true,
   presets: [
-    { name: "Shop: 12 months", points: shop },
-    { name: "Plus one odd month", points: [...shop, [45, 40]] },
-    { name: "A noisier year", points: noisy }
+    { name: "8 deliveries", points: deliveries },
+    { name: "Plus a traffic jam", points: [...deliveries, [22, 120]] },
+    { name: "A messier week", points: messy }
   ]
 });
 
@@ -163,24 +634,31 @@ Quiz.mount(document.getElementById("quiz"), {
   questions: [
     {
       topic: "Slope",
-      q: "<p>A trend line reads <strong>Sales ≈ 30 + 3 × Ad spend</strong> (both in £k). What does the <strong>3</strong> mean?</p>",
-      options: ["Sales start at £3k with no ads", "Each extra £1k of ads goes with ~£3k more sales", "Ads explain 3% of sales", "Sales triple whenever ads double"],
+      q: "<p>A trend line reads <strong>Time ≈ 9 + 2.1 × km</strong>. What does the <strong>2.1</strong> mean?</p>",
+      options: ["Every delivery takes 2.1 minutes", "Each extra km goes with ~2.1 more minutes", "Deliveries average 2.1 km", "Time doubles every 2.1 km"],
       answer: 1,
-      explain: "The slope is the 'per unit' number: one step right on X (£1k of ads) goes with about 3 steps up on Y (£3k of sales), on average."
+      explain: "The slope is the 'per unit' number: one step right (1 km) goes with about 2.1 steps up (minutes), on average."
+    },
+    {
+      topic: "Intercept",
+      q: "<p>In <strong>Time ≈ 9 + 2.1 × km</strong>, what does the <strong>9</strong> mean?</p>",
+      options: ["The longest trip in the data", "There were 9 deliveries", "The line's time at 0 km: where it starts", "The slope at 9 km"],
+      answer: 2,
+      explain: "The intercept is where the line starts, at 0 km. Here it's like the fixed time per stop (parking, handing over). Nobody drove 0 km, though, so it's a line setting, not a measurement."
     },
     {
       topic: "Predicting",
-      q: "<p>Using <strong>Sales ≈ 30 + 3 × Ad spend</strong>, what does the line predict for a month with <strong>£20k</strong> of ads?</p>",
-      options: ["£50k", "£60k", "£80k", "£90k"],
+      q: "<p>Using <strong>Time ≈ 9 + 2.1 × km</strong>, what does the line predict for a <strong>15 km</strong> delivery?</p>",
+      options: ["About 24 min", "About 32 min", "About 166 min", "About 40 min"],
       answer: 3,
-      explain: "Multiply first, then add: 3 × 20 = 60, and 30 + 60 = 90. So about £90k. (Order of operations from Lesson 0001.)"
+      explain: "Multiply first, then add: 2.1 × 15 = 31.5, and 9 + 31.5 = 40.5. So about 40 minutes. Adding first, (9 + 2.1) × 15, gives a silly 166."
     },
     {
       topic: "Extrapolation",
-      q: "<p>The data covers ad spend from <strong>£8k to £40k</strong>. A manager asks what the line predicts at <strong>£200k</strong>. Best response?</p>",
+      q: "<p>The delivery data covers <strong>3 to 25 km</strong>. Your manager asks what the line predicts for <strong>200 km</strong>. Best response?</p>",
       options: ["Warn it's far outside the data", "Give the number; the line is exact", "Use the intercept instead", "Say the slope must be zero there"],
       answer: 0,
-      explain: "That's extrapolation. Nothing in the data shows ads still working the same way at five times the highest spend. You can give the number, but flag that it's a guess."
+      explain: "That's extrapolation. A 200 km trip means motorways, breaks, maybe an overnight stop, and nothing in short city trips shows the same rule holds. You can give the number (9 + 2.1 × 200 = 429 min), but flag that it's a guess."
     },
     {
       topic: "Negative slope",
@@ -190,22 +668,36 @@ Quiz.mount(document.getElementById("quiz"), {
       explain: "Each £1 goes with 4 fewer units, so £10 goes with 4 × 10 = 40 fewer. The minus sign means the line goes down as price goes up."
     },
     {
+      topic: "Odd points",
+      q: "<p>One delivery got stuck in a 2-hour traffic jam. What does adding it to the data most likely do to the trend line?</p>",
+      options: ["Nothing; one point can't matter", "Tilts it, and r² drops", "Makes r² go up", "Moves the intercept, never the slope"],
+      answer: 1,
+      explain: "Least squares counts big gaps extra, so one extreme point pulls the line towards itself. In the lesson, the slope went from 2.1 to 3.2 and r² fell from 0.98 to 0.60."
+    },
+    {
       topic: "r²",
       q: "<p>Two metrics have <strong>r = 0.9</strong>. What is r², and how is it usually read?</p>",
-      options: ["0.18: the line fits poorly", "0.81: about 81% follows the line", "0.95: nearly a perfect fit", "0.90: same as r, just renamed"],
-      answer: 1,
+      options: ["0.81: about 81% follows the line", "0.18: the line fits poorly", "0.95: nearly a perfect fit", "0.90: same as r, just renamed"],
+      answer: 0,
       explain: "r² = 0.9 × 0.9 = 0.81. Roughly 81% of the ups and downs in Y line up with the trend line. The other 19% is other factors and noise."
     },
     {
       topic: "Excel",
-      q: "<p>Ad spend is in <strong>A2:A13</strong> and sales in <strong>B2:B13</strong>. Which formula gives the slope of sales against ads?</p>",
-      options: ["=SLOPE(B2:B13, A2:A13)", "=SLOPE(A2:A13, B2:B13)", "=CORREL(B2:B13, A2:A13)", "=INTERCEPT(A2:A13, B2:B13)"],
-      answer: 0,
-      explain: "SLOPE takes the Y range (what you predict) first, then the X range. Swapping them gives the slope of ads against sales, a different number. CORREL gives r, not the slope."
+      q: "<p>Distances are in <strong>A2:A9</strong> and times in <strong>B2:B9</strong>. Which formula gives the slope (minutes per km)?</p>",
+      options: ["=SLOPE(A2:A9, B2:B9)", "=CORREL(B2:B9, A2:A9)", "=INTERCEPT(B2:B9, A2:A9)", "=SLOPE(B2:B9, A2:A9)"],
+      answer: 3,
+      explain: "SLOPE takes the Y range (what you predict: time) first, then the X range (distance). Swapped, you'd get km per minute, a different number. CORREL gives r, and INTERCEPT gives the 9."
+    },
+    {
+      topic: "Least squares",
+      q: "<p>How do Excel and Power BI choose the trend line?</p>",
+      options: ["It joins the first and last dots", "Smallest total of squared gaps", "It passes through the most dots exactly", "It joins the mean and the median"],
+      answer: 1,
+      explain: "Least squares: measure each dot's gap to the line, square the gaps, add them up, and pick the line with the smallest total."
     },
     {
       topic: "Causation",
-      q: "<p>A manager says: \"The slope is 3, so every £1k we add to ads <em>will earn</em> £3k.\" What's the best reply?</p>",
+      q: "<p>A shop's line reads Sales ≈ 30 + 3 × Ad spend (£k). A manager says: \"The slope is 3, so every £1k we add to ads <em>will earn</em> £3k.\" What's the best reply?</p>",
       options: ["Agree; that is what slope means", "Disagree; the slope should be 1", "Agree, but only if r² is above 0.5", "The slope shows a pattern, not cause"],
       answer: 3,
       explain: "A trend line is still correlation. Busy months might have both bigger ad budgets and more sales. To show cause, run a test (stage 7)."

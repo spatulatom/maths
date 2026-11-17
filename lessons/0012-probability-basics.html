@@ -33,7 +33,9 @@
   <dl>
     <dt>Probability</dt><dd>How likely something is, from 0 (never) to 1 (certain). 0.25 = 25% = "1 in 4".</dd>
     <dt>Complement</dt><dd>The chance something does <em>not</em> happen: 1 minus the chance it does.</dd>
-    <dt>Independent</dt><dd>One event doesn't change the chance of the other.</dd>
+    <dt>Independent</dt><dd>One event doesn't change the chance of the other. Two strangers' purchases are independent; buying shoes and buying socks are not.</dd>
+    <dt>Conditional probability</dt><dd>The chance of B among only the cases where A happened. Written P(B | A) and read "B given A". 20% of shoe buyers also buy socks: P(socks | shoes) = 0.2.</dd>
+    <dt>Mutually exclusive</dt><dd>Can't both happen, like paying by card and paying by PayPal on one order.</dd>
     <dt>Funnel</dt><dd>A chain of steps customers go through (visit → view → basket → pay), losing some at each step.</dd>
     <dt>Expected value</dt><dd>Chance × value: what something is worth on average, per try.</dd>
   </dl>
@@ -57,11 +59,48 @@
 </table>
 </div>
 
-<p>The overlap rule stops you counting the "both" customers twice. You'll see the same idea as a Venn diagram in the joins lesson.</p>
+<p>The overlap rule stops you counting the "both" customers twice. Here are the shoes and bags customers as a Venn diagram, which you'll meet again in the joins lesson:</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 305" width="100%" role="img" aria-label="Venn diagram. A shoes circle and a bags circle overlap. Shoes only: 25%. Both: 5%. Bags only: 15%. Shoes or bags: 25 + 5 + 15 = 45%." style="display: block; max-width: 600px; height: auto;">
+  <circle cx="240" cy="150" r="120" style="fill: var(--accent); fill-opacity: 0.15; stroke: var(--accent); stroke-width: 2.5;"/>
+  <circle cx="390" cy="150" r="100" style="fill: var(--good); fill-opacity: 0.15; stroke: var(--good); stroke-width: 2.5;"/>
+  <g style="font-family: var(--sans);" text-anchor="middle">
+    <text x="190" y="20" style="font-size: 19px; font-weight: 600; fill: var(--accent);">Shoes: 30%</text>
+    <text x="440" y="40" style="font-size: 19px; font-weight: 600; fill: var(--good);">Bags: 20%</text>
+    <text x="195" y="158" style="font-size: 26px; font-weight: 600; fill: var(--text);">25%</text>
+    <text x="195" y="182" style="font-size: 16px; fill: var(--muted);">shoes only</text>
+    <text x="325" y="158" style="font-size: 26px; font-weight: 600; fill: var(--text);">5%</text>
+    <text x="325" y="182" style="font-size: 16px; fill: var(--muted);">both</text>
+    <text x="435" y="158" style="font-size: 26px; font-weight: 600; fill: var(--text);">15%</text>
+    <text x="435" y="182" style="font-size: 16px; fill: var(--muted);">bags only</text>
+    <text x="300" y="298" style="font-size: 19px; font-weight: 600; fill: var(--text);">Shoes OR bags = 25 + 5 + 15 = 45%</text>
+  </g>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">30% + 20% counts the 5% in the middle twice: once in each circle. Subtract it once and you get 45%.</figcaption>
+</figure>
 
 <h3>Why AND multiplies</h3>
 
 <p>Start with 10,000 visitors. 40% view a product, which is 4,000 people. 25% <em>of those</em> add it to the basket, which is 1,000 people. That's 1,000 of the original 10,000, or 10%.</p>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 250" width="100%" role="img" aria-label="Funnel as three bars. 10,000 visitors. Times 0.4 gives 4,000 who view a product. Times 0.25 gives 1,000 who add to basket, 10% of the start." style="display: block; max-width: 600px; height: auto;">
+  <g style="font-family: var(--sans); font-size: 18px; fill: var(--text);" text-anchor="end">
+    <text x="105" y="50">Visit</text><text x="105" y="130">View</text><text x="105" y="210">Basket</text>
+  </g>
+  <rect x="120" y="22" width="460" height="44" rx="4" style="fill: var(--muted); opacity: 0.45;"/>
+  <rect x="120" y="102" width="184" height="44" rx="4" style="fill: var(--accent); opacity: 0.7;"/>
+  <rect x="120" y="182" width="46" height="44" rx="4" style="fill: var(--accent);"/>
+  <g style="font-family: var(--sans); font-size: 19px; font-weight: 600; fill: var(--text);">
+    <text x="135" y="51">10,000</text><text x="316" y="131">4,000</text><text x="178" y="211">1,000 = 10%</text>
+  </g>
+  <g style="font-family: var(--sans); font-size: 17px; fill: var(--muted);">
+    <text x="130" y="90">× 0.4 (40% of 10,000)</text><text x="130" y="170">× 0.25 (25% of 4,000, not of 10,000)</text>
+  </g>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Each step keeps a share of what's left. 0.4 × 0.25 = 0.1, so 1,000 of the 10,000 reach the basket.</figcaption>
+</figure>
 
 <p>"25% of 40%" means multiplying, just as "percent of" did in stage 2. Each step takes a percentage of what's left, not of the starting crowd.</p>
 
@@ -69,6 +108,101 @@
   <span class="label">Watch out</span>
   <p>Multiplying assumes each chance is measured <em>among the people who passed the previous step</em>. That's how funnel reports are usually built, so check the report says "% of previous step" and not "% of all visitors".</p>
 </div>
+
+<h3>Independent or not?</h3>
+
+<p><strong>Independent</strong> means that knowing one thing happened doesn't change the chance of the other.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Independent</th><th>Not independent</th></tr>
+  <tr><td>Two strangers visit your shop. Whether the first one buys tells you nothing about the second.</td><td>A customer buys shoes. That makes them much more likely to buy socks too.</td></tr>
+  <tr><td>A coin flip, then another coin flip.</td><td>Viewing a product, then adding it to the basket. You can't add what you never viewed.</td></tr>
+</table>
+</div>
+
+<p>With independent events you can multiply the plain overall chances. Two strangers who each have a 3% chance of buying: the chance both buy is 0.03 × 0.03 = 0.0009, about 1 in 1,100.</p>
+
+<p>When events are <em>not</em> independent, multiplying the overall chances gives the wrong answer. Say 40% of customers buy shoes and 10% buy socks. Among shoe buyers, though, 20% also buy socks:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Calculation</th><th>Chance of both</th></tr>
+  <tr><td>Pretend they're independent: 0.4 × 0.1</td><td>4%</td></tr>
+  <tr><td>Use the real rate among shoe buyers: 0.4 × 0.2</td><td><strong>8%</strong></td></tr>
+</table>
+</div>
+
+<figure style="margin: 1.25rem 0;">
+<svg viewBox="0 0 600 375" width="100%" role="img" aria-label="Two grids of 100 customers. Left, if shoes and socks were independent: 4 buy both, 36 shoes only, 6 socks only. Right, the real data: 8 buy both, 32 shoes only, 2 socks only." style="display: block; max-width: 600px; height: auto;">
+  <g style="fill: var(--good);"><circle cx="30" cy="30" r="8"/><circle cx="54" cy="30" r="8"/><circle cx="78" cy="30" r="8"/><circle cx="102" cy="30" r="8"/></g><g style="fill: var(--accent);"><circle cx="126" cy="30" r="8"/><circle cx="150" cy="30" r="8"/><circle cx="174" cy="30" r="8"/><circle cx="198" cy="30" r="8"/><circle cx="222" cy="30" r="8"/><circle cx="246" cy="30" r="8"/><circle cx="30" cy="54" r="8"/><circle cx="54" cy="54" r="8"/><circle cx="78" cy="54" r="8"/><circle cx="102" cy="54" r="8"/><circle cx="126" cy="54" r="8"/><circle cx="150" cy="54" r="8"/><circle cx="174" cy="54" r="8"/><circle cx="198" cy="54" r="8"/><circle cx="222" cy="54" r="8"/><circle cx="246" cy="54" r="8"/><circle cx="30" cy="78" r="8"/><circle cx="54" cy="78" r="8"/><circle cx="78" cy="78" r="8"/><circle cx="102" cy="78" r="8"/><circle cx="126" cy="78" r="8"/><circle cx="150" cy="78" r="8"/><circle cx="174" cy="78" r="8"/><circle cx="198" cy="78" r="8"/><circle cx="222" cy="78" r="8"/><circle cx="246" cy="78" r="8"/><circle cx="30" cy="102" r="8"/><circle cx="54" cy="102" r="8"/><circle cx="78" cy="102" r="8"/><circle cx="102" cy="102" r="8"/><circle cx="126" cy="102" r="8"/><circle cx="150" cy="102" r="8"/><circle cx="174" cy="102" r="8"/><circle cx="198" cy="102" r="8"/><circle cx="222" cy="102" r="8"/><circle cx="246" cy="102" r="8"/></g><g style="fill: var(--text);"><circle cx="30" cy="126" r="8"/><circle cx="54" cy="126" r="8"/><circle cx="78" cy="126" r="8"/><circle cx="102" cy="126" r="8"/><circle cx="126" cy="126" r="8"/><circle cx="150" cy="126" r="8"/></g><g style="fill: var(--muted); opacity: 0.3;"><circle cx="174" cy="126" r="8"/><circle cx="198" cy="126" r="8"/><circle cx="222" cy="126" r="8"/><circle cx="246" cy="126" r="8"/><circle cx="30" cy="150" r="8"/><circle cx="54" cy="150" r="8"/><circle cx="78" cy="150" r="8"/><circle cx="102" cy="150" r="8"/><circle cx="126" cy="150" r="8"/><circle cx="150" cy="150" r="8"/><circle cx="174" cy="150" r="8"/><circle cx="198" cy="150" r="8"/><circle cx="222" cy="150" r="8"/><circle cx="246" cy="150" r="8"/><circle cx="30" cy="174" r="8"/><circle cx="54" cy="174" r="8"/><circle cx="78" cy="174" r="8"/><circle cx="102" cy="174" r="8"/><circle cx="126" cy="174" r="8"/><circle cx="150" cy="174" r="8"/><circle cx="174" cy="174" r="8"/><circle cx="198" cy="174" r="8"/><circle cx="222" cy="174" r="8"/><circle cx="246" cy="174" r="8"/><circle cx="30" cy="198" r="8"/><circle cx="54" cy="198" r="8"/><circle cx="78" cy="198" r="8"/><circle cx="102" cy="198" r="8"/><circle cx="126" cy="198" r="8"/><circle cx="150" cy="198" r="8"/><circle cx="174" cy="198" r="8"/><circle cx="198" cy="198" r="8"/><circle cx="222" cy="198" r="8"/><circle cx="246" cy="198" r="8"/><circle cx="30" cy="222" r="8"/><circle cx="54" cy="222" r="8"/><circle cx="78" cy="222" r="8"/><circle cx="102" cy="222" r="8"/><circle cx="126" cy="222" r="8"/><circle cx="150" cy="222" r="8"/><circle cx="174" cy="222" r="8"/><circle cx="198" cy="222" r="8"/><circle cx="222" cy="222" r="8"/><circle cx="246" cy="222" r="8"/><circle cx="30" cy="246" r="8"/><circle cx="54" cy="246" r="8"/><circle cx="78" cy="246" r="8"/><circle cx="102" cy="246" r="8"/><circle cx="126" cy="246" r="8"/><circle cx="150" cy="246" r="8"/><circle cx="174" cy="246" r="8"/><circle cx="198" cy="246" r="8"/><circle cx="222" cy="246" r="8"/><circle cx="246" cy="246" r="8"/></g>
+  <g style="fill: var(--good);"><circle cx="340" cy="30" r="8"/><circle cx="364" cy="30" r="8"/><circle cx="388" cy="30" r="8"/><circle cx="412" cy="30" r="8"/><circle cx="436" cy="30" r="8"/><circle cx="460" cy="30" r="8"/><circle cx="484" cy="30" r="8"/><circle cx="508" cy="30" r="8"/></g><g style="fill: var(--accent);"><circle cx="532" cy="30" r="8"/><circle cx="556" cy="30" r="8"/><circle cx="340" cy="54" r="8"/><circle cx="364" cy="54" r="8"/><circle cx="388" cy="54" r="8"/><circle cx="412" cy="54" r="8"/><circle cx="436" cy="54" r="8"/><circle cx="460" cy="54" r="8"/><circle cx="484" cy="54" r="8"/><circle cx="508" cy="54" r="8"/><circle cx="532" cy="54" r="8"/><circle cx="556" cy="54" r="8"/><circle cx="340" cy="78" r="8"/><circle cx="364" cy="78" r="8"/><circle cx="388" cy="78" r="8"/><circle cx="412" cy="78" r="8"/><circle cx="436" cy="78" r="8"/><circle cx="460" cy="78" r="8"/><circle cx="484" cy="78" r="8"/><circle cx="508" cy="78" r="8"/><circle cx="532" cy="78" r="8"/><circle cx="556" cy="78" r="8"/><circle cx="340" cy="102" r="8"/><circle cx="364" cy="102" r="8"/><circle cx="388" cy="102" r="8"/><circle cx="412" cy="102" r="8"/><circle cx="436" cy="102" r="8"/><circle cx="460" cy="102" r="8"/><circle cx="484" cy="102" r="8"/><circle cx="508" cy="102" r="8"/><circle cx="532" cy="102" r="8"/><circle cx="556" cy="102" r="8"/></g><g style="fill: var(--text);"><circle cx="340" cy="126" r="8"/><circle cx="364" cy="126" r="8"/></g><g style="fill: var(--muted); opacity: 0.3;"><circle cx="388" cy="126" r="8"/><circle cx="412" cy="126" r="8"/><circle cx="436" cy="126" r="8"/><circle cx="460" cy="126" r="8"/><circle cx="484" cy="126" r="8"/><circle cx="508" cy="126" r="8"/><circle cx="532" cy="126" r="8"/><circle cx="556" cy="126" r="8"/><circle cx="340" cy="150" r="8"/><circle cx="364" cy="150" r="8"/><circle cx="388" cy="150" r="8"/><circle cx="412" cy="150" r="8"/><circle cx="436" cy="150" r="8"/><circle cx="460" cy="150" r="8"/><circle cx="484" cy="150" r="8"/><circle cx="508" cy="150" r="8"/><circle cx="532" cy="150" r="8"/><circle cx="556" cy="150" r="8"/><circle cx="340" cy="174" r="8"/><circle cx="364" cy="174" r="8"/><circle cx="388" cy="174" r="8"/><circle cx="412" cy="174" r="8"/><circle cx="436" cy="174" r="8"/><circle cx="460" cy="174" r="8"/><circle cx="484" cy="174" r="8"/><circle cx="508" cy="174" r="8"/><circle cx="532" cy="174" r="8"/><circle cx="556" cy="174" r="8"/><circle cx="340" cy="198" r="8"/><circle cx="364" cy="198" r="8"/><circle cx="388" cy="198" r="8"/><circle cx="412" cy="198" r="8"/><circle cx="436" cy="198" r="8"/><circle cx="460" cy="198" r="8"/><circle cx="484" cy="198" r="8"/><circle cx="508" cy="198" r="8"/><circle cx="532" cy="198" r="8"/><circle cx="556" cy="198" r="8"/><circle cx="340" cy="222" r="8"/><circle cx="364" cy="222" r="8"/><circle cx="388" cy="222" r="8"/><circle cx="412" cy="222" r="8"/><circle cx="436" cy="222" r="8"/><circle cx="460" cy="222" r="8"/><circle cx="484" cy="222" r="8"/><circle cx="508" cy="222" r="8"/><circle cx="532" cy="222" r="8"/><circle cx="556" cy="222" r="8"/><circle cx="340" cy="246" r="8"/><circle cx="364" cy="246" r="8"/><circle cx="388" cy="246" r="8"/><circle cx="412" cy="246" r="8"/><circle cx="436" cy="246" r="8"/><circle cx="460" cy="246" r="8"/><circle cx="484" cy="246" r="8"/><circle cx="508" cy="246" r="8"/><circle cx="532" cy="246" r="8"/><circle cx="556" cy="246" r="8"/></g>
+  <text x="138" y="285" text-anchor="middle" style="font-family: var(--sans); font-size: 20px; font-weight: 600; fill: var(--text);">If independent</text>
+  <text x="138" y="309" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; fill: var(--muted);">4 of 100 buy both</text>
+  <text x="448" y="285" text-anchor="middle" style="font-family: var(--sans); font-size: 20px; font-weight: 600; fill: var(--text);">Real data</text>
+  <text x="448" y="309" text-anchor="middle" style="font-family: var(--sans); font-size: 18px; fill: var(--muted);">8 of 100 buy both</text>
+  <circle cx="30" cy="347" r="8" style="fill: var(--good);"/><text x="44" y="353" text-anchor="start" style="font-family: var(--sans); font-size: 17px; fill: var(--text);">shoes + socks</text>
+  <circle cx="190" cy="347" r="8" style="fill: var(--accent);"/><text x="204" y="353" text-anchor="start" style="font-family: var(--sans); font-size: 17px; fill: var(--text);">shoes only</text>
+  <circle cx="325" cy="347" r="8" style="fill: var(--text);"/><text x="339" y="353" text-anchor="start" style="font-family: var(--sans); font-size: 17px; fill: var(--text);">socks only</text>
+  <circle cx="460" cy="347" r="8" style="fill: var(--muted); opacity: 0.3;"/><text x="474" y="353" text-anchor="start" style="font-family: var(--sans); font-size: 17px; fill: var(--text);">neither</text>
+</svg>
+<figcaption style="font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem;">Same 100 customers, same 40 shoe buyers and 10 sock buyers in both pictures. Socks cluster among shoe buyers, so "both" is twice what independence predicts.</figcaption>
+</figure>
+
+<p>Pretending the two are independent halves the real number. This is exactly why funnels use "% of previous step": the basket rate is measured <em>among people who viewed</em>. Viewing and adding to the basket aren't independent, but multiplying by the rate among those who passed the step before still gives the right answer.</p>
+
+<h2>The big picture: one map of the rules</h2>
+
+<p>Every rule in this lesson answers one of three questions. Do both things happen (AND)? Does either one happen (OR)? Does it not happen (NOT)?</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Question</th><th>Case</th><th>Do this</th><th>Example</th></tr>
+  <tr><td rowspan="2"><strong>Both</strong> happen (AND)</td><td>Independent</td><td>P(A) × P(B)</td><td>Two strangers both buy: 0.03 × 0.03</td></tr>
+  <tr><td>Dependent</td><td>P(A) × P(B | A)</td><td>Shoes, then socks: 0.4 × 0.2 = 8%. Every funnel.</td></tr>
+  <tr><td rowspan="2"><strong>Either</strong> happens (OR)</td><td>Can't both happen (mutually exclusive)</td><td>P(A) + P(B)</td><td>Card or PayPal: 70 + 20 = 90%</td></tr>
+  <tr><td>Can both happen</td><td>P(A) + P(B) − P(A and B)</td><td>Shoes or bags: 30 + 20 − 5 = 45%</td></tr>
+  <tr><td><strong>Doesn't</strong> happen (NOT)</td><td>Any event</td><td>1 − P(A)</td><td>Churn 8% → 92% stay</td></tr>
+</table>
+</div>
+
+<p>P(A) is short for "the probability of A". The new piece is P(B | A) in the dependent row, explained next.</p>
+
+<p class="small">Don't mix up <em>mutually exclusive</em> with <em>independent</em>. If an order paid by card, you know it didn't use PayPal. Knowing one tells you about the other, so mutually exclusive events are dependent.</p>
+
+<h3>Conditional probability: the funnel's real rule</h3>
+
+<p>P(B | A) reads "the chance of B <em>given</em> A". You shrink the crowd to only the cases where A happened, then ask what share of them also do B.</p>
+
+<p>In the shoes example, P(socks | shoes) = 20%: one in five shoe buyers also buys socks. Across all customers, P(socks) is only 10%. Knowing someone bought shoes changes the chance, so the two events are dependent.</p>
+
+<p>You can also work it out from the overall numbers: P(B | A) = P(A and B) ÷ P(A). For socks: 8% ÷ 40% = 20%.</p>
+
+<div class="callout">
+  <span class="label">Independent is the special case</span>
+  <p>If knowing A changes nothing, then P(B | A) = P(B). The dependent rule P(A) × P(B | A) then becomes the plain P(A) × P(B). One rule covers both rows of AND.</p>
+</div>
+
+<h3>More than two steps: the chain rule</h3>
+
+<p>AND with more than two events works the same way. Each new step is conditioned on <em>every</em> step before it:</p>
+
+<p style="text-align: center;"><code>P(A and B and C and D) = P(A) × P(B | A) × P(C | A and B) × P(D | A, B and C)</code></p>
+
+<p>Here's the funnel from the Try it section below, written that way:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Step</th><th>In probability terms</th><th>Rate</th></tr>
+  <tr><td>View a product</td><td>P(view)</td><td>0.40</td></tr>
+  <tr><td>Add to basket</td><td>P(basket | view)</td><td>0.25</td></tr>
+  <tr><td>Start checkout</td><td>P(checkout | view and basket)</td><td>0.60</td></tr>
+  <tr><td>Pay</td><td>P(pay | view, basket and checkout)</td><td>0.50</td></tr>
+  <tr><td><strong>All four</strong></td><td>Multiply them</td><td><strong>0.03 = 3%</strong></td></tr>
+</table>
+</div>
+
+<p>A funnel report's "% of previous step" column is this list of conditional probabilities. That's why multiplying it gives the right answer, even though every step depends on the one before.</p>
 
 <h2>Expected value: chance × value</h2>
 
@@ -197,6 +331,27 @@ Quiz.mount(document.getElementById("quiz"), {
       options: ["It should almost never happen", "Every store fails every day", "Exactly 1,000 glitches a day", "About one glitch somewhere daily"],
       answer: 3,
       explain: "Expected count = chance × tries = 0.001 × 1,000 = 1 per day. Rare per store isn't rare across a big chain."
+    },
+    {
+      topic: "Conditional probability",
+      q: "<p><strong>40%</strong> of customers buy a phone, and <strong>12%</strong> buy a phone <em>and</em> a case. Among phone buyers, what share also buy a case?</p>",
+      options: ["12%", "4.8%", "52%", "30%"],
+      answer: 3,
+      explain: "Shrink the crowd to phone buyers: P(case | phone) = P(phone and case) ÷ P(phone) = 0.12 ÷ 0.40 = 0.30, so 30%."
+    },
+    {
+      topic: "Dependent AND",
+      q: "<p><strong>20%</strong> of café customers buy coffee and <strong>10%</strong> buy cake. Among coffee buyers, <strong>30%</strong> also buy cake. What share buy both?</p>",
+      options: ["6%", "2%", "30%", "50%"],
+      answer: 0,
+      explain: "Cake depends on coffee, so use the rate among coffee buyers: 0.2 × 0.3 = 0.06 = 6%. 0.2 × 0.1 = 2% would wrongly treat them as independent."
+    },
+    {
+      topic: "Independent vs mutually exclusive",
+      q: "<p>Every order ships either <strong>standard</strong> or <strong>express</strong>, never both. Are the two events independent?</p>",
+      options: ["Yes, because they can't both happen", "No: if an order is express, you know it isn't standard", "Yes, because both are shipping methods", "You can't tell without the percentages"],
+      answer: 1,
+      explain: "Can't both happen = mutually exclusive. Knowing one happened tells you the other didn't, so they're dependent, not independent."
     },
     {
       topic: "Review: trend lines",
