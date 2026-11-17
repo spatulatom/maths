@@ -35,6 +35,7 @@
     <dt>Complement</dt><dd>The chance something does <em>not</em> happen: 1 minus the chance it does.</dd>
     <dt>Independent</dt><dd>One event doesn't change the chance of the other. Two strangers' purchases are independent; buying shoes and buying socks are not.</dd>
     <dt>Conditional probability</dt><dd>The chance of B among only the cases where A happened. Written P(B | A) and read "B given A". 20% of shoe buyers also buy socks: P(socks | shoes) = 0.2.</dd>
+    <dt>Mutually exclusive</dt><dd>Can't both happen, like paying by card and paying by PayPal on one order.</dd>
     <dt>Funnel</dt><dd>A chain of steps customers go through (visit → view → basket → pay), losing some at each step.</dd>
     <dt>Expected value</dt><dd>Chance × value: what something is worth on average, per try.</dd>
   </dl>
@@ -159,13 +160,15 @@
   <tr><th>Question</th><th>Case</th><th>Do this</th><th>Example</th></tr>
   <tr><td rowspan="2"><strong>Both</strong> happen (AND)</td><td>Independent</td><td>P(A) × P(B)</td><td>Two strangers both buy: 0.03 × 0.03</td></tr>
   <tr><td>Dependent</td><td>P(A) × P(B | A)</td><td>Shoes, then socks: 0.4 × 0.2 = 8%. Every funnel.</td></tr>
-  <tr><td rowspan="2"><strong>Either</strong> happens (OR)</td><td>Can't both happen</td><td>P(A) + P(B)</td><td>Card or PayPal: 70 + 20 = 90%</td></tr>
+  <tr><td rowspan="2"><strong>Either</strong> happens (OR)</td><td>Can't both happen (mutually exclusive)</td><td>P(A) + P(B)</td><td>Card or PayPal: 70 + 20 = 90%</td></tr>
   <tr><td>Can both happen</td><td>P(A) + P(B) − P(A and B)</td><td>Shoes or bags: 30 + 20 − 5 = 45%</td></tr>
   <tr><td><strong>Doesn't</strong> happen (NOT)</td><td>Any event</td><td>1 − P(A)</td><td>Churn 8% → 92% stay</td></tr>
 </table>
 </div>
 
 <p>P(A) is short for "the probability of A". The new piece is P(B | A) in the dependent row, explained next.</p>
+
+<p class="small">Don't mix up <em>mutually exclusive</em> with <em>independent</em>. If an order paid by card, you know it didn't use PayPal. Knowing one tells you about the other, so mutually exclusive events are dependent.</p>
 
 <h3>Conditional probability: the funnel's real rule</h3>
 
@@ -328,6 +331,27 @@ Quiz.mount(document.getElementById("quiz"), {
       options: ["It should almost never happen", "Every store fails every day", "Exactly 1,000 glitches a day", "About one glitch somewhere daily"],
       answer: 3,
       explain: "Expected count = chance × tries = 0.001 × 1,000 = 1 per day. Rare per store isn't rare across a big chain."
+    },
+    {
+      topic: "Conditional probability",
+      q: "<p><strong>40%</strong> of customers buy a phone, and <strong>12%</strong> buy a phone <em>and</em> a case. Among phone buyers, what share also buy a case?</p>",
+      options: ["12%", "4.8%", "52%", "30%"],
+      answer: 3,
+      explain: "Shrink the crowd to phone buyers: P(case | phone) = P(phone and case) ÷ P(phone) = 0.12 ÷ 0.40 = 0.30, so 30%."
+    },
+    {
+      topic: "Dependent AND",
+      q: "<p><strong>20%</strong> of café customers buy coffee and <strong>10%</strong> buy cake. Among coffee buyers, <strong>30%</strong> also buy cake. What share buy both?</p>",
+      options: ["6%", "2%", "30%", "50%"],
+      answer: 0,
+      explain: "Cake depends on coffee, so use the rate among coffee buyers: 0.2 × 0.3 = 0.06 = 6%. 0.2 × 0.1 = 2% would wrongly treat them as independent."
+    },
+    {
+      topic: "Independent vs mutually exclusive",
+      q: "<p>Every order ships either <strong>standard</strong> or <strong>express</strong>, never both. Are the two events independent?</p>",
+      options: ["Yes, because they can't both happen", "No: if an order is express, you know it isn't standard", "Yes, because both are shipping methods", "You can't tell without the percentages"],
+      answer: 1,
+      explain: "Can't both happen = mutually exclusive. Knowing one happened tells you the other didn't, so they're dependent, not independent."
     },
     {
       topic: "Review: trend lines",
