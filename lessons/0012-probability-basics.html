@@ -34,6 +34,7 @@
     <dt>Probability</dt><dd>How likely something is, from 0 (never) to 1 (certain). 0.25 = 25% = "1 in 4".</dd>
     <dt>Complement</dt><dd>The chance something does <em>not</em> happen: 1 minus the chance it does.</dd>
     <dt>Independent</dt><dd>One event doesn't change the chance of the other. Two strangers' purchases are independent; buying shoes and buying socks are not.</dd>
+    <dt>Conditional probability</dt><dd>The chance of B among only the cases where A happened. Written P(B | A) and read "B given A". 20% of shoe buyers also buy socks: P(socks | shoes) = 0.2.</dd>
     <dt>Funnel</dt><dd>A chain of steps customers go through (visit → view → basket → pay), losing some at each step.</dd>
     <dt>Expected value</dt><dd>Chance × value: what something is worth on average, per try.</dd>
   </dl>
@@ -148,6 +149,57 @@
 </figure>
 
 <p>Pretending the two are independent halves the real number. This is exactly why funnels use "% of previous step": the basket rate is measured <em>among people who viewed</em>. Viewing and adding to the basket aren't independent, but multiplying by the rate among those who passed the step before still gives the right answer.</p>
+
+<h2>The big picture: one map of the rules</h2>
+
+<p>Every rule in this lesson answers one of three questions. Do both things happen (AND)? Does either one happen (OR)? Does it not happen (NOT)?</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Question</th><th>Case</th><th>Do this</th><th>Example</th></tr>
+  <tr><td rowspan="2"><strong>Both</strong> happen (AND)</td><td>Independent</td><td>P(A) × P(B)</td><td>Two strangers both buy: 0.03 × 0.03</td></tr>
+  <tr><td>Dependent</td><td>P(A) × P(B | A)</td><td>Shoes, then socks: 0.4 × 0.2 = 8%. Every funnel.</td></tr>
+  <tr><td rowspan="2"><strong>Either</strong> happens (OR)</td><td>Can't both happen</td><td>P(A) + P(B)</td><td>Card or PayPal: 70 + 20 = 90%</td></tr>
+  <tr><td>Can both happen</td><td>P(A) + P(B) − P(A and B)</td><td>Shoes or bags: 30 + 20 − 5 = 45%</td></tr>
+  <tr><td><strong>Doesn't</strong> happen (NOT)</td><td>Any event</td><td>1 − P(A)</td><td>Churn 8% → 92% stay</td></tr>
+</table>
+</div>
+
+<p>P(A) is short for "the probability of A". The new piece is P(B | A) in the dependent row, explained next.</p>
+
+<h3>Conditional probability: the funnel's real rule</h3>
+
+<p>P(B | A) reads "the chance of B <em>given</em> A". You shrink the crowd to only the cases where A happened, then ask what share of them also do B.</p>
+
+<p>In the shoes example, P(socks | shoes) = 20%: one in five shoe buyers also buys socks. Across all customers, P(socks) is only 10%. Knowing someone bought shoes changes the chance, so the two events are dependent.</p>
+
+<p>You can also work it out from the overall numbers: P(B | A) = P(A and B) ÷ P(A). For socks: 8% ÷ 40% = 20%.</p>
+
+<div class="callout">
+  <span class="label">Independent is the special case</span>
+  <p>If knowing A changes nothing, then P(B | A) = P(B). The dependent rule P(A) × P(B | A) then becomes the plain P(A) × P(B). One rule covers both rows of AND.</p>
+</div>
+
+<h3>More than two steps: the chain rule</h3>
+
+<p>AND with more than two events works the same way. Each new step is conditioned on <em>every</em> step before it:</p>
+
+<p style="text-align: center;"><code>P(A and B and C and D) = P(A) × P(B | A) × P(C | A and B) × P(D | A, B and C)</code></p>
+
+<p>Here's the funnel from the Try it section below, written that way:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Step</th><th>In probability terms</th><th>Rate</th></tr>
+  <tr><td>View a product</td><td>P(view)</td><td>0.40</td></tr>
+  <tr><td>Add to basket</td><td>P(basket | view)</td><td>0.25</td></tr>
+  <tr><td>Start checkout</td><td>P(checkout | view and basket)</td><td>0.60</td></tr>
+  <tr><td>Pay</td><td>P(pay | view, basket and checkout)</td><td>0.50</td></tr>
+  <tr><td><strong>All four</strong></td><td>Multiply them</td><td><strong>0.03 = 3%</strong></td></tr>
+</table>
+</div>
+
+<p>A funnel report's "% of previous step" column is this list of conditional probabilities. That's why multiplying it gives the right answer, even though every step depends on the one before.</p>
 
 <h2>Expected value: chance × value</h2>
 
