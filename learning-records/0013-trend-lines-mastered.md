@@ -29,3 +29,14 @@ In the same message the user asked to "create following lessons" (plural). The r
 | 0019 | Wrap-up |
 
 Results for each lesson still go into its own learning record as they arrive. If a later lesson misses, revise it, because these lessons were written before the user had shown evidence on the lessons just before them.
+
+## Update 2026-11-17: retake after the rewrite, 11/11
+
+The user revised 0011 and said they didn't understand it. The lesson was rebuilt around the 0010 deliveries (Time ≈ 9 + 2.1 × km), with six pictures. The user then expanded it themselves: a theory section, rise ÷ run vs least squares, the "machine" diagram, a check-every-delivery table and the worked Σ example. After more chat questions it gained r² as "error removed compared with guessing the mean" (1 − 38.0 ÷ 1,913.5), a "big picture" map at the top (one answer = the prediction; settings = intercept and slope; checks = r² and extrapolation) and a closing "three questions" section.
+
+**Evidence**: user reported "Quiz 0011-trend-lines: 11/11 correct", 2026-11-17, on the new 11-question quiz. That quiz covers slope, intercept, prediction, extrapolation, negative slope, odd points, r², SLOPE argument order, least squares, slope ≠ cause and a review of the 68–95–99.7 rule. Gaps shown in chat before the retake:
+- which two points to use for rise ÷ run. Answer: any two points on the line; pairs of dots give different slopes, which is why least squares exists.
+- what r² actually does
+- the lesson didn't make clear that a prediction is the one output and everything else supports it
+
+**Implications**: The learner understands best with one worked dataset carried through, a map of "the answer vs the supporting bits", and the reason behind a number ("better than guessing the mean"). Use the same framing in 0014 (a confidence interval = an estimate plus how far to trust it) and 0015.
