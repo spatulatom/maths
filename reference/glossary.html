@@ -255,6 +255,48 @@
   <dd>"No value here." After a left outer join, null in a right-hand column means that row had no matching key on the right.</dd>
 </dl>
 
+<h2>Filtering</h2>
+<dl>
+  <dt>Condition</dt>
+  <dd>A yes/no test on a row: "Amount &gt; 100" is true or false for each row.</dd>
+
+  <dt>AND, OR, NOT</dt>
+  <dd>AND keeps a row only if <em>all</em> conditions are true, so it narrows. OR keeps a row if <em>at least one</em> is true, so it widens. NOT flips a condition. Use brackets when mixing them: (North OR South) AND Amount &gt; 100 means big orders from either region.</dd>
+  <dd class="avoid">Avoid: Region = North AND Region = South. One row can't be in two regions, so it returns nothing. You meant OR.</dd>
+
+  <dt>Slicers in Power BI</dt>
+  <dd>Ticks inside one slicer combine with OR (North or South). Separate slicers combine with AND (North and Tea).</dd>
+
+  <dt>De Morgan's rule</dt>
+  <dd>NOT flips AND to OR and OR to AND: NOT (North OR South) = not North AND not South.</dd>
+
+  <dt>Boolean</dt>
+  <dd>A true/false value. Named after George Boole, who wrote down these rules.</dd>
+  <dd class="avoid">Avoid: assuming NOT (Returned = Yes) means "No". It keeps the No rows <em>and</em> the blank rows.</dd>
+</dl>
+
+<h2>Data models</h2>
+<dl>
+  <dt>Cardinality</dt>
+  <dd>How many rows on one side can match how many on the other: one-to-one, one-to-many, many-to-many. Customers → Orders is one-to-many: each customer once in Customers, many times in Orders.</dd>
+
+  <dt>Unique key</dt>
+  <dd>A column where every value appears only once, such as ProductID in a product list. The "one" side of a relationship needs one.</dd>
+  <dd class="avoid">Avoid: merging onto a table whose key isn't unique. A key that matches twice copies the row, so the row count grows (1,000 → 1,040) and totals go up. Check for duplicates first.</dd>
+
+  <dt>Fact table</dt>
+  <dd>The big table of events: sales, orders, clicks. Many rows, mostly numbers. The "many" side.</dd>
+
+  <dt>Dimension table</dt>
+  <dd>A lookup table describing things: products, customers, dates. One row per thing. The "one" side.</dd>
+
+  <dt>Star schema</dt>
+  <dd>A fact table in the middle, with dimension tables around it, each linked one-to-many. A slicer on a dimension (Product = Tea) filters the fact table through the relationship, so Sales visuals show only Tea sales.</dd>
+
+  <dt>Count distinct</dt>
+  <dd>The number of <em>different</em> values in a column. Customers who ordered = count distinct CustomerIDs in Orders, not the number of rows.</dd>
+</dl>
+
 <p class="small"><a href="roadmap.html">← Roadmap</a></p>
 
 </main>
