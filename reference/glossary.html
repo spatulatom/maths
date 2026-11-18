@@ -210,6 +210,16 @@
   <dt>Bias</dt>
   <dd>A systematic lean: samples keep missing in the same direction because of <em>who</em> was sampled. Four common kinds: selection, non-response, survivorship, convenience.</dd>
   <dd class="avoid">Avoid: trusting a huge sample because it's huge. 50,000 self-selected votes are still biased; size only fixes wobble.</dd>
+
+  <dt>Standard error (SE)</dt>
+  <dd>How much an estimate typically wobbles from sample to sample. For an average: SD ÷ √n. Example: SD 20, n 100 → SE 2.</dd>
+
+  <dt>Margin of error</dt>
+  <dd>The "give or take" part of an estimate. For a rough 95% interval: about 2 × SE. For a survey percentage: about 1 ÷ √n (1,000 people → ± 3 points). Excel: <code>CONFIDENCE.T(0.05, SD, n)</code> returns this margin, not the interval.</dd>
+
+  <dt>Confidence interval (CI)</dt>
+  <dd>Estimate ± margin of error, written as a range: "£37 to £47". A 95% interval built this way catches the true average about 19 times in 20. Narrower with a bigger sample; wider with more spread or a higher confidence level.</dd>
+  <dd class="avoid">Avoid: reading it as "95% of values fall in this range". It's a range for the average, not for individual orders. And it only covers wobble, not bias.</dd>
 </dl>
 
 <p class="small"><a href="roadmap.html">← Roadmap</a></p>
