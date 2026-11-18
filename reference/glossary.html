@@ -220,6 +220,39 @@
   <dt>Confidence interval (CI)</dt>
   <dd>Estimate ± margin of error, written as a range: "£37 to £47". A 95% interval built this way catches the true average about 19 times in 20. Narrower with a bigger sample; wider with more spread or a higher confidence level.</dd>
   <dd class="avoid">Avoid: reading it as "95% of values fall in this range". It's a range for the average, not for individual orders. And it only covers wobble, not bias.</dd>
+
+  <dt>A/B test</dt>
+  <dd>Randomly show half your visitors version A and half version B, then compare results. The random split balances out confounders, so unlike a correlation it can show cause.</dd>
+
+  <dt>p-value</dt>
+  <dd>If there really were no difference (the "null hypothesis"), the chance of seeing a gap at least this big by luck alone. p = 0.02: luck would produce this gap only 2% of the time.</dd>
+  <dd class="avoid">Avoid: "a 2% chance B is better" or "B is 2% better". And a high p (say 0.30) doesn't prove A and B are the same. It means the test couldn't tell, often because it was too small.</dd>
+
+  <dt>Statistically significant</dt>
+  <dd>p is below an agreed cut-off, usually 0.05, so luck alone is an unlikely explanation.</dd>
+  <dd class="avoid">Avoid: reading "significant" as "big" or "worth acting on". With 2 million visitors, a 0.05-point gap can be significant and still too small to matter.</dd>
+
+  <dt>False positive</dt>
+  <dd>A "significant" result when there's really no difference: a false alarm. At p &lt; 0.05, about 1 in 20 tests of nothing will give one. That's why checking 20 metrics, or peeking every day and stopping at the first p &lt; 0.05, creates false wins.</dd>
+</dl>
+
+<h2>Combining tables</h2>
+<dl>
+  <dt>Intersection, union, difference</dt>
+  <dd>Three ways to combine two sets. Intersection: in <em>both</em> (ordered in January and February). Union: in <em>either</em>, or both. Difference: in one but not the other (ordered in January, not February).</dd>
+
+  <dt>Key</dt>
+  <dd>The column used to match rows between tables, such as CustomerID.</dd>
+
+  <dt>Join (merge)</dt>
+  <dd>Combining two tables side by side by matching their keys. Power Query calls it Merge. Left outer keeps every left row; inner keeps only matches; left anti keeps only left rows <em>without</em> a match (such as orders with an unknown customer). If each key appears once on the right, a left outer join keeps the left table's row count.</dd>
+  <dd class="avoid">Avoid: switching to an inner join without checking what it drops. Unmatched rows vanish, and totals fall without warning.</dd>
+
+  <dt>Append</dt>
+  <dd>Stacking tables with the same columns on top of each other, such as January sales + February sales. It adds rows; merge adds columns.</dd>
+
+  <dt>null</dt>
+  <dd>"No value here." After a left outer join, null in a right-hand column means that row had no matching key on the right.</dd>
 </dl>
 
 <p class="small"><a href="roadmap.html">← Roadmap</a></p>
