@@ -80,6 +80,26 @@
 
 <p>The pattern: the weighted mean is pulled toward the group with the most weight. The naive average always sits exactly halfway, whatever the sizes.</p>
 
+<h3>Bonus: the mix can even flip the winner</h3>
+
+<p>Weights don't just nudge a result. They can turn it upside down. Here two stores sell online, and visitors come from email or social ads. <em>Conversion</em> = the share of visitors who buy.</p>
+
+<table>
+  <thead><tr><th>Channel</th><th>Store A</th><th>Store B</th></tr></thead>
+  <tbody>
+    <tr><td>Email</td><td>10 of 100 = <strong>10%</strong></td><td>81 of 900 = 9%</td></tr>
+    <tr><td>Social</td><td>18 of 900 = <strong>2%</strong></td><td>1 of 100 = 1%</td></tr>
+    <tr><td><strong>All</strong></td><td>28 of 1,000 = 2.8%</td><td>82 of 1,000 = <strong>8.2%</strong></td></tr>
+  </tbody>
+</table>
+
+<p>A wins in <strong>both</strong> channels, yet B wins overall. Why? Email converts far better than social, and 90% of B's visitors come from email, while 90% of A's come from social. The totals compare the <em>mix</em>, not the stores.</p>
+
+<div class="callout">
+  <span class="label">Simpson's paradox</span>
+  <p>That flip has a name: <strong>Simpson's paradox</strong>. When groups are different sizes, a pattern in every group can reverse in the total. In Power BI, if a total looks odd next to its rows, check how the rows are weighted before trusting either.</p>
+</div>
+
 <h2>Where you'll meet this</h2>
 
 <h3>In Excel</h3>
